@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 114731399830636250}
   - component: {fileID: 114680890187567402}
   m_Layer: 0
-  m_Name: Player
+  m_Name: GamejamPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -514,13 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32067ea884548644b13cf9baddd4573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 0
-  healthSlider: {fileID: 0}
-  damageImage: {fileID: 0}
-  deathClip: {fileID: 8300000, guid: d36a393bca4582043982db9089e1694f, type: 3}
-  flashSpeed: 5
-  flashColour: {r: 1, g: 0, b: 0, a: 0.09803922}
 --- !u!114 &114680890187567402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -534,6 +527,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   id: 0
+  startingHealth: 100
+  currentHealth: 0
+  healthSlider: {fileID: 0}
+  damageImage: {fileID: 0}
+  deathClip: {fileID: 0}
+  flashSpeed: 5
+  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!114 &114709054319181818
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -10,6 +10,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public static int LocalPlayerId {get {
 		return PhotonNetwork.player.ID;
 	}}
+
 	public GameObject playerPrefab;
 	GameObject playersParent;
 	public List<Player> players = new List<Player>();
@@ -19,6 +20,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	
 	void Awake()
 	{
+		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		PauseManager.instance.Pause();
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
@@ -26,6 +28,11 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	}
 	public void UpdatePlayers()
 	{
+		if (!PhotonNetwork.player.IsMasterClient)
+		{
+			Debug.Log("What am I than?");
+			return;
+		}
 		var ogNumPlayers = numPlayers;
 		List<int> realPlayers = new List<int>();
 		numPlayers = 0;
@@ -48,18 +55,11 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		{
 			if (playersParent.transform.childCount < numPlayers)
 			{
-				GameObject playerGO = Instantiate(playerPrefab);
-				playerGO.name = "Player " + realPlayers.Count;
-				playerGO.transform.SetParent(playersParent.transform);
-				Player player = playerGO.GetComponent<Player>();
-				player.damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
-				player.healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
-				player.id = realPlayers[realPlayers.Count-1];
-				players.Add(player);
-				if (player.id == LocalPlayerId)
-				{
-					CameraFollow.instance.target = player.transform;
-				}
+				int id = realPlayers[realPlayers.Count-1];
+				object[] parameters = new object[] {id};
+				PhotonNetwork.InstantiateSceneObject(playerPrefab.name, Vector3.zero, Quaternion.identity, 0, parameters);				
+				//Instantiate(playerPrefab);
+				
 			}
 		}
 		

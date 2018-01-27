@@ -72,7 +72,6 @@ public class Enemy : MonoBehaviour {
 		float closestDistance = float.MaxValue;
 		foreach(Player p in GameJamGameManager.instance.players)
 		{
-			Debug.Log("P: " + p);
 			var dist = Vector3.Distance(p.transform.position, transform.position);
 			if (dist < closestDistance)
 			{

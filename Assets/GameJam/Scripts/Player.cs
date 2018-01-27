@@ -37,6 +37,8 @@ namespace CompleteProject
 
             // Set the initial health of the player.
             currentHealth = startingHealth;
+            damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
+			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
         }
 
 
@@ -216,5 +218,24 @@ namespace CompleteProject
             SceneManager.LoadScene (0);
         }
 		#endregion
+        void OnPhotonInstantiate(PhotonMessageInfo info) 
+        {
+            GameJamGameManager gm = GameJamGameManager.instance;
+            // e.g. store this gameobject as this player's charater in PhotonPlayer.TagObject
+            PhotonView pv = GetComponent<PhotonView>();
+            id = (int) pv.instantiationData[0];
+           // gameObject.transform.SetParent(playersParent.transform);
+            gm.players.Add(this);
+            if (id == GameJamGameManager.LocalPlayerId)
+            {           
+                gameObject.name = "Active Player";
+
+                CameraFollow.instance.target = transform;
+            }
+            else
+            {
+                gameObject.name = "Other Player";
+            }
+        }
     }
 }
