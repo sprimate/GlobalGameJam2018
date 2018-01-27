@@ -255,10 +255,10 @@ namespace CompleteProject
 
         public void Swap(int playerTarget)
         {
-            Dictionary<int, Vector3> players = new Dictionary<int, Vector3>();
+            List<Vector3> players = new List<Vector3>(2);
             foreach(Player x in FindObjectsOfType<Player>())
             {
-                players[x.id] = x.transform.position;
+                players[x.id-1] = x.transform.position;
             }
             object[] parameters = new object[1] {players};
             GetComponent<PhotonView>().RPC("SwapPositions", PhotonTargets.All, parameters);
@@ -286,9 +286,9 @@ namespace CompleteProject
         }
 
         [PunRPC]
-        public void SwapPositions(Dictionary<int, Vector3> playerPositions)
+        public void SwapPositions(List<Vector3> playerPositions)
         {
-            transform.position = playerPositions[id == 1 ? 2 : 1];
+            transform.position = playerPositions[id == 1 ? 1 : 0];
         }
 
 
