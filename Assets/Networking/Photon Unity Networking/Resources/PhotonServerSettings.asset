@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3758f8f58fdef43803eb9be1df0608, type: 3}
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
-  AppID: 6f0a4456-036e-4f83-9bf4-c0d91fc9d409
+  AppID: 0d8c23f2-741e-48a1-a488-b0abd42217c6
   VoiceAppID: 
   ChatAppID: 
   HostType: 1
@@ -46,4 +46,8 @@ MonoBehaviour:
   - Death
   - Shoot
   - Swap
+  - SetColor
+  - SwapColor
+  - SwapPositions
+  - SetPosition
   DisableAutoOpenWizard: 1
