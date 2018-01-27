@@ -195,8 +195,9 @@ namespace CompleteProject
                     //weapon.Shoot (id);
                 }
                 if (Input.GetButtonUp("Swap"))
-                {
-                    GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, null);
+                {                  
+                    object[] parameters = new object[] {id == 1 ? 2 : id};
+                    GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
                 }
             }
 #else
@@ -249,10 +250,21 @@ namespace CompleteProject
         {
             if (PhotonNetwork.player.IsMasterClient)
             {
-                Player p = GameJamGameManager.instance.players[playerTarget-1];
-                var tempTrans = p.transform;
+                GameObject p = null;
+                foreach(Player x in FindObjectsOfType<Player>())
+                {
+                    if (x.id == playerTarget)
+                    {
+                        p = x.gameObject;
+                    }
+                }
+                if (p != null)
+                {
+               // Player p = GameJamGameManager.instance.players[playerTarget-1];
+                var tempPos = p.transform.position;
                 p.transform.position = transform.position;
-                transform.position = tempTrans.position;
+                transform.position = tempPos;
+                }
             }
         }
 

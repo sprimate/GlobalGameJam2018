@@ -2991,7 +2991,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160,
     type: 2}
   players: []
-  maxNumPlayers: 1
+  maxNumPlayers: 3
 --- !u!1 &1591794898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3084,7 +3084,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114680890187567402, guid: 83e86d924f5a54230a5154f7a3f6a160,
+        type: 2}
+      propertyPath: id
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
