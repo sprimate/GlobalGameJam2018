@@ -50,4 +50,5 @@ MonoBehaviour:
   - SwapColor
   - SwapPositions
   - SetPosition
+  - SetOtherTeleportPosition
   DisableAutoOpenWizard: 1

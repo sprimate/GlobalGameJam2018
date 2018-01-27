@@ -3037,8 +3037,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160,
     type: 2}
   players: []
-  maxNumPlayers: 3
-  waitForAllPlayers: 0
+  maxNumPlayers: 2
+  waitForAllPlayers: 1
 --- !u!1 &1591794898
 GameObject:
   m_ObjectHideFlags: 0

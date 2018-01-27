@@ -554,7 +554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   id: 0
-  startingHealth: 100
+  startingHealth: 2147483647
   currentHealth: 0
   healthSlider: {fileID: 0}
   damageImage: {fileID: 0}
