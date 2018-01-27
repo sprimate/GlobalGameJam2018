@@ -219,6 +219,8 @@ namespace CompleteProject
 
         void Death ()
         {
+            Debug.Log("Death played");
+
             // Set the death flag so this function won't be called again.
             isDead = true;
 
