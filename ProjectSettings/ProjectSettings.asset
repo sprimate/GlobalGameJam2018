@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 14
-  productGUID: 00000000000000000000000000000000
+  productGUID: 6ec441631f96a4d6a8b399c41a3d4864
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   defaultScreenOrientation: 3
@@ -749,7 +749,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
   cloudProjectId: 216f2902-439c-4a89-baf5-838c4da065a4
-  projectName: New Unity Project (1)
+  projectName: GlobalGameJam2017
   organizationId: pb0o6
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
