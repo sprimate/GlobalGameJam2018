@@ -265,7 +265,25 @@ namespace CompleteProject
                 }
                 gameObject.name = "Other Player";
             }
+
+			initialColorAssignment ();
         }
+
+		public void initialColorAssignment()
+		{
+			//maybe a hack? just use the id assigned from multiplayer
+			int playerColor;
+			if (id == 1) 
+			{
+				playerColor = PlayerColor.ColorID1;
+			} 
+			else 
+			{
+				playerColor = PlayerColor.ColorID2;
+			}
+
+			playerShooting.bsetColor (playerColor);
+		}
 
         public Quaternion realRotation = Quaternion.identity;
         public Quaternion rotationAtLastPacket = Quaternion.identity;

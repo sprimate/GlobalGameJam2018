@@ -21,6 +21,7 @@ namespace CompleteProject
 		public Light faceLight;								// Duh
         float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
 
+		int playerColorId;
 
         void Awake ()
         {
@@ -48,6 +49,13 @@ namespace CompleteProject
                 // ... shoot the gun.
                 Shoot ();
             }
+
+			if(Input.GetButtonUp ("Fire2"))
+			{
+				//super crap hack for play testing
+				int nextColor = playerColorId == 1? 2: 1;
+				bsetColor(nextColor);
+			}
 #else
             // If there is input on the shoot direction stick and it's time to fire...
             if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
@@ -108,7 +116,7 @@ namespace CompleteProject
                 if(enemyHealth != null)
                 {
                     // ... the enemy should take damage.
-                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                    enemyHealth.TakeDamage (playerColorId, damagePerShot, shootHit.point);
                 }
 
                 // Set the second position of the line renderer to the point the raycast hit.
@@ -121,5 +129,18 @@ namespace CompleteProject
                 gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
             }
         }
+
+		public void bsetColor(int colorId){
+
+			playerColorId = colorId;
+
+			Color color = PlayerColor.getColorForId (colorId);
+
+			gunLine.material.color = color;
+			gunLight.color = color;
+
+			var mainGunParticles = gunParticles.main;
+			mainGunParticles.startColor = color;
+		}
     }
 }

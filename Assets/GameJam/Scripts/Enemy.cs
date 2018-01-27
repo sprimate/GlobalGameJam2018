@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
  	public float timeBetweenAttacks = 0.5f;     // The time in seconds between each attack.
-	public int attackDamage = 10;               // The amount of health taken away per attack.
+	public int attackDamage = 20;               // The amount of health taken away per attack.
 
 
 	Animator anim;                              // Reference to the animator component.
@@ -27,6 +27,11 @@ public class Enemy : MonoBehaviour {
 	CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
 	bool isDead;                                // Whether the enemy is dead.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
+
+
+	public int enemyColorId;
+
+
 
 	void Awake ()
 	{
@@ -131,12 +136,19 @@ public class Enemy : MonoBehaviour {
 			target.TakeDamage (attackDamage);
 		}
 	}
-			public void TakeDamage (int amount, Vector3 hitPoint)
+			
+	public void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
 	{
 		// If the enemy is dead...
 		if(isDead)
 			// ... no need to take damage so exit the function.
 			return;
+
+		if (playerColor != enemyColorId) 
+		{
+			//dont take damage if the shooting player isnt your type
+			return;
+		}
 
 		// Play the hurt sound effect.
 		enemyAudio.Play ();
