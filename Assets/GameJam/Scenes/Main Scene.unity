@@ -2420,7 +2420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a210693e63307044a858d1787aacd62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: {fileID: 2023876516}
 --- !u!95 &1139190137
 Animator:
   serializedVersion: 3
@@ -2978,6 +2977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160,
     type: 2}
+  players: []
   maxNumPlayers: 2
 --- !u!1 &1591794898
 GameObject:

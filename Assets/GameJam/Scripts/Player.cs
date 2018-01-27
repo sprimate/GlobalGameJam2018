@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
@@ -44,6 +45,7 @@ namespace CompleteProject
 
         void FixedUpdate ()
         {
+           // Debug.Log("Fixed");
 			if (GameJamGameManager.LocalPlayerId != id)
 			{
 				return;
@@ -150,6 +152,7 @@ namespace CompleteProject
 
         void Update ()
         {
+         //   Debug.Log("Update");
             // If the player has just been damaged...
             if(damaged)
             {
@@ -229,11 +232,14 @@ namespace CompleteProject
             if (id == GameJamGameManager.LocalPlayerId)
             {           
                 gameObject.name = "Active Player";
-
                 CameraFollow.instance.target = transform;
             }
             else
             {
+		        if (PhotonNetwork.player.IsMasterClient)
+                {
+                    pv.TransferOwnership(id);
+                }
                 gameObject.name = "Other Player";
             }
         }

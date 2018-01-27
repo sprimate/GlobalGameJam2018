@@ -28,11 +28,6 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	}
 	public void UpdatePlayers()
 	{
-		if (!PhotonNetwork.player.IsMasterClient)
-		{
-			Debug.Log("What am I than?");
-			return;
-		}
 		var ogNumPlayers = numPlayers;
 		List<int> realPlayers = new List<int>();
 		numPlayers = 0;
@@ -51,13 +46,13 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			return;
 		}
 
-		if (numPlayers > ogNumPlayers) //players added here
+		if (PhotonNetwork.player.IsMasterClient && numPlayers > ogNumPlayers) //players added here
 		{
 			if (playersParent.transform.childCount < numPlayers)
 			{
 				int id = realPlayers[realPlayers.Count-1];
 				object[] parameters = new object[] {id};
-				PhotonNetwork.InstantiateSceneObject(playerPrefab.name, Vector3.zero, Quaternion.identity, 0, parameters);				
+				PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);				
 				//Instantiate(playerPrefab);
 				
 			}
@@ -81,5 +76,11 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	void CreatePlayer()
 	{
 		Instantiate(playerPrefab);
+	}
+	public void OnOwnershipRequest(object[] viewAndPlayer)
+	{
+		PhotonView view = viewAndPlayer[0] as PhotonView;
+		PhotonPlayer requestingPlayer = viewAndPlayer[1] as PhotonPlayer;
+		Debug.Log("OnOwnershipRequest(): Player " + requestingPlayer + " requests ownership of: " + view + ".");
 	}
 }
