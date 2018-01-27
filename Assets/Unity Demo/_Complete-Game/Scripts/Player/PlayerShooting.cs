@@ -108,7 +108,9 @@ namespace CompleteProject
                 if(enemyHealth != null)
                 {
                     // ... the enemy should take damage.
-                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+
+					//not using this file in actual ggj18 project - commented in order to compile
+//                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
                 }
 
                 // Set the second position of the line renderer to the point the raycast hit.

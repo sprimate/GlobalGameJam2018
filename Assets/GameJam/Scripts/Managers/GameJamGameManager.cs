@@ -60,6 +60,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		
 		if (numPlayers == maxNumPlayers)
 		{
+			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
 		}
 		else
