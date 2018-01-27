@@ -224,10 +224,18 @@ namespace CompleteProject
         {
             if (!GetComponent<PhotonView>().isMine)
             {
-                timeToReachGoal = currentPacketTime - lastPacketTime;
-                currentTime += Time.deltaTime;
-                transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
-                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime/timeToReachGoal));
+                Debug.Log("Teleporting: " + teleportPosition.HasValue);
+                if (teleportPosition.HasValue)
+                {
+                    transform.position = teleportPosition.Value;
+                }
+                else
+                {
+                    timeToReachGoal = currentPacketTime - lastPacketTime;
+                    currentTime += Time.deltaTime;
+                    transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                    transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime/timeToReachGoal));
+                }
             }
         }
 
@@ -270,8 +278,7 @@ namespace CompleteProject
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             parameters[0] = tempPos;
             otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            otherPlayer.positionAtLastPacket = realPosition = tempPos;            
-            timeToReachGoal = Time.time;
+            otherPlayer.teleportPosition = tempPos;
 
             /*if (PhotonNetwork.player.IsMasterClient)
             {
@@ -391,6 +398,7 @@ namespace CompleteProject
         public double currentPacketTime = 0.0;
         public double lastPacketTime = 0.0;
         public double timeToReachGoal = 0.0;
+        public Vector3? teleportPosition;
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {              
             if (stream.isWriting)
@@ -400,6 +408,10 @@ namespace CompleteProject
             }
             else
             {
+                if (teleportPosition.HasValue)
+                {
+                    teleportPosition = null;
+                }
                 currentTime = 0.0;
                 positionAtLastPacket = transform.position;
                 rotationAtLastPacket = transform.rotation;
