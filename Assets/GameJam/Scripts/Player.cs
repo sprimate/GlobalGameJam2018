@@ -263,11 +263,13 @@ namespace CompleteProject
                 if (x != this)
                 {
                     otherPlayer = x;
-                    break;
                 }
             }           
-            object[] parameters = new object[2] {transform.position, otherPlayer.transform.position};
-            GetComponent<PhotonView>().RPC("SwapPositions", PhotonTargets.All, parameters);
+            Vector3 tempPos = transform.position;
+            object[] parameters = new object[1] {otherPlayer.transform.position};
+            GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            parameters[0] = tempPos;
+            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             /*if (PhotonNetwork.player.IsMasterClient)
             {
                 GameObject p = null;
@@ -291,18 +293,15 @@ namespace CompleteProject
             }*/
         }
 
+
         [PunRPC]
-        public void SwapPositions(Vector3 player1Pos, Vector3 player2Pos)
-        {
-            Debug.Log("Trying to swap");
-            transform.position = id == 1 ? player2Pos : player1Pos;
-        }
-
-
-
         public void SetPosition(Vector3 pos)
         {
-            transform.position = pos;
+            if (id == GameJamGameManager.LocalPlayerId)
+            { 
+                Debug.Log("Transporting " + transform + " to " + pos, transform);
+                transform.position = pos;
+            }
         }
 
 
