@@ -45,4 +45,5 @@ MonoBehaviour:
   - Destroy
   - Death
   - Shoot
+  - Swap
   DisableAutoOpenWizard: 1

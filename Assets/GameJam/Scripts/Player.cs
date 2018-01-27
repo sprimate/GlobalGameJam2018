@@ -186,12 +186,19 @@ namespace CompleteProject
 
 #if !MOBILE_INPUT
             // If the Fire1 button is being press and it's time to fire...
-			if(GameJamGameManager.LocalPlayerId == id && Input.GetButton ("Fire1") && Time.timeScale != 0)
+			if(GameJamGameManager.LocalPlayerId == id)
             {
-                // ... shoot the gun.
-                object[] parameters = new object[] {id};
-                weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
-                //weapon.Shoot (id);
+                if (Input.GetButton ("Fire1") && Time.timeScale != 0)
+                {
+                    // ... shoot the gun.
+                    object[] parameters = new object[] {id};
+                    weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
+                    //weapon.Shoot (id);
+                }
+                if (Input.GetButtonUp("Swap"))
+                {
+                    GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, null);
+                }
             }
 
 			if(GameJamGameManager.LocalPlayerId == id && Input.GetButtonUp ("Fire2"))
@@ -243,6 +250,18 @@ namespace CompleteProject
             }
         }
 
+        [PunRPC]
+        public void Swap(int playerTarget)
+        {
+            if (PhotonNetwork.player.IsMasterClient)
+            {
+                Player p = GameJamGameManager.instance.players[playerTarget-1];
+                var tempTrans = p.transform;
+                p.transform.position = transform.position;
+                transform.position = tempTrans.position;
+            }
+        }
+
 
         void Death ()
         {
@@ -281,6 +300,7 @@ namespace CompleteProject
             // e.g. store this gameobject as this player's charater in PhotonPlayer.TagObject
             PhotonView pv = GetComponent<PhotonView>();
             id = (int) pv.instantiationData[0];
+            Debug.Log("ID: " + id);
            // gameObject.transform.SetParent(playersParent.transform);
             gm.players.Add(this);
             if (id == GameJamGameManager.LocalPlayerId)

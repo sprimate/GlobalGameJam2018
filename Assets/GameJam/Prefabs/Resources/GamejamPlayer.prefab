@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4251656747380580}
   - component: {fileID: 137296045349444562}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 108212030563795838}
   - component: {fileID: 114920450668804916}
   - component: {fileID: 114724032736077160}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GunBarrelEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 114680890187567402}
   - component: {fileID: 114163845839646794}
   - component: {fileID: 114434568053515614}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GamejamPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4829407663970074}
   - component: {fileID: 137940186040770498}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4436699860060110}
   - component: {fileID: 108267993583747078}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: FaceLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 5
@@ -431,7 +431,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 0.5

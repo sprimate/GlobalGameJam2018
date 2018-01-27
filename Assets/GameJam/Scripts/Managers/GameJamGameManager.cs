@@ -10,7 +10,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public static int LocalPlayerId {get {
 		return PhotonNetwork.player.ID;
 	}}
-
+	public string playerLayerName;
 	public GameObject playerPrefab;
 	GameObject playersParent;
 	public List<Player> players = new List<Player>();
@@ -21,7 +21,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	void Awake()
 	{
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
-		PauseManager.instance.Pause();
+		//PauseManager.instance.Pause();
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
 		playersParent = new GameObject("Players");
