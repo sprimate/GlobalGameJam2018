@@ -43,4 +43,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - TaggedPlayer
   - Destroy
+  - Death
   DisableAutoOpenWizard: 1

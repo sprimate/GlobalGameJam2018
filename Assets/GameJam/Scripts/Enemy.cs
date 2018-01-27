@@ -154,11 +154,11 @@ public class Enemy : MonoBehaviour {
 		if(currentHealth <= 0)
 		{
 			// ... the enemy is dead.
-			Death ();
+			GetComponent<PhotonView>().RPC("Death", PhotonTargets.All);
 		}
 	}
 
-
+	[PunRPC]
 	void Death ()
 	{
 		// The enemy is dead.
