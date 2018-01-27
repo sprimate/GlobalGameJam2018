@@ -3599,37 +3599,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 114645640485882318, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
-      propertyPath: healthSlider
-      value: 
-      objectReference: {fileID: 1837071937}
-    - target: {fileID: 114645640485882318, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
-      propertyPath: damageImage
-      value: 
-      objectReference: {fileID: 1394906873}
-    - target: {fileID: 0}
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: instantiationId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: viewIdField
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: instantiationId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: instantiationId
       value: 1
@@ -3637,22 +3612,12 @@ Prefab:
     - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: viewIdField
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 82787731141453368, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
-      propertyPath: panLevelCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 82787731141453368, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
-      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 108212030563795838, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294967039
+      propertyPath: instantiationId
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
@@ -4235,7 +4200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1894709536}
   - component: {fileID: 1894709533}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
