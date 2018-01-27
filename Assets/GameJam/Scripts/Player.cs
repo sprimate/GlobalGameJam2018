@@ -417,6 +417,7 @@ namespace CompleteProject
         public double lastPacketTime = 0.0;
         public double timeToReachGoal = 0.0;
         public Vector3? teleportPosition;
+        bool shouldReset = false;
         void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {              
             if (stream.isWriting)
@@ -428,7 +429,11 @@ namespace CompleteProject
             {
                 if (teleportPosition.HasValue)
                 {
-                    teleportPosition = null;
+                    if (shouldReset) 
+                    {
+                        teleportPosition = null;
+                    }  
+                    shouldReset = !shouldReset; 
                 }
                 currentTime = 0.0;
                 positionAtLastPacket = transform.position;
