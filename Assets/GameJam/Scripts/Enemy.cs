@@ -95,9 +95,8 @@ public class Enemy : MonoBehaviour {
 			// ... tell the animator the player is dead.
 			anim.SetTrigger ("PlayerDead");
 		}
-
-
-					// If the enemy and the player have health left...
+		
+		// If the enemy and the player have health left...
 		if(currentHealth > 0 && target.currentHealth > 0)
 		{
 			// ... set the destination of the nav mesh agent to the player.

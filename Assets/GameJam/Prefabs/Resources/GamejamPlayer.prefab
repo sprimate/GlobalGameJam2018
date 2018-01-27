@@ -39,8 +39,9 @@ GameObject:
   - component: {fileID: 198909242466789786}
   - component: {fileID: 82787731141453368}
   - component: {fileID: 120077205635214612}
-  - component: {fileID: 114709054319181818}
   - component: {fileID: 108212030563795838}
+  - component: {fileID: 114920450668804916}
+  - component: {fileID: 114724032736077160}
   m_Layer: 0
   m_Name: GunBarrelEnd
   m_TagString: Untagged
@@ -324,7 +325,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -336,7 +337,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -348,7 +349,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &95715785074355904
 Animator:
   serializedVersion: 3
@@ -568,7 +569,7 @@ MonoBehaviour:
   currentPacketTime: 0
   lastPacketTime: 0
   timeToReachGoal: 0
---- !u!114 &114709054319181818
+--- !u!114 &114724032736077160
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -576,13 +577,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 1188832091729954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c83720df9acb89488dbf2c0dbd3ad78, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114920450668804916}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &114920450668804916
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188832091729954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38f2da2297b2f43578f3ae77c3f676d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faceLight: {fileID: 108267993583747078}
+  effectsDisplayTime: 0.2
+  range: 100
   damagePerShot: 20
   timeBetweenBullets: 0.12
-  range: 100
-  faceLight: {fileID: 108267993583747078}
 --- !u!120 &120077205635214612
 LineRenderer:
   m_ObjectHideFlags: 1

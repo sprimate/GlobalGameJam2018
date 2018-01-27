@@ -20,7 +20,7 @@ namespace CompleteProject
         int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
-
+    
         void Awake ()
         {
 #if !MOBILE_INPUT
@@ -35,7 +35,7 @@ namespace CompleteProject
 			 // Setting up the references.
             playerAudio = GetComponent <AudioSource> ();
             playerMovement = GetComponent <Player> ();
-            playerShooting = GetComponentInChildren <PlayerShooting> ();
+            weapon = GetComponentInChildren <Weapon> ();
 
             // Set the initial health of the player.
             currentHealth = startingHealth;
@@ -147,7 +147,7 @@ namespace CompleteProject
                                           // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
         Player playerMovement;                              // Reference to the player's movement.
-        PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
+        Weapon weapon;                              // Reference to the PlayerShooting script.
         bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
 
@@ -179,6 +179,28 @@ namespace CompleteProject
             {
                 
             }
+
+            #region PlayerShooting
+             // Add the time since Update was last called to the timer.
+
+#if !MOBILE_INPUT
+            // If the Fire1 button is being press and it's time to fire...
+			if(GameJamGameManager.LocalPlayerId == id && Input.GetButton ("Fire1") && Time.timeScale != 0)
+            {
+                // ... shoot the gun.
+                object[] parameters = new object[] {id};
+                weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
+                //weapon.Shoot (id);
+            }
+#else
+            // If there is input on the shoot direction stick and it's time to fire...
+            if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
+            {
+                // ... shoot the gun
+                weapon.Shoot(id);
+            }
+#endif
+            #endregion
         
         }
 
@@ -225,7 +247,7 @@ namespace CompleteProject
             isDead = true;
 
             // Turn off any remaining shooting effects.
-            playerShooting.DisableEffects ();
+            weapon.DisableEffects ();
 
             // Tell the animator that the player is dead.
             anim.SetTrigger ("Die");
@@ -236,7 +258,7 @@ namespace CompleteProject
 
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
-            playerShooting.enabled = false;
+            weapon.enabled = false;
         }
 
 
@@ -246,6 +268,8 @@ namespace CompleteProject
             SceneManager.LoadScene (0);
         }
 		#endregion
+
+        #region PhotonStuff
         void OnPhotonInstantiate(PhotonMessageInfo info) 
         {
             GameJamGameManager gm = GameJamGameManager.instance;
@@ -299,5 +323,7 @@ namespace CompleteProject
                 currentPacketTime = info.timestamp;
             }
         }
+        #endregion
+
     }
 }
