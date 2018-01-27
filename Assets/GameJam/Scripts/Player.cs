@@ -288,6 +288,10 @@ namespace CompleteProject
                 positionAtLastPacket = transform.position;
                 rotationAtLastPacket = transform.rotation;
                 realPosition = (Vector3) stream.ReceiveNext();
+                if (float.IsNaN(realPosition.x)) //if not a number, ignore this update
+                {
+                    realPosition = positionAtLastPacket;
+                }
                 realRotation = (Quaternion) stream.ReceiveNext();             
                 lastPacketTime = currentPacketTime;
                 currentPacketTime = info.timestamp;

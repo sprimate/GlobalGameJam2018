@@ -194,9 +194,27 @@ public class Enemy : MonoBehaviour {
 		StartCoroutine(DestroyAfterSeconds(2));
 	}
 
+	[PunRPC]
+	void Destroy()
+	{		
+		PhotonView pv = GetComponent<PhotonView>();
+		if (pv.isMine)
+		{
+			Debug.Log("Destroingn from RPC");
+			PhotonNetwork.Destroy (gameObject);
+		}
+	}
+
 	IEnumerator DestroyAfterSeconds(float time)
 	{
 		yield return new WaitForSeconds(time);
-		PhotonNetwork.Destroy (gameObject);
+		PhotonView pv = GetComponent<PhotonView>();
+		if (pv.isMine)
+		{
+			PhotonNetwork.Destroy (gameObject);
+		}
+		else{
+			pv.RPC("Destroy", PhotonTargets.All);
+		}
 	}
 }
