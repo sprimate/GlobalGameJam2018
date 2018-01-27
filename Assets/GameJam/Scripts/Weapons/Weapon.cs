@@ -19,6 +19,11 @@ public class Weapon : Photon.MonoBehaviour {
 	int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
 	 public int damagePerShot = 20;                  // The damage inflicted by each bullet.
 	public float timeBetweenBullets = 0.15f;        // The time between each shot.
+
+	int playerColorId;
+
+
+
 	// Use this for initialization
 	void Awake()
 	{
@@ -89,7 +94,7 @@ public class Weapon : Photon.MonoBehaviour {
 				if(enemy != null)
 				{
 					// ... the enemy should take damage.
-					enemy.TakeDamage (damagePerShot, shootHit.point);
+					enemy.TakeDamage (playerColorId, damagePerShot, shootHit.point);
 				}
 			}
 			else
@@ -120,4 +125,26 @@ public class Weapon : Photon.MonoBehaviour {
 	{      
 
     }
+
+	[PunRPC]
+	public void SetColor(int colorId){
+
+		playerColorId = colorId;
+
+		Color color = PlayerColor.getColorForId (colorId);
+
+		gunLine.material.color = color;
+		gunLight.color = color;
+
+		var mainGunParticles = gunParticles.main;
+		mainGunParticles.startColor = color;
+	}
+
+	[PunRPC]
+	public void SwapColor(){
+		//super crap hack for play testing
+		int nextColor = playerColorId == 1? 2: 1;
+		object[] parameters = new object[] {nextColor};
+		GetComponent<PhotonView>().RPC("SetColor", PhotonTargets.All, parameters );
+	}
 }

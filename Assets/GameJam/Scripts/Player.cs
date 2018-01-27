@@ -20,6 +20,7 @@ namespace CompleteProject
         int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
+
     
         void Awake ()
         {
@@ -200,6 +201,11 @@ namespace CompleteProject
                     GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
                 }
             }
+
+			if(GameJamGameManager.LocalPlayerId == id && Input.GetButtonUp ("Fire2"))
+			{
+				weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
+			}
 #else
             // If there is input on the shoot direction stick and it's time to fire...
             if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
@@ -322,7 +328,26 @@ namespace CompleteProject
                 }
                 gameObject.name = "Other Player";
             }
+
+			initialColorAssignment ();
         }
+
+		public void initialColorAssignment()
+		{
+			//maybe a hack? just use the id assigned from multiplayer
+			int playerColor;
+			if (id == 1) 
+			{
+				playerColor = PlayerColor.ColorID1;
+			} 
+			else 
+			{
+				playerColor = PlayerColor.ColorID2;
+			}
+
+			object[] parameters = new object[] {playerColor};
+			weapon.GetComponent<PhotonView>().RPC("SetColor", PhotonTargets.All, parameters );
+		}
 
         public Quaternion realRotation = Quaternion.identity;
         public Quaternion rotationAtLastPacket = Quaternion.identity;

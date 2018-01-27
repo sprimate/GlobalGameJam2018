@@ -28,6 +28,9 @@ public class Enemy : MonoBehaviour {
 	bool isDead;                                // Whether the enemy is dead.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
 
+	public int enemyColorId;
+
+
 	void Awake ()
 	{
 		// Setting up the references.
@@ -130,12 +133,18 @@ public class Enemy : MonoBehaviour {
 			target.TakeDamage (attackDamage);
 		}
 	}
-			public void TakeDamage (int amount, Vector3 hitPoint)
+			
+	public void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
 	{
 		// If the enemy is dead...
 		if(isDead)
 			// ... no need to take damage so exit the function.
 			return;
+
+		if (playerColor != enemyColorId) {
+			//dont take damage if the shooting player isnt your type
+			return;
+		}
 
 		// Play the hurt sound effect.
 		enemyAudio.Play ();
