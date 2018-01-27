@@ -10,7 +10,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public static int LocalPlayerId {get {
 		return PhotonNetwork.player.ID;
 	}}
-
+	public string playerLayerName;
 	public GameObject playerPrefab;
 	GameObject playersParent;
 	public List<Player> players = new List<Player>();

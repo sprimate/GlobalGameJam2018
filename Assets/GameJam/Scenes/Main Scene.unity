@@ -2987,10 +2987,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04ded5bd3df2462b88fedc9ca9f5ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLayerName: 
   playerPrefab: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160,
     type: 2}
   players: []
-  maxNumPlayers: 2
+  maxNumPlayers: 1
 --- !u!1 &1591794898
 GameObject:
   m_ObjectHideFlags: 0
@@ -3083,7 +3084,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
