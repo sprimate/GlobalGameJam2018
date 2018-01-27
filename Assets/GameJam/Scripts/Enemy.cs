@@ -191,6 +191,12 @@ public class Enemy : MonoBehaviour {
 		ScoreManager.score += scoreValue;
 
 		// After 2 seconds destory the enemy.
-		Destroy (gameObject, 2f);
+		StartCoroutine(DestroyAfterSeconds(2));
+	}
+
+	IEnumerator DestroyAfterSeconds(float time)
+	{
+		yield return new WaitForSeconds(time);
+		PhotonNetwork.Destroy (gameObject);
 	}
 }

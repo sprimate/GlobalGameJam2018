@@ -26,11 +26,14 @@ namespace CompleteProject
                 return;
             }*/
 
+            if (PhotonNetwork.player.IsMasterClient)
+            {
             // Find a random index between zero and one less than the number of spawn points.
             int spawnPointIndex = Random.Range (0, spawnPoints.Length);
-
+            PhotonNetwork.InstantiateSceneObject(enemy.name, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation, 0, null);				
+            }
             // Create an instance of the enemy prefab at the randomly selected spawn point's position and rotation.
-            Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            //Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
         }
     }
 }

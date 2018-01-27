@@ -3059,19 +3059,35 @@ Prefab:
       propertyPath: damageImage
       value: 
       objectReference: {fileID: 1394906873}
-    - target: {fileID: 114731399830636250, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114731399830636250, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+        type: 2}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+        type: 2}
+      propertyPath: viewIdField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
