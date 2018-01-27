@@ -202,12 +202,13 @@ namespace CompleteProject
                     Swap(id == 1 ? 2 : 1);
                     //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
                 }
-            }
 
-			if(GameJamGameManager.LocalPlayerId == id && Input.GetButtonUp ("Fire2"))
-			{
-				weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
-			}
+//				if(Input.GetButtonUp ("Fire2"))
+//				{
+//					weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
+//				}
+            }
+				
 #else
             // If there is input on the shoot direction stick and it's time to fire...
             if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
