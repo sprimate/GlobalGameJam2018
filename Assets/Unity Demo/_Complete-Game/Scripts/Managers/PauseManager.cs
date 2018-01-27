@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 using UnityEditor;
 #endif
 
-public class PauseManager : MonoBehaviour {
+public class PauseManager : MonoSingleton<PauseManager> {
 	
 	public AudioMixerSnapshot paused;
 	public AudioMixerSnapshot unpaused;
@@ -23,15 +23,24 @@ public class PauseManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			canvas.enabled = !canvas.enabled;
-			Pause();
+			TogglePause();
 		}
 	}
 	
 	public void Pause()
 	{
+		Time.timeScale = 0f;
+	}
+
+	public void Unpause()
+	{
+		Time.timeScale = 1f;
+	}
+
+	public void TogglePause()
+	{
 		Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 		Lowpass ();
-		
 	}
 	
 	void Lowpass()

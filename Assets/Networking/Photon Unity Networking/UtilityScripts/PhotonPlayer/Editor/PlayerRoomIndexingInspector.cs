@@ -24,19 +24,19 @@ namespace ExitGames.UtilityScripts
 
 		void OnEnable () {
 			_target = (PlayerRoomIndexing)target;
-			_target.OnRoomIndexingChanged += RefreshData;
+			_target.OnRoomIndexingChanged.AddListener(RefreshData);
 		}
 
 		void OnDisable () {
 			_target = (PlayerRoomIndexing)target;
-			_target.OnRoomIndexingChanged -= RefreshData;
+			_target.OnRoomIndexingChanged.RemoveListener(RefreshData);
 		}
 
 		public override void OnInspectorGUI()
 		{
 			_target = (PlayerRoomIndexing)target;
 
-			_target.OnRoomIndexingChanged += RefreshData;
+			_target.OnRoomIndexingChanged.AddListener(RefreshData);
 
 			if (PhotonNetwork.inRoom)
 			{

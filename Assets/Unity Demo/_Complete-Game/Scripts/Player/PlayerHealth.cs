@@ -7,6 +7,7 @@ namespace CompleteProject
 {
     public class PlayerHealth : MonoBehaviour
     {
+        /*
         public int startingHealth = 100;                            // The amount of health the player starts the game with.
         public int currentHealth;                                   // The current health the player has.
         public Slider healthSlider;                                 // Reference to the UI's health bar.
@@ -18,7 +19,7 @@ namespace CompleteProject
 
         Animator anim;                                              // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
-        PlayerMovement playerMovement;                              // Reference to the player's movement.
+        Player playerMovement;                              // Reference to the player's movement.
         PlayerShooting playerShooting;                              // Reference to the PlayerShooting script.
         bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
@@ -29,7 +30,7 @@ namespace CompleteProject
             // Setting up the references.
             anim = GetComponent <Animator> ();
             playerAudio = GetComponent <AudioSource> ();
-            playerMovement = GetComponent <PlayerMovement> ();
+            playerMovement = GetComponent <Player> ();
             playerShooting = GetComponentInChildren <PlayerShooting> ();
 
             // Set the initial health of the player.
@@ -105,6 +106,6 @@ namespace CompleteProject
         {
             // Reload the level that is currently loaded.
             SceneManager.LoadScene (0);
-        }
+        }*/
     }
 }

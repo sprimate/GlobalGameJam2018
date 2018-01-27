@@ -64,7 +64,7 @@ public class ColorPerPlayer : PunBehaviour
 	{
 		if (!isInitialized && PlayerRoomIndexing.instance!=null)
 		{
-			PlayerRoomIndexing.instance.OnRoomIndexingChanged += Refresh;
+			PlayerRoomIndexing.instance.OnRoomIndexingChanged.AddListener(Refresh);
 			isInitialized = true;
 		}
 	}
@@ -72,7 +72,7 @@ public class ColorPerPlayer : PunBehaviour
 
 	void OnDisable()
 	{
-		PlayerRoomIndexing.instance.OnRoomIndexingChanged -= Refresh;
+		PlayerRoomIndexing.instance.OnRoomIndexingChanged.RemoveListener(Refresh);
 	}
 
 	void Refresh()

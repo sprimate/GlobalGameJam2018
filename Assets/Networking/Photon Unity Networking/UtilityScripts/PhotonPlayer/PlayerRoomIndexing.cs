@@ -16,8 +16,7 @@ using System.Linq;
 using Photon;
 using ExitGames.Client.Photon;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-
-
+using UnityEngine.Events;
 
 namespace ExitGames.UtilityScripts
 {
@@ -42,11 +41,10 @@ namespace ExitGames.UtilityScripts
 		/// <summary>
 		/// OnRoomIndexingChanged delegate. Use
 		/// </summary>
-		public delegate void RoomIndexingChanged();
+		public UnityEvent OnRoomIndexingChanged;
 		/// <summary>
 		/// Called everytime the room Indexing was updated. Use this for discrete updates. Always better than brute force calls every frame.
 		/// </summary>
-		public RoomIndexingChanged OnRoomIndexingChanged;
 
 		/// <summary>Defines the room custom property name to use for room player indexing tracking.</summary>
 		public const string RoomPlayerIndexedProp = "PlayerIndexes";
@@ -103,7 +101,9 @@ namespace ExitGames.UtilityScripts
 			if (PhotonNetwork.isMasterClient)
 			{
 				AssignIndex(PhotonNetwork.player);
-			}else{
+			}
+			else
+			{
 				RefreshData();
 			}
 		}
@@ -223,7 +223,7 @@ namespace ExitGames.UtilityScripts
 			}
 
 
-			if (OnRoomIndexingChanged!=null) OnRoomIndexingChanged();
+			if (OnRoomIndexingChanged!=null) OnRoomIndexingChanged.Invoke();
 		}
 
 
@@ -244,7 +244,6 @@ namespace ExitGames.UtilityScripts
 			}
 
 			_indexesLUT[player.ID] = Mathf.Max (0,_indexesPool.IndexOf(false));
-
 			PhotonNetwork.room.SetCustomProperties(new Hashtable() {{PlayerRoomIndexing.RoomPlayerIndexedProp, _indexesLUT}});
 
 			RefreshData();

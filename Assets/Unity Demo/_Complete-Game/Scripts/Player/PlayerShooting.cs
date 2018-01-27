@@ -102,7 +102,7 @@ namespace CompleteProject
             if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
             {
                 // Try and find an EnemyHealth script on the gameobject hit.
-                EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
+                Enemy enemyHealth = shootHit.collider.GetComponent <Enemy> ();
 
                 // If the EnemyHealth component exist...
                 if(enemyHealth != null)

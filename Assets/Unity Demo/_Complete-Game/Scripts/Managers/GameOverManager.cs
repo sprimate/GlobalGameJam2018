@@ -2,10 +2,8 @@
 
 namespace CompleteProject
 {
-    public class GameOverManager : MonoBehaviour
+    public class GameOverManager : MonoSingleton<GameOverManager>
     {
-        public PlayerHealth playerHealth;       // Reference to the player's health.
-
 
         Animator anim;                          // Reference to the animator component.
 
@@ -20,7 +18,15 @@ namespace CompleteProject
         void Update ()
         {
             // If the player has run out of health...
-            if(playerHealth.currentHealth <= 0)
+            bool gameOver = false;
+            foreach(var player in GameJamGameManager.instance.players)
+            {
+                if (player.currentHealth > 0)
+                {
+                    break;
+                }
+            }
+            if(gameOver)
             {
                 // ... tell the animator the game is over.
                 anim.SetTrigger ("GameOver");

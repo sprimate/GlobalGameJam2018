@@ -35,7 +35,7 @@ public class ColorPerPlayerApply : PunBehaviour
 	{
 		if (!isInitialized && PlayerRoomIndexing.instance!=null)
 		{
-			PlayerRoomIndexing.instance.OnRoomIndexingChanged += ApplyColor;
+			PlayerRoomIndexing.instance.OnRoomIndexingChanged.AddListener(ApplyColor);
 			isInitialized = true;
 		}
 	}
@@ -46,7 +46,7 @@ public class ColorPerPlayerApply : PunBehaviour
 		isInitialized = false;
 		if (PlayerRoomIndexing.instance!=null)
 		{
-			PlayerRoomIndexing.instance.OnRoomIndexingChanged -= ApplyColor;
+			PlayerRoomIndexing.instance.OnRoomIndexingChanged.RemoveListener(ApplyColor);
 		}
 	}
 
