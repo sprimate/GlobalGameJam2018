@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour {
 		if(timer >= timeBetweenAttacks && playersInRange.Count > 0 && currentHealth > 0)
 		{
 			// ... attack.
-			//Attack ();
+			Attack ();
 		}
 
 		// If the player has zero or less health...
