@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CompleteProject;
 using ExitGames.UtilityScripts;
@@ -26,9 +27,13 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		{
 			PauseManager.instance.Pause();
 		}
+		try{
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
 		playersParent = new GameObject("Players");
+	}
+	catch(Exception)
+	{}
 	}
 	public void UpdatePlayers()
 	{

@@ -10,9 +10,7 @@ public class Enemy : MonoBehaviour {
 
 	Animator anim;                              // Reference to the animator component.
 	Player target;                  // Reference to the player's health.
-	bool playerInRange;                         // Whether player is within the trigger collider and can be attacked.
 	float timer;                                // Timer for counting up to the next attack.
-
 	UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
 	
 	public int startingHealth = 100;            // The amount of health the enemy starts the game with.
@@ -29,6 +27,7 @@ public class Enemy : MonoBehaviour {
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
 
 	public int enemyColorId;
+	IList<Player> playersInRange = new List<Player>();
 
 
 	void Awake ()
@@ -49,22 +48,26 @@ public class Enemy : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other)
 	{
+		//Destroy(other.gameObject);
+
+	//	Debug.Log("Umm: " + target, other.gameObject);
 		// If the entering collider is the player...
-		if(other.gameObject == target)
+		var player = other.gameObject.GetComponent<Player>();
+		if(player != null)
 		{
 			// ... the player is in range.
-			playerInRange = true;
+			playersInRange.Add(player);
 		}
 	}
 
 
 	void OnTriggerExit (Collider other)
 	{
-		// If the exiting collider is the player...
-		if(other.gameObject == target)
+		var player = other.gameObject.GetComponent<Player>();
+		if(player != null)
 		{
 			// ... the player is no longer in range.
-			playerInRange = false;
+			playersInRange.Remove(player);
 		}
 	}
 
@@ -86,7 +89,7 @@ public class Enemy : MonoBehaviour {
 		timer += Time.deltaTime;
 
 		// If the timer exceeds the time between attacks, the player is in range and this enemy is alive...
-		if(timer >= timeBetweenAttacks && playerInRange && currentHealth > 0)
+		if(timer >= timeBetweenAttacks && playersInRange.Count > 0 && currentHealth > 0)
 		{
 			// ... attack.
 			Attack ();
@@ -126,12 +129,15 @@ public class Enemy : MonoBehaviour {
 		// Reset the timer.
 		timer = 0f;
 
-		// If the player has health to lose...
-		if(target.currentHealth > 0)
+		foreach(var p in playersInRange)
 		{
-			// ... damage the player.
-			target.TakeDamage (attackDamage);
+			if(p.currentHealth > 0)
+			{
+				// ... damage the player.
+				p.TakeDamage (attackDamage);
+			}
 		}
+		// If the player has health to lose...
 	}
 			
 	public void TakeDamage (int playerColor, int amount, Vector3 hitPoint)

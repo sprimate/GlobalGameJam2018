@@ -5,7 +5,7 @@ namespace CompleteProject
 {
     public class EnemyAttack : MonoBehaviour
     {
-        /* 
+        
         public float timeBetweenAttacks = 0.5f;     // The time in seconds between each attack.
         public int attackDamage = 10;               // The amount of health taken away per attack.
 
@@ -28,6 +28,7 @@ namespace CompleteProject
 
         void OnTriggerEnter (Collider other)
         {
+           // Debug.Log("ummm");
             // If the entering collider is the player...
             if(other.gameObject == target)
             {
@@ -91,6 +92,6 @@ namespace CompleteProject
                 // ... damage the player.
                 target.TakeDamage (attackDamage);
             }
-        }*/
+        }
     }
 }
