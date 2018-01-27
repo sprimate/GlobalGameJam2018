@@ -215,7 +215,6 @@ namespace CompleteProject
             }
         }
 
-
         public void TakeDamage (int amount)
         {
             // Set the damaged flag so the screen will flash.

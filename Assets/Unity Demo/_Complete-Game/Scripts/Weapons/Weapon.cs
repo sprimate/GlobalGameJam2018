@@ -4,8 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof (PhotonView))]
 public class Weapon : MonoBehaviour {
-
-
 	ParticleSystem gunParticles;                    // Reference to the particle system.
 	LineRenderer gunLine;                           // Reference to the line renderer.
 	AudioSource gunAudio;                           // Reference to the audio source.

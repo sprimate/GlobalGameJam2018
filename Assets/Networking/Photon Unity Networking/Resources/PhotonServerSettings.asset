@@ -44,4 +44,5 @@ MonoBehaviour:
   - TaggedPlayer
   - Destroy
   - Death
+  - Shoot
   DisableAutoOpenWizard: 1
