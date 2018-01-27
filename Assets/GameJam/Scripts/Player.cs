@@ -197,7 +197,7 @@ namespace CompleteProject
                 }
                 if (Input.GetButtonUp("Swap"))
                 {                  
-                    object[] parameters = new object[] {id == 1 ? 2 : id};
+                    object[] parameters = new object[] {id == 1 ? 2 : 1};
                     GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
                 }
             }
