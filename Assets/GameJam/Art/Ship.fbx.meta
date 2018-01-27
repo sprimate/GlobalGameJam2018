@@ -105,6 +105,17 @@ ModelImporter:
     2100002: lambert6
     2100004: lambert5
     2100006: lambert1
+    2100008: OUTERVENT
+    2100010: HANDLES
+    2100012: WINGTIP
+    2100014: INNERVENT
+    2100016: VENTBLADES
+    2100018: CANNON
+    2100020: COCKPIT_bottom
+    2100022: COCKPIT_TOP
+    2100024: THRUSTER
+    2100026: No Name
+    2100028: lambert2
     2300000: pCube4
     2300002: pCube5
     2300004: pCube6
@@ -131,6 +142,7 @@ ModelImporter:
     2300046: pSphere2
     2300048: pSphere8
     2300050: pTorus1
+    2300052: //RootNode
     3300000: pCube4
     3300002: pCube5
     3300004: pCube6
@@ -157,6 +169,7 @@ ModelImporter:
     3300046: pSphere2
     3300048: pSphere8
     3300050: pTorus1
+    3300052: //RootNode
     4300000: pPlane1
     4300002: pPlane2
     4300004: pPlane3
@@ -184,7 +197,12 @@ ModelImporter:
     4300048: pCube6
     4300050: pCube7
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 37b391f10007ee643892a02818b8abc9, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
