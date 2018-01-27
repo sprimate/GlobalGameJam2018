@@ -161,6 +161,7 @@ public class Enemy : MonoBehaviour {
 	[PunRPC]
 	void Death ()
 	{
+		Debug.Log("Death");
 		// The enemy is dead.
 		isDead = true;
 
