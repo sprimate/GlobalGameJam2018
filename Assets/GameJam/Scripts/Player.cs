@@ -255,12 +255,18 @@ namespace CompleteProject
 
         public void Swap(int playerTarget)
         {
-            List<Vector3> players = new List<Vector3>(2);
-            foreach(Player x in FindObjectsOfType<Player>())
+            var allPlayers = FindObjectsOfType<Player>();
+            List<Vector3> players = new List<Vector3>();
+            Player otherPlayer = null;
+            foreach(Player x in allPlayers)//TODO - this is so shitty. Do better, priyal. 
             {
-                players[x.id-1] = x.transform.position;
-            }
-            object[] parameters = new object[1] {players};
+                if (x != this)
+                {
+                    otherPlayer = x;
+                    break;
+                }
+            }           
+            object[] parameters = new object[2] {transform.position, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SwapPositions", PhotonTargets.All, parameters);
             /*if (PhotonNetwork.player.IsMasterClient)
             {
@@ -286,9 +292,10 @@ namespace CompleteProject
         }
 
         [PunRPC]
-        public void SwapPositions(List<Vector3> playerPositions)
+        public void SwapPositions(Vector3 player1Pos, Vector3 player2Pos)
         {
-            transform.position = playerPositions[id == 1 ? 1 : 0];
+            Debug.Log("Trying to swap");
+            transform.position = id == 1 ? player2Pos : player1Pos;
         }
 
 
