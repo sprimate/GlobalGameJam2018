@@ -270,6 +270,9 @@ namespace CompleteProject
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             parameters[0] = tempPos;
             otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            otherPlayer.transform.position = tempPos;            
+            timeToReachGoal = Time.time;
+
             /*if (PhotonNetwork.player.IsMasterClient)
             {
                 GameObject p = null;
@@ -301,6 +304,7 @@ namespace CompleteProject
             { 
                 Debug.Log("Transporting " + transform + " to " + pos, transform);
                 transform.position = pos;
+
             }
         }
 
