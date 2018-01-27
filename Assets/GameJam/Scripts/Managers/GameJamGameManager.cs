@@ -52,7 +52,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			{
 				int id = realPlayers[realPlayers.Count-1];
 				object[] parameters = new object[] {id};
-				PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity, 0);				
+				PhotonNetwork.InstantiateSceneObject(playerPrefab.name, Vector3.zero, Quaternion.identity, 0, parameters);				
 				//Instantiate(playerPrefab);
 				
 			}
