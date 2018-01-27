@@ -278,7 +278,7 @@ namespace CompleteProject
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             parameters[0] = tempPos;
             otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            otherPlayer.teleportPosition = tempPos;
+            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
 
             /*if (PhotonNetwork.player.IsMasterClient)
             {
@@ -311,8 +311,26 @@ namespace CompleteProject
             { 
                 Debug.Log("Transporting " + transform + " to " + pos, transform);
                 transform.position = pos;
-
             }
+            else
+            {
+                Debug.Log("Setting TeleportPosition to " + pos, transform);
+                teleportPosition = pos;
+            }
+        }
+
+        [PunRPC]
+        public void SetOtherTeleportPosition(Vector3 pos)
+        {
+            Player otherPlayer = null;
+            foreach(Player x in FindObjectsOfType<Player>())//TODO - this is so shitty. Do better, priyal. 
+            {
+                if (x != this)
+                {
+                    otherPlayer = x;
+                }
+            }
+            otherPlayer.teleportPosition = pos;       
         }
 
 
