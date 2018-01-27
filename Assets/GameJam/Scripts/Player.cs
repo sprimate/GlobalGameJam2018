@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -197,8 +198,9 @@ namespace CompleteProject
                 }
                 if (Input.GetButtonUp("Swap"))
                 {                  
-                    object[] parameters = new object[] {id == 1 ? 2 : 1};
-                    GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
+                  //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
+                    Swap(id == 1 ? 2 : 1);
+                    //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
                 }
             }
 
@@ -251,10 +253,16 @@ namespace CompleteProject
             }
         }
 
-        [PunRPC]
         public void Swap(int playerTarget)
         {
-            if (PhotonNetwork.player.IsMasterClient)
+            Dictionary<int, Vector3> players = new Dictionary<int, Vector3>();
+            foreach(Player x in FindObjectsOfType<Player>())
+            {
+                players[x.id] = x.transform.position;
+            }
+            object[] parameters = new object[1] {players};
+            GetComponent<PhotonView>().RPC("SwapPositions", PhotonTargets.All, parameters);
+            /*if (PhotonNetwork.player.IsMasterClient)
             {
                 GameObject p = null;
                 foreach(Player x in FindObjectsOfType<Player>())
@@ -266,12 +274,28 @@ namespace CompleteProject
                 }
                 if (p != null)
                 {
-               // Player p = GameJamGameManager.instance.players[playerTarget-1];
-                var tempPos = p.transform.position;
-                p.transform.position = transform.position;
-                transform.position = tempPos;
+                // Player p = GameJamGameManager.instance.players[playerTarget-1];
+                    Debug.Log("Before position: " + transform.position);
+                    var tempPos = p.transform.position;
+
+                    p.transform.position = transform.position;
+                    transform.position = tempPos;
+                    Debug.Log("After position: " + transform.position);
                 }
-            }
+            }*/
+        }
+
+        [PunRPC]
+        public void SwapPositions(Dictionary<int, Vector3> playerPositions)
+        {
+            transform.position = playerPositions[id == 1 ? 2 : 1];
+        }
+
+
+
+        public void SetPosition(Vector3 pos)
+        {
+            transform.position = pos;
         }
 
 

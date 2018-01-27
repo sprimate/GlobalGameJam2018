@@ -16,12 +16,16 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public List<Player> players = new List<Player>();
 	public int maxNumPlayers = 2;
 	int numPlayers = 0;
+	public bool waitForAllPlayers = false;
 	PlayerRoomIndexing indexer;
 	
 	void Awake()
 	{
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
-		//PauseManager.instance.Pause();
+		if (waitForAllPlayers)
+		{
+			PauseManager.instance.Pause();
+		}
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
 		playersParent = new GameObject("Players");
