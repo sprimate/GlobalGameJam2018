@@ -21,7 +21,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	void Awake()
 	{
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
-		PauseManager.instance.Pause();
+		//PauseManager.instance.Pause();
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
 		playersParent = new GameObject("Players");

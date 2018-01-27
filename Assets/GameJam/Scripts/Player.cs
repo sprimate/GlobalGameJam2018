@@ -185,12 +185,19 @@ namespace CompleteProject
 
 #if !MOBILE_INPUT
             // If the Fire1 button is being press and it's time to fire...
-			if(GameJamGameManager.LocalPlayerId == id && Input.GetButton ("Fire1") && Time.timeScale != 0)
+			if(GameJamGameManager.LocalPlayerId == id)
             {
-                // ... shoot the gun.
-                object[] parameters = new object[] {id};
-                weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
-                //weapon.Shoot (id);
+                if (Input.GetButton ("Fire1") && Time.timeScale != 0)
+                {
+                    // ... shoot the gun.
+                    object[] parameters = new object[] {id};
+                    weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
+                    //weapon.Shoot (id);
+                }
+                if (Input.GetButtonUp("Swap"))
+                {
+                    GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, null);
+                }
             }
 #else
             // If there is input on the shoot direction stick and it's time to fire...
@@ -243,8 +250,12 @@ namespace CompleteProject
             if (PhotonNetwork.player.IsMasterClient)
             {
                 Player p = GameJamGameManager.instance.players[playerTarget-1];
+                var tempTrans = p.transform;
+                p.transform.position = transform.position;
+                transform.position = tempTrans.position;
             }
         }
+
 
         void Death ()
         {
