@@ -75,8 +75,7 @@ public class Hive : ADamageable {
 	[PunRPC]
 	protected override void RemoveDamage(int amount)
 	{
-		Debug.Log("Damage amount: " + amount);
-		currentHealth -= amount;
+		base.RemoveDamage(amount);
 	}
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{
