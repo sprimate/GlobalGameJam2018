@@ -7,7 +7,8 @@ public class PlayMusic : MonoBehaviour {
 
 
 	public AudioClip titleMusic;					//Assign Audioclip for title music loop
-	public AudioClip mainMusic;						//Assign Audioclip for main 
+	public AudioClip mainMusicPlayer1;						//Assign Audioclip for main 
+	public AudioClip mainMusicPlayer2;
 	public AudioMixerSnapshot volumeDown;			//Reference to Audio mixer snapshot in which the master volume of main mixer is turned down
 	public AudioMixerSnapshot volumeUp;				//Reference to Audio mixer snapshot in which the master volume of main mixer is turned up
 
@@ -35,7 +36,7 @@ public class PlayMusic : MonoBehaviour {
 				break;
 			//If scene index is 1 (usually main scene) assign the clip mainMusic to musicSource
 			case 1:
-				musicSource.clip = mainMusic;
+				musicSource.clip = mainMusicPlayer1;
 				break;
 		}
 		//Fade up the volume very quickly, over resetTime seconds (.01 by default)
@@ -57,7 +58,7 @@ public class PlayMusic : MonoBehaviour {
 			break;
 			//if musicChoice is 1 assigns mainMusic to audio source
 		case 1:
-			musicSource.clip = mainMusic;
+			musicSource.clip = mainMusicPlayer2;
 			break;
 		}
 		//Play the selected clip

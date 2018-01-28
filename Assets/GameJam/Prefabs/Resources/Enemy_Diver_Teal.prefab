@@ -7418,8 +7418,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyColorId: 1
   startingHealth: 30
-  healthDrop: {fileID: 0}
-  firingRateDrop: {fileID: 0}
+  healthDrop: {fileID: 1894737646982756, guid: 82510f794d0d6470fa80cb06ebbcb8c5, type: 2}
+  firingRateDrop: {fileID: 1819517846112802, guid: 467e3331f04234a669d40cd2c23ef5b4,
+    type: 2}
+  speedDrop: {fileID: 1401477287462172, guid: 342c369bf389f47b98ba9bdc4c59b70b, type: 2}
   timeBetweenAttacks: 0.5
   attackDamage: 15
   sinkSpeed: 2.5

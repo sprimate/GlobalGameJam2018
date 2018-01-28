@@ -20,8 +20,10 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
 	PhotonView pv;
 
+	public const int numDropTypes = 3;
 	public GameObject healthDrop;
 	public GameObject firingRateDrop;
+	public GameObject speedDrop;
 
 	protected virtual void Awake()
 	{
