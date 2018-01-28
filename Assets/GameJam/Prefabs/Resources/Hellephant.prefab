@@ -271,7 +271,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -670,7 +670,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -711,7 +711,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -7457,9 +7457,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyColorId: 0
   startingHealth: 300
-  currentHealth: 0
   timeBetweenAttacks: 0.5
   attackDamage: 30
   sinkSpeed: 2.5
   scoreValue: 50
   deathClip: {fileID: 8300000, guid: 8c615fd0429f34edf85539d70279360d, type: 3}
+  destroyEnemyGameObjectAfterKilledTime: 1
+  minSpeed: 0
+  maxSpeed: 0
+  timeAliveUntilMaxSpeed: 0
+  angularSpeedMin: 0
+  angularSpeedMax: 0
+  timeAliveUntilMaxAngularSpeed: 0

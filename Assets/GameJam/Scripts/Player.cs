@@ -31,7 +31,6 @@ namespace CompleteProject
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask ("Floor");
 #endif
-
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
@@ -45,8 +44,8 @@ namespace CompleteProject
             currentHealth = startingHealth;
             damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
 			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+            healthSlider.maxValue = startingHealth;
         }
-
 
         void FixedUpdate ()
         {
@@ -171,7 +170,6 @@ namespace CompleteProject
                 // ... transition the colour back to clear.
                 damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
             }
-
 
             // Reset the damaged flag.
             damaged = false;
@@ -298,8 +296,8 @@ namespace CompleteProject
             object[] parameters = new object[1] {otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             parameters[0] = tempPos;
-            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+           // otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
 
             /*if (PhotonNetwork.player.IsMasterClient)
             {
@@ -371,8 +369,35 @@ namespace CompleteProject
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
             weapon.enabled = false;
+            object[] parameters = new object[1] {id};
+            GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
         }
 
+    [PunRPC]
+	public void KillPlayer(int playerId)
+	{
+        Debug.Log("Ded");
+        Player player = null;
+
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+        foreach(Player p in GameJamGameManager.instance.players)
+        {
+            if (playerId == p.id)
+            {
+                player = p;
+                if (PhotonNetwork.isMasterClient)
+                {
+                    PhotonNetwork.Destroy(player.gameObject);
+                }
+            }
+        }
+
+        if (player != null)
+        {
+            GameJamGameManager.instance.players.Remove(player);
+        }
+
+	}
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.

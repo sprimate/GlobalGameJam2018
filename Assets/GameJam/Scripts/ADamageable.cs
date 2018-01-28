@@ -66,6 +66,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		// If the current health is less than or equal to zero...
 		if(currentHealth <= 0)
 		{
+			GameJamGameManager.instance.RecordEnemyDestroyed();
 			// ... the enemy is dead.
 			GetComponent<PhotonView>().RPC("Death", PhotonTargets.All);
 		}
@@ -77,7 +78,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 			// And play the particles.
 			hitParticles.Play();
 		}
-		catch(Exception e)
+		catch(Exception)
 		{
 			//Debug.Log("Exception caught: " + e);
 		}
