@@ -219,7 +219,8 @@ namespace CompleteProject
                 if ((Input.GetAxisRaw("Right Stick Horizontal") != 0 || Input.GetAxisRaw("Right Stick Vertical") != 0))
                 {
                     // ... shoot the gun
-                    weapon.Shoot(id);
+					object[] parameters = new object[] {id};
+					weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
                 }
             }
             #endregion
