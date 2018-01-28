@@ -8,18 +8,6 @@ public class BorderSpawner : MonoBehaviour {
 	public float spawnRate {protected get; set;}
 	float lastSpawn;
 
-	void Start()
-	{
-		for(int i = 0; i < enemies.Length; i++)
-		{
-			
-			GameObject e = Instantiate(enemies[i].gameObject) as GameObject;
-			e.SetActive(false);
-			e.transform.SetParent(transform);
-			enemies[i] = e.GetComponent<Enemy>();
-		}
-	}
-
 	protected virtual void Update () 
 	{
 		HandleSpawns();
