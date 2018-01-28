@@ -31,8 +31,8 @@ public class Enemy : ADamageable {
 
 	protected override void Awake()
 	{
+		base.Awake ();
 		// Setting up the references.
-		
 		anim = GetComponent <Animator> ();
 		nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
 		capsuleCollider = GetComponent <CapsuleCollider> ();
