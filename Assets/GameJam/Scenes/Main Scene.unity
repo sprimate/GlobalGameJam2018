@@ -1950,6 +1950,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1737270944094682, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436717183964672, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066742500004428, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092161084544512, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092161084544512, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: aa7162239ac23e14d86f6f33a1b03c1b, type: 2}
   m_IsPrefabParent: 0
