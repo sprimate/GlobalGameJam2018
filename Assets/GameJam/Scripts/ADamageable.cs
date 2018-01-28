@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(PhotonView))]
-public abstract class ADamageable : MonoBehaviour{
+public abstract class ADamageable : Photon.MonoBehaviour{
 
 	protected virtual bool SendDamageAcrossNetwork {
 		get {

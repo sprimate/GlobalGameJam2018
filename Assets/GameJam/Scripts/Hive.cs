@@ -71,4 +71,12 @@ public class Hive : ADamageable {
 		Debug.Log("HIVE SHOULD BE DEAD");
 		Destroy();
     }
+	void OnPhotonInstantiate(PhotonMessageInfo info) 
+	{
+		GameJamGameManager gm = GameJamGameManager.instance;
+	    // e.g. store this gameobject as this player's charater in PhotonPlayer.TagObject
+	    PhotonView pv = GetComponent<PhotonView>();
+		SetEnemyColor((int) pv.instantiationData[0]);
+	}
+	
 }
