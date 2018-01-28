@@ -3161,7 +3161,7 @@ MonoBehaviour:
     type: 2}
   hivePrefab: {fileID: 1376236416235052, guid: 5c207a25242f949b3806898506cb8731, type: 2}
   players: []
-  maxNumPlayers: 1
+  maxNumPlayers: 2
   waitForAllPlayers: 1
   totalHiveHealth: 0
   totalHiveStartHealth: 0
