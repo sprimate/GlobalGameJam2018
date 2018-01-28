@@ -11,8 +11,12 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public static int LocalPlayerId {get {
 		return PhotonNetwork.player.ID;
 	}}
+
+	bool gameStarted = false;
+	public Transform[] hiveStartingPoints;
 	public string playerLayerName;
 	public GameObject playerPrefab;
+	public GameObject hivePrefab;
 	GameObject playersParent;
 	public List<Player> players = new List<Player>();
 	public int maxNumPlayers = 2;
@@ -20,6 +24,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public bool waitForAllPlayers = false;
 	PlayerRoomIndexing indexer;
 	
+	public int totalHiveHealth;
+	public int totalHiveStartHealth;
 	void Awake()
 	{
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
@@ -27,13 +33,17 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		{
 			PauseManager.instance.Pause();
 		}
+		else
+		{
+			StartGame();
+		}
 		try{
-		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
-		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
-		playersParent = new GameObject("Players");
-	}
-	catch(Exception)
-	{}
+			indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
+			indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
+			playersParent = new GameObject("Players");
+		}
+		catch(Exception)
+		{}
 	}
 	public void UpdatePlayers()
 	{
@@ -67,7 +77,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			}
 		}
 		
-		if (numPlayers == maxNumPlayers)
+		if (waitForAllPlayers && numPlayers == maxNumPlayers)
 		{
 			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
@@ -80,6 +90,19 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+		if (gameStarted)
+		{
+			return;
+		}
+
+		gameStarted = true;
+		int color = UnityEngine.Random.Range(1, 3);
+		foreach(Transform t in hiveStartingPoints)
+		{
+			object[] parameters = new object[] {color};
+			PhotonNetwork.InstantiateSceneObject(hivePrefab.name, t.position, Quaternion.identity, 0, parameters);				
+			color = color == 1 ? 2 : 1;
+		}
 		PauseManager.instance.Unpause();
 	}
 

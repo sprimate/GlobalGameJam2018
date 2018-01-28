@@ -259,7 +259,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -283,7 +283,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!95 &9583922
 Animator:
   serializedVersion: 3
@@ -7455,11 +7455,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b976a6dac32b4e619a91f4940d10c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 0.5
-  attackDamage: 30
+  enemyColorId: 0
   startingHealth: 300
   currentHealth: 0
+  timeBetweenAttacks: 0.5
+  attackDamage: 30
   sinkSpeed: 2.5
   scoreValue: 50
   deathClip: {fileID: 8300000, guid: 8c615fd0429f34edf85539d70279360d, type: 3}
-  enemyColorId: 0

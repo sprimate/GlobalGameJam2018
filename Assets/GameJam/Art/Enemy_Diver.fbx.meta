@@ -38,7 +38,11 @@ ModelImporter:
     400028: joint9
     400030: ship2_Low:Group51331
     2100000: aiStandardSurface1
+    2100002: lambert1
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: ship2_Low:Group51331
+    4300002: Enemy1
     7400000: Take 001
     9500000: //RootNode
     13700000: ship2_Low:Group51331
