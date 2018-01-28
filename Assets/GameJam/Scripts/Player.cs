@@ -294,10 +294,8 @@ namespace CompleteProject
             }        
             Vector3 tempPos = transform.position;
             Debug.Log("Settingn tempPos to " + tempPos);
-            object[] parameters = new object[1] {otherPlayer.transform.position};
-            parameters[0] = tempPos;
-            otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
-            parameters = new object[1] {otherPlayer.transform.position};
+            int otherId = id == 1 ? 2 : 1;
+            object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
@@ -332,17 +330,17 @@ namespace CompleteProject
         }
 
         [PunRPC]
-        public void SetPosition(Vector3 pos)
+        public void SetPosition(int player1, Vector3 pos1, int player2, Vector3 pos2)
         {
-            if (id == GameJamGameManager.LocalPlayerId)
-            { 
-                transform.position = pos;
-            }
-            else
+            foreach(Player p in GameJamGameManager.instance.players)
             {
-                transform.position = otherPosition;
-              //  Debug.Log("Setting TeleportPosition to " + pos, transform);
-                //teleportPosition = pos;
+                if (p.id == player1)
+                {
+                    p.transform.position = (pos1);
+                }
+                else{
+                    p.transform.position = pos2;
+                }
             }
         }
 
@@ -352,6 +350,7 @@ namespace CompleteProject
         {
             if (id == GameJamGameManager.LocalPlayerId)
             {
+                Debug.Log(id + ".) Setting Other Positionn: " + otherPosition);
                 otherPosition = pos;
             }
         }
