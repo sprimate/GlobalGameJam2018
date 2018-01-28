@@ -51,4 +51,5 @@ MonoBehaviour:
   - SwapPositions
   - SetPosition
   - SetOtherTeleportPosition
+  - DestroyRemotely
   DisableAutoOpenWizard: 1

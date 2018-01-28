@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyColorId: 0
-  startingHealth: 10000
-  currentHealth: 10000
+  startingHealth: 5000
+  currentHealth: 1000
   enemies:
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}

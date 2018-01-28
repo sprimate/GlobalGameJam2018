@@ -52,5 +52,6 @@ public class Hive : ADamageable {
     protected override void Death()
     {
 		Debug.Log("HIVE SHOULD BE DEAD");
+		Destroy();
     }
 }

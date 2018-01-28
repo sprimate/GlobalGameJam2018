@@ -1671,23 +1671,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114909970675399030, guid: 5c207a25242f949b3806898506cb8731,
         type: 2}
-      propertyPath: instantiationId
+      propertyPath: viewIdField
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114909970675399030, guid: 5c207a25242f949b3806898506cb8731,
         type: 2}
-      propertyPath: viewIdField
+      propertyPath: instantiationId
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114047188783068840, guid: 5c207a25242f949b3806898506cb8731,
-        type: 2}
-      propertyPath: currentHealth
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114047188783068840, guid: 5c207a25242f949b3806898506cb8731,
-        type: 2}
-      propertyPath: startingHealth
-      value: 5000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c207a25242f949b3806898506cb8731, type: 2}
