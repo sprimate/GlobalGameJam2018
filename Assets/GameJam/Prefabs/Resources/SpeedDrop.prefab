@@ -54,6 +54,7 @@ GameObject:
   - component: {fileID: 135624903084458534}
   - component: {fileID: 114532777555592740}
   - component: {fileID: 114807810135724166}
+  - component: {fileID: 114508725718970342}
   m_Layer: 12
   m_Name: SpeedDrop
   m_TagString: Untagged
@@ -85,7 +86,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1401477287462172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0740648, y: 0.000000020138913, z: 0.16893746}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4829751352536240}
@@ -215,6 +216,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1758167148091532}
   m_Mesh: {fileID: 4300002, guid: b8d4a1885e53d42b5a5b39b5b2316035, type: 3}
+--- !u!114 &114508725718970342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1401477287462172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ac112b5a30d4cb2945a266c4dadf10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 2
 --- !u!114 &114532777555592740
 MonoBehaviour:
   m_ObjectHideFlags: 1

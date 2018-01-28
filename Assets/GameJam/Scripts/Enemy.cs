@@ -153,8 +153,7 @@ public class Enemy : ADamageable {
 	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
 	{
 		base.TakeDamage(playerColor, amount, hitPoint);
-		//low chance of dropping powerup
-		MaybeDropSomething();
+
 	}
 
 	void Attack ()
@@ -197,6 +196,9 @@ public class Enemy : ADamageable {
 		{
 			
 		}
+
+		//low chance of dropping powerup
+		MaybeDropSomething();
 	}
 
 	public float dropProb = .05f;
@@ -219,8 +221,10 @@ public class Enemy : ADamageable {
 			}
 
 
-
-			Instantiate(item, gameObject.transform.position, Quaternion.identity);
+			Vector3 dropPos = gameObject.transform.position;
+			//hack to prevent powerup models from clipping under floor
+			dropPos.y += 1.0f;
+			Instantiate(item, dropPos, Quaternion.identity);
 		}
 
 	}
