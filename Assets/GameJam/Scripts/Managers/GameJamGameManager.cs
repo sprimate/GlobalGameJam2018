@@ -27,6 +27,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		{
 			PauseManager.instance.Pause();
 		}
+		else
+		{
+			StartGame();
+		}
 		try{
 		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
 		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
@@ -80,6 +84,15 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+		int color = UnityEngine.Random.Range(1, 3);
+		foreach(Hive hive in FindObjectsOfType<Hive>())
+		{
+			hive.SetEnemyColor(color);
+			Debug.Log(hive + " Setting Color to " + color, hive);
+
+			color = color == 1 ? 2 : 1;
+
+		}
 		PauseManager.instance.Unpause();
 	}
 

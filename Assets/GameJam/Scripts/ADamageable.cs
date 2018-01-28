@@ -34,7 +34,7 @@ public abstract class ADamageable : MonoBehaviour{
 
 		if (enemyColorId != 0 && playerColor != enemyColorId) 
 		{
-			Debug.Log("Returning cause play colors match: " + playerColor + " vs " + enemyColorId);
+//			Debug.Log("Returning cause play colors match: " + playerColor + " vs " + enemyColorId);
 			//dont take damage if the shooting player isnt your type
 			return;
 		}
@@ -62,7 +62,7 @@ public abstract class ADamageable : MonoBehaviour{
 		{
 			Debug.Log("Exception caught: " + e);
 		}
-	}
+	}	
 
 	protected void Destroy()
 	{
