@@ -293,16 +293,18 @@ namespace CompleteProject
                 return;
             }        
             Vector3 tempPos = transform.position;
+            Debug.Log("Settingn tempPos to " + tempPos);
             object[] parameters = new object[1] {otherPlayer.transform.position};
+            parameters[0] = tempPos;
+            otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+            parameters = new object[1] {otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
             //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
-            parameters[0] = tempPos;
-           // otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-           otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+           //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
             if (PhotonNetwork.isMasterClient)//host jumps to client without telling client to go
             {
+               // SetOtherTeleportPosition(tempPos);
                 //otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             }
 
@@ -334,28 +336,24 @@ namespace CompleteProject
         {
             if (id == GameJamGameManager.LocalPlayerId)
             { 
-                Debug.Log("Transporting " + transform + " to " + pos, transform);
                 transform.position = pos;
             }
             else
             {
-                Debug.Log("Setting TeleportPosition to " + pos, transform);
-                teleportPosition = pos;
+                transform.position = otherPosition;
+              //  Debug.Log("Setting TeleportPosition to " + pos, transform);
+                //teleportPosition = pos;
             }
         }
 
+        Vector3 otherPosition;
         [PunRPC]
         public void SetOtherTeleportPosition(Vector3 pos)
         {
-            Player otherPlayer = null;
-            foreach(Player x in FindObjectsOfType<Player>())//TODO - this is so shitty. Do better, priyal. 
+            if (id == GameJamGameManager.LocalPlayerId)
             {
-                if (x != this)
-                {
-                    otherPlayer = x;
-                }
+                otherPosition = pos;
             }
-            otherPlayer.teleportPosition = pos;       
         }
 
         void Death ()
