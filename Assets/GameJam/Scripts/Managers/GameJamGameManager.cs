@@ -12,6 +12,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		return PhotonNetwork.player.ID;
 	}}
 
+	public float hiveRegenerationTime;
 	bool gameStarted = false;
 	public Transform[] hiveStartingPoints;
 	public string playerLayerName;
@@ -23,7 +24,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	int numPlayers = 0;
 	public bool waitForAllPlayers = false;
 	PlayerRoomIndexing indexer;
-	
+	IList<Hive> hives = new List<Hive>();
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
 	void Awake()
@@ -71,9 +72,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			{
 				int id = realPlayers[realPlayers.Count-1];
 				object[] parameters = new object[] {id};
-				PhotonNetwork.InstantiateSceneObject(playerPrefab.name, Vector3.zero, Quaternion.identity, 0, parameters);				
+				PhotonNetwork.InstantiateSceneObject(playerPrefab.name, Vector3.zero, Quaternion.identity, 0, parameters).GetComponent<Hive>();
 				//Instantiate(playerPrefab);
-				
 			}
 		}
 		
@@ -99,30 +99,37 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		int color = UnityEngine.Random.Range(1, 3);
 		foreach(Transform t in hiveStartingPoints)
 		{
-			object[] parameters = new object[] {color};
-			PhotonNetwork.InstantiateSceneObject(hivePrefab.name, t.position, Quaternion.identity, 0, parameters);				
+			CreateHive(color, t.position);			
 			color = color == 1 ? 2 : 1;
+
 		}
 		PauseManager.instance.Unpause();
 	}
 
-	public void KillPlayer(Player player)
+	void CreateHive(int color, Vector3 position)
 	{
-		foreach(Player p in players)
+		if (PhotonNetwork.isMasterClient)
 		{
-			if (player == p)
-			{
-				PhotonNetwork.Destroy(player.gameObject);
-			}
-		}
-
-		if (player.id == LocalPlayerId)
-		{
-
-		}
-		players.Remove(player);
+			object[] parameters = new object[] {color};
+			PhotonNetwork.InstantiateSceneObject(hivePrefab.name, position, Quaternion.identity, 0, parameters);	
+		}			
 	}
 
+	public void HiveAboutToBeDestroyed(Hive h)
+	{
+		int newHiveColor = h.enemyColorId;
+		if (h.numChanges % 2 != 0 )
+		{
+			newHiveColor = newHiveColor == 1 ? 2 : 1;
+		}
+		StartCoroutine(RegenerateHive(newHiveColor, h.transform.position));
+	}
+
+	IEnumerator RegenerateHive(int color, Vector3 position)
+	{
+		yield return new WaitForSeconds(hiveRegenerationTime);
+		CreateHive(color, position);
+	}
 	void CreatePlayer()
 	{
 		Instantiate(playerPrefab);

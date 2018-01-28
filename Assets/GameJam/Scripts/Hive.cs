@@ -39,6 +39,7 @@ public class Hive : ADamageable {
 	[PunRPC]
     protected override void Death()
     {
+		GameJamGameManager.instance.HiveAboutToBeDestroyed(this);
 		Destroy();
     }
 
