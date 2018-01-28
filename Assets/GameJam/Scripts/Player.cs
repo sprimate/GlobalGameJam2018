@@ -301,7 +301,10 @@ namespace CompleteProject
             parameters[0] = tempPos;
            // otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
            otherPlayer. GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
-
+            if (PhotonNetwork.isMasterClient)//host jjumps to cliennt without telling client to go
+            {
+                otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            }
 
             /*if (PhotonNetwork.player.IsMasterClient)
             {
