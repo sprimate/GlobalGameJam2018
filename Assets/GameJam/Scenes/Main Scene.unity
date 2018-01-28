@@ -4029,8 +4029,8 @@ MonoBehaviour:
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
   - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
   spawnDistanceFromEdge: 1
-  maxSpawnRate: 5
-  minSpawnRate: 1
+  maxSpawnRate: 1.5
+  minSpawnRate: 0.3
 --- !u!1 &1948277206
 GameObject:
   m_ObjectHideFlags: 0

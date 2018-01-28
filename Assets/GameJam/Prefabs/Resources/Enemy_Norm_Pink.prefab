@@ -412,7 +412,7 @@ NavMeshAgent:
   m_Height: 1.1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -7381,6 +7381,12 @@ MonoBehaviour:
   scoreValue: 10
   deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
   destroyEnemyGameObjectAfterKilledTime: 0.5
+  minSpeed: 0
+  maxSpeed: 0
+  timeAliveUntilMaxSpeed: 0
+  angulatSpeedMin: 0
+  angularSpeedMax: 0
+  timeAliveUntilMaxAngularSpeed: 0
 --- !u!114 &114997091927550794
 MonoBehaviour:
   m_ObjectHideFlags: 1

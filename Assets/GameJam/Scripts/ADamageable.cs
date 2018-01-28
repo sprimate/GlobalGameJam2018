@@ -11,7 +11,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 			return false;
 		}
 	} 
-	
+
 	protected bool isDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
@@ -76,7 +76,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		}
 		catch(Exception e)
 		{
-			Debug.Log("Exception caught: " + e);
+			//Debug.Log("Exception caught: " + e);
 		}
 	}	
 

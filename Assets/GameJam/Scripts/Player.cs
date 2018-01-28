@@ -12,6 +12,8 @@ namespace CompleteProject
     {
 
 #region PortedFromPlayerMovement
+        public float bufferBetweenDamageTaken;
+        float lastDamageTaken;
         public float speed = 6f;            // The speed that the player will move at.
 		public int id;
         Vector3 movement;                   // The vector to store the direction of the player's movement.
@@ -244,8 +246,13 @@ namespace CompleteProject
             }
         }
 
-        public void TakeDamage (int amount)
+        public bool TakeDamage (int amount)
         {
+            if (lastDamageTaken + bufferBetweenDamageTaken > Time.time)
+            {
+                return false;
+            }
+            lastDamageTaken = Time.time;
             // Set the damaged flag so the screen will flash.
             damaged = true;
 
@@ -264,6 +271,7 @@ namespace CompleteProject
                 // ... it should die.
                 Death ();
             }
+            return true;
         }
 
         public void Swap(int playerTarget)

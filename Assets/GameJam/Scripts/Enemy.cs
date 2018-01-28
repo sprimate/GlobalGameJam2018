@@ -20,6 +20,14 @@ public class Enemy : ADamageable {
 	IList<Player> playersInRange = new List<Player>();
 	public float destroyEnemyGameObjectAfterKilledTime = 1f;
 
+	public float minSpeed;
+	public float maxSpeed;
+	public float timeAliveUntilMaxSpeed;
+
+	public float angulatSpeedMin;
+	public float angularSpeedMax;
+	public float timeAliveUntilMaxAngularSpeed;
+
 
 	protected override void Awake()
 	{
@@ -30,6 +38,7 @@ public class Enemy : ADamageable {
 		capsuleCollider = GetComponent <CapsuleCollider> ();
 		// Setting the current health when the enemy first spawns.
 		currentHealth = startingHealth;
+		UpdateTarget();
 	}
 
 
@@ -58,8 +67,9 @@ public class Enemy : ADamageable {
 		}
 	}
 
-	void Update ()
+	void UpdateTarget()
 	{
+		target = null;
 		float closestDistance = float.MaxValue;
 		foreach(Player p in GameJamGameManager.instance.players)
 		{
@@ -69,6 +79,35 @@ public class Enemy : ADamageable {
 				closestDistance = dist;
 				target = p;
 			}
+		}
+	}
+
+	void FixedUpdate()
+	{
+
+		// If the enemy and the player have health left...
+		if(currentHealth > 0 && target.currentHealth > 0)
+		{
+			// ... set the destination of the nav mesh agent to the player.
+			nav.SetDestination (target.transform.position);
+		}
+		// Otherwise...
+		else
+		{
+			if (target == null)
+			{
+				nav.enabled = false;
+			}
+			// ... disable the nav mesh agent.
+		}
+	}
+	float lastTargetCheck;
+	void Update ()
+	{
+
+		if (lastTargetCheck + Time.fixedDeltaTime > Time.time)
+		{
+			UpdateTarget();
 		}
 		// Add the time since Update was last called to the timer.
 		timer += Time.deltaTime;
@@ -86,19 +125,6 @@ public class Enemy : ADamageable {
 			// ... tell the animator the player is dead.
 			anim.SetTrigger ("PlayerDead");
 		}
-		
-		// If the enemy and the player have health left...
-		if(currentHealth > 0 && target.currentHealth > 0)
-		{
-			// ... set the destination of the nav mesh agent to the player.
-			nav.SetDestination (target.transform.position);
-		}
-		// Otherwise...
-		else
-		{
-			// ... disable the nav mesh agent.
-			nav.enabled = false;
-		}
 
 			// If the enemy should be sinking...
 		if(isSinking)
@@ -110,17 +136,20 @@ public class Enemy : ADamageable {
 
 	void Attack ()
 	{
-		// Reset the timer.
-		timer = 0f;
-
 		foreach(var p in playersInRange)
 		{
 			if(p.currentHealth > 0)
 			{
 				// ... damage the player.
-				p.TakeDamage (attackDamage);
+				if (p.TakeDamage (attackDamage))
+				{
+					// Reset the timer if the attack was successful.
+					timer = 0f;
+				}
+
 			}
 		}
+		
 		// If the player has health to lose...
 	}
 
