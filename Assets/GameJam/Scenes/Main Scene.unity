@@ -2418,7 +2418,7 @@ GameObject:
   - component: {fileID: 1139190136}
   m_Layer: 5
   m_Name: HUDCanvas
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
