@@ -151,7 +151,7 @@ namespace CompleteProject
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
         Player playerMovement;                              // Reference to the player's movement.
         Weapon weapon;                              // Reference to the PlayerShooting script.
-        bool isDead;                                                // Whether the player is dead.
+        public bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
 
         void Update ()
@@ -270,11 +270,7 @@ namespace CompleteProject
         {
             var allPlayers = FindObjectsOfType<Player>();
 
-            if (allPlayers.Length == 1)
-            {
-			    weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
-                return;
-            }
+
 //            List<Vector3> players = new List<Vector3>();
             Player otherPlayer = null;
             foreach(Player x in allPlayers)//TODO - this is so shitty. Do better, priyal. 
@@ -283,7 +279,13 @@ namespace CompleteProject
                 {
                     otherPlayer = x;
                 }
-            }           
+            }   
+
+            if (allPlayers.Length == 1 || otherPlayer.isDead)
+            {
+			    weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
+                return;
+            }        
             Vector3 tempPos = transform.position;
             object[] parameters = new object[1] {otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);

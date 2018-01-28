@@ -7417,13 +7417,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyColorId: 2
-  startingHealth: 100
-  currentHealth: 0
+  startingHealth: 30
   timeBetweenAttacks: 0.5
   attackDamage: 15
   sinkSpeed: 2.5
   scoreValue: 10
   deathClip: {fileID: 8300000, guid: 62366b8d2c37a49dca550841c741317f, type: 3}
+  destroyEnemyGameObjectAfterKilledTime: 0.5
 --- !u!114 &114829755880575020
 MonoBehaviour:
   m_ObjectHideFlags: 1

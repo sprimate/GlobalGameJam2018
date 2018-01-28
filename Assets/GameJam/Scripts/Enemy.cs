@@ -18,6 +18,7 @@ public class Enemy : ADamageable {
 	CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
 	IList<Player> playersInRange = new List<Player>();
+	public float destroyEnemyGameObjectAfterKilledTime = 1f;
 
 
 	protected override void Awake()
@@ -161,7 +162,7 @@ public class Enemy : ADamageable {
 		ScoreManager.score += scoreValue;
 
 		// After 2 seconds destory the enemy.
-		StartCoroutine(DestroyAfterSeconds(2));
+		StartCoroutine(DestroyAfterSeconds(destroyEnemyGameObjectAfterKilledTime));
 	}
 
 	[PunRPC]

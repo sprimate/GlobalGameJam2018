@@ -14,22 +14,21 @@ public class Hive : ADamageable {
 
 	public int numChanges = 4;
 	public float hiveMinScale = 1f;
-	public float spawnDistanceFromEdge = 10f;
-	public float hiveSpawnRate = 1f; 
+	public float hiveMinSpawnRate = 1f; 
+	public float hiveMaxSpawnRate = 4f;
 	float lastSpawn;
 	float ogScaleValue;
+	BorderSpawner borderSpawner;
 
     // Use this for initialization
     void Start () 
 	{
+		borderSpawner = GetComponent<BorderSpawner>();
  		ogScaleValue = transform.localScale.x;
+		borderSpawner.spawnRate = hiveMaxSpawnRate;
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
-		HandleSpawns();
-	}
 	
 	public void SetEnemyColor(int id)
 	{
@@ -37,30 +36,9 @@ public class Hive : ADamageable {
 		GetComponent<Renderer>().material.color = PlayerColor.getColorForId(enemyColorId);
 	}
 
-	void HandleSpawns()
-	{
-		if (!PhotonNetwork.player.IsMasterClient)
-		{
-			return;
-		}
-		
-		if (lastSpawn + hiveSpawnRate < Time.time)
-		{
-			var radius = GetComponent<Renderer>().bounds.extents.magnitude;
-			//Debug.Log("Radius: " + radius);
-			var spawnDistance = radius + spawnDistanceFromEdge;
-			var randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f,1f));
-			Vector3 spawnPosition = transform.position + (randomDirection * spawnDistance);
-			Enemy toSpawn = enemies[Random.Range(0, enemies.Length)];
-			//toSpawn.enemyColorId = Random.Range(1, 3); //3 is exclusive
-			PhotonNetwork.InstantiateSceneObject(toSpawn.gameObject.name, spawnPosition, Quaternion.LookRotation(randomDirection), 0, null);				
-			lastSpawn = Time.time;
-		}
-	}
 	[PunRPC]
     protected override void Death()
     {
-		Debug.Log("HIVE SHOULD BE DEAD");
 		Destroy();
     }
 
@@ -83,7 +61,9 @@ public class Hive : ADamageable {
 
 		float distanceBetweenScales = ogScaleValue - hiveMinScale;
 		float scale = distanceBetweenScales * healthPercentage + hiveMinScale;
+		borderSpawner.spawnRate = (hiveMaxSpawnRate - hiveMinSpawnRate) * healthPercentage + hiveMinSpawnRate;
 		transform.localScale = new Vector3(scale, scale, scale);
+		GameJamGameManager.instance.totalHiveHealth -= amount;
 	}
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{
@@ -91,6 +71,8 @@ public class Hive : ADamageable {
 	    // e.g. store this gameobject as this player's charater in PhotonPlayer.TagObject
 	    PhotonView pv = GetComponent<PhotonView>();
 		SetEnemyColor((int) pv.instantiationData[0]);
+		GameJamGameManager.instance.totalHiveStartHealth += startingHealth;
+		GameJamGameManager.instance.totalHiveHealth += startingHealth;
 	}
 	
 }

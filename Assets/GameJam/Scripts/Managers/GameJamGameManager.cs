@@ -24,6 +24,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public bool waitForAllPlayers = false;
 	PlayerRoomIndexing indexer;
 	
+	public int totalHiveHealth;
+	public int totalHiveStartHealth;
 	void Awake()
 	{
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
@@ -36,12 +38,12 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			StartGame();
 		}
 		try{
-		indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
-		indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
-		playersParent = new GameObject("Players");
-	}
-	catch(Exception)
-	{}
+			indexer = GameObject.FindObjectOfType<PlayerRoomIndexing>();
+			indexer.OnRoomIndexingChanged.AddListener(UpdatePlayers);
+			playersParent = new GameObject("Players");
+		}
+		catch(Exception)
+		{}
 	}
 	public void UpdatePlayers()
 	{

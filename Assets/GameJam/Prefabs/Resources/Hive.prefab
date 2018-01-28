@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114047188783068840}
   - component: {fileID: 114909970675399030}
   - component: {fileID: 114901611805888092}
+  - component: {fileID: 114777365072736466}
   m_Layer: 9
   m_Name: Hive
   m_TagString: Untagged
@@ -98,14 +99,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyColorId: 0
-  startingHealth: 2000
+  startingHealth: 1500
   enemies:
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
-  numChanges: 4
+  numChanges: 3
   hiveMinScale: 3
-  spawnDistanceFromEdge: 5
-  hiveSpawnRate: 3
+  hiveMinSpawnRate: 1
+  hiveMaxSpawnRate: 4
+--- !u!114 &114777365072736466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376236416235052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b337ecdb0b10142c9804d63eec577863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemies:
+  - {fileID: 114668996035347458, guid: e343260a5d164c446b4ad3e7d0d19dcc, type: 2}
+  - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
+  - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
+  - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
+  spawnDistanceFromEdge: 2
 --- !u!114 &114901611805888092
 MonoBehaviour:
   m_ObjectHideFlags: 1
