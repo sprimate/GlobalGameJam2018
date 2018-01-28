@@ -194,11 +194,12 @@ namespace CompleteProject
                 //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
             }
 
-            if (Input.GetJoystickNames().Length == 0)
-            {
-                // If the Fire1 button is being press and it's time to fire...
-                if(GameJamGameManager.LocalPlayerId == id)
-                {
+			//only process input here if its from this player...
+			if(GameJamGameManager.LocalPlayerId == id){
+
+	            if (Input.GetJoystickNames().Length == 0)
+	            {
+	                // If the Fire1 button is being press and it's time to fire...
                     if (Input.GetButton ("Fire1") && Time.timeScale != 0)
                     {
                         // ... shoot the gun.
@@ -207,23 +208,21 @@ namespace CompleteProject
                         //weapon.Shoot (id);
                     }
 
-
     //				if(Input.GetButtonUp ("Fire2"))
     //				{
     //					weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
-    //				}
-                }
-                    
-            }
-            else
-            {
-                // If there is input on the shoot direction stick and it's time to fire...
-                if ((Input.GetAxisRaw("Right Stick Horizontal") != 0 || Input.GetAxisRaw("Right Stick Vertical") != 0))
-                {
-                    // ... shoot the gun
-					object[] parameters = new object[] {id};
-					weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
-                }
+    //				}                    
+	            }
+	            else
+	            {
+	                // If there is input on the shoot direction stick and it's time to fire...
+	                if ((Input.GetAxisRaw("Right Stick Horizontal") != 0 || Input.GetAxisRaw("Right Stick Vertical") != 0))
+	                {
+	                    // ... shoot the gun
+						object[] parameters = new object[] {id};
+						weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
+	                }
+				}
             }
             #endregion
         }
