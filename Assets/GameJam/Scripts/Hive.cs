@@ -30,15 +30,6 @@ public class Hive : ADamageable {
 	{
 		HandleSpawns();
 	}
-	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
-	{
-		base.TakeDamage(playerColor, amount, hitPoint);
-		float healthPercentage = currentHealth/startingHealth;
-		if (((1/numChanges) % healthPercentage - 1) % 2 == 0)
-		{
-			SetEnemyColor(enemyColorId == 1 ? 2 : 1);
-		}
-	}
 	
 	public void SetEnemyColor(int id)
 	{
@@ -76,7 +67,19 @@ public class Hive : ADamageable {
 	[PunRPC]
 	protected override void RemoveDamage(int amount)
 	{
+		float healthPercentageBefore = (float)currentHealth/(float)startingHealth;
 		base.RemoveDamage(amount);
+		float healthPercentage = (float)currentHealth/(float)startingHealth;
+		float percentageDifference = 1f/numChanges;
+
+		for (float f = percentageDifference; f < healthPercentageBefore; f+= percentageDifference)
+		{
+			if (healthPercentage <= f)
+			{
+				SetEnemyColor(enemyColorId == 1 ? 2 : 1);
+				break;
+			}
+		}
 	}
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{
