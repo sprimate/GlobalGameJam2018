@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hive : ADamageable {
+
+	protected override bool SendDamageAcrossNetwork {
+		get {
+			return true;
+		}
+	} 
 	public Enemy[] enemies;
 	//public int hiveOriginalColor = 1;
 
