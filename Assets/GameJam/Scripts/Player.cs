@@ -185,6 +185,12 @@ namespace CompleteProject
 
             #region PlayerShooting
              // Add the time since Update was last called to the timer.
+            if (Input.GetButtonUp("Swap"))
+            {                  
+            //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
+                Swap(id == 1 ? 2 : 1);
+                //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
+            }
 
             if (Input.GetJoystickNames().Length == 0)
             {
@@ -198,12 +204,7 @@ namespace CompleteProject
                         weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
                         //weapon.Shoot (id);
                     }
-                    if (Input.GetButtonUp("Swap"))
-                    {                  
-                    //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
-                        Swap(id == 1 ? 2 : 1);
-                        //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
-                    }
+
 
     //				if(Input.GetButtonUp ("Fire2"))
     //				{
@@ -268,6 +269,12 @@ namespace CompleteProject
         public void Swap(int playerTarget)
         {
             var allPlayers = FindObjectsOfType<Player>();
+
+            if (allPlayers.Length == 1)
+            {
+			    weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
+                return;
+            }
 //            List<Vector3> players = new List<Vector3>();
             Player otherPlayer = null;
             foreach(Player x in allPlayers)//TODO - this is so shitty. Do better, priyal. 
@@ -306,7 +313,6 @@ namespace CompleteProject
                 }
             }*/
         }
-
 
         [PunRPC]
         public void SetPosition(Vector3 pos)
@@ -356,7 +362,6 @@ namespace CompleteProject
             playerMovement.enabled = false;
             weapon.enabled = false;
         }
-
 
         public void RestartLevel ()
         {
