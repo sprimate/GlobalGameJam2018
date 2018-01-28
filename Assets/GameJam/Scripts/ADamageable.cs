@@ -11,6 +11,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 			return false;
 		}
 	} 
+	
 	protected bool isDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
@@ -82,7 +83,6 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	[PunRPC]
 	protected virtual void RemoveDamage(int amount)
 	{
-		Debug.Log("Damage amount: " + amount);
 		currentHealth -= amount;
 	}
 

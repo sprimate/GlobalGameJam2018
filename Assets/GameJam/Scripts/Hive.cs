@@ -14,15 +14,15 @@ public class Hive : ADamageable {
 
 	public int numChanges = 4;
 	public float hiveMinScale = 1f;
-	public float hiveMaxScale = 1f;
 	public float spawnDistanceFromEdge = 10f;
 	public float hiveSpawnRate = 1f; 
 	float lastSpawn;
+	float ogScaleValue;
 
     // Use this for initialization
     void Start () 
 	{
- 		
+ 		ogScaleValue = transform.localScale.x;
 	}
 	
 	// Update is called once per frame
@@ -80,6 +80,10 @@ public class Hive : ADamageable {
 				break;
 			}
 		}
+
+		float distanceBetweenScales = ogScaleValue - hiveMinScale;
+		float scale = distanceBetweenScales * healthPercentage + hiveMinScale;
+		transform.localScale = new Vector3(scale, scale, scale);
 	}
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{

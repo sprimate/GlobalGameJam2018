@@ -109,8 +109,7 @@ namespace CompleteProject
             }
             else
             {
-                Vector3 turnDir = new Vector3(Input.GetAxisRaw("Right Stick Horizontal") , 0f , Input.GetAxisRaw("Right Stick Vertical"));
-                Debug.Log("Joystic discovered");
+                Vector3 turnDir = new Vector3(Input.GetAxis("Right Stick Horizontal") , 0f , Input.GetAxis("Right Stick Vertical"));
                 if (turnDir != Vector3.zero)
                 {
                     // Create a vector from the player to the point on the floor the raycast from the mouse hit.
@@ -124,10 +123,6 @@ namespace CompleteProject
 
                     // Set the player's rotation to this new rotation.
                     playerRigidbody.MoveRotation(newRotatation);
-                }
-                else
-                {
-                    Debug.Log("Null and shit");
                 }
             }
         }
@@ -220,7 +215,7 @@ namespace CompleteProject
             else
             {
                 // If there is input on the shoot direction stick and it's time to fire...
-                if ((CrossPlatformInputManager.GetAxisRaw("Right Stick Horizontal") != 0 || CrossPlatformInputManager.GetAxisRaw("Right Stick Vertical") != 0))
+                if ((Input.GetAxisRaw("Right Stick Horizontal") != 0 || Input.GetAxisRaw("Right Stick Vertical") != 0))
                 {
                     // ... shoot the gun
                     weapon.Shoot(id);
@@ -341,7 +336,6 @@ namespace CompleteProject
             }
             otherPlayer.teleportPosition = pos;       
         }
-
 
         void Death ()
         {
