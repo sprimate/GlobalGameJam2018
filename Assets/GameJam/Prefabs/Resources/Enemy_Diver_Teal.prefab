@@ -7434,6 +7434,7 @@ MonoBehaviour:
   angularSpeedMin: 95
   angularSpeedMax: 160
   timeAliveUntilMaxAngularSpeed: 120
+  dropProb: 0.05
 --- !u!114 &114829755880575020
 MonoBehaviour:
   m_ObjectHideFlags: 1

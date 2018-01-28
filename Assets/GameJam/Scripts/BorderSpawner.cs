@@ -26,10 +26,36 @@ public class BorderSpawner : MonoBehaviour {
 			var spawnDistance = radius + spawnDistanceFromEdge;
 			var randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f,1f));
 			Vector3 spawnPosition = transform.position + (randomDirection * spawnDistance);
-			Enemy toSpawn = enemies[Random.Range(0, enemies.Length)];
+			int index = Random.Range(0, enemies.Length);
+
+			Enemy toSpawn = enemies[index];
+			if (toSpawn == null)
+			{
+				StartCoroutine(KeepTrying(index));
+				/*int i = 0;
+				foreach(var enemy in enemies)
+				{
+					i++;
+					Debug.Log("Enemy " + i + ": " + enemy, gameObject);
+				}
+				Debug.Log(toSpawn + " - " + enemies.Length + " - " + index + "-" +  enemies[index], gameObject);*/
+
+			}
 			//toSpawn.enemyColorId = Random.Range(1, 3); //3 is exclusive
 			PhotonNetwork.InstantiateSceneObject(toSpawn.gameObject.name, spawnPosition, Quaternion.LookRotation(randomDirection), 0, null);				
 			lastSpawn = Time.time;
 		}
+	}
+
+	IEnumerator KeepTrying(int inx)
+	{
+		int i = 0;
+		while(enemies[inx] == null)
+		{
+			yield return null;
+			Debug.Log("Still trying for " + inx + " on " + gameObject.name, gameObject );
+			i++;
+		}
+		Debug.Log("Got it after " + i + "Frames" );
 	}
 }
