@@ -65,7 +65,8 @@ public class Weapon : Photon.MonoBehaviour {
 		timer = 0f;
 
 		// Play the gun shot audioclip.
-		gunAudio.Play ();
+		if(!gunAudio.isPlaying)
+			gunAudio.Play();
 
 		// Enable the lights.
 		gunLight.enabled = true;
