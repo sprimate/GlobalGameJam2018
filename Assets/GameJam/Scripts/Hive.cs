@@ -9,7 +9,6 @@ public class Hive : ADamageable {
 			return true;
 		}
 	} 
-	public Enemy[] enemies;
 	//public int hiveOriginalColor = 1;
 
 	public int numChanges = 4;
