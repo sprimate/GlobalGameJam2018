@@ -185,7 +185,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 8434b04884c414ac6b468e10945685e6,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 02e6208ec76314158a9f548f51fe9f11, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 895bf215a151e43fd873a6f16868339c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -7379,7 +7379,7 @@ MonoBehaviour:
   attackDamage: 10
   sinkSpeed: 2.5
   scoreValue: 10
-  deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
+  deathClip: {fileID: 8300000, guid: 31b64db7e4f1f42f2842b309903d5cfe, type: 3}
   destroyEnemyGameObjectAfterKilledTime: 0.5
   minSpeed: 0
   maxSpeed: 0
