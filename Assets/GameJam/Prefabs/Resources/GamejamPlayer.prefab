@@ -552,15 +552,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14bd909413cf4e9f876979043912ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 12
   id: 0
-  startingHealth: 2147483647
+  startingHealth: 400
   currentHealth: 0
   healthSlider: {fileID: 0}
   damageImage: {fileID: 0}
   deathClip: {fileID: 0}
   flashSpeed: 5
-  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
+  flashColour: {r: 1, g: 0, b: 0, a: 0.553}
   realRotation: {x: 0, y: 0, z: 0, w: 1}
   rotationAtLastPacket: {x: 0, y: 0, z: 0, w: 1}
   realPosition: {x: 0, y: 0, z: 0}
