@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 114668996035347458, guid: e343260a5d164c446b4ad3e7d0d19dcc, type: 2}
+  - {fileID: 0}
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
   - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
@@ -193,7 +193,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.4001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137398692495074376
 SkinnedMeshRenderer:
