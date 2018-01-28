@@ -185,9 +185,10 @@ namespace CompleteProject
                 
             }
 
+
             #region PlayerShooting
              // Add the time since Update was last called to the timer.
-            if (Input.GetButtonUp("Swap"))
+            if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
             {                  
             //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
                 Swap(id == 1 ? 2 : 1);
@@ -293,7 +294,6 @@ namespace CompleteProject
                 return;
             }        
             Vector3 tempPos = transform.position;
-            Debug.Log("Settingn tempPos to " + tempPos);
             int otherId = id == 1 ? 2 : 1;
             object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
@@ -332,14 +332,13 @@ namespace CompleteProject
         [PunRPC]
         public void SetPosition(int player1, Vector3 pos1, int player2, Vector3 pos2)
         {
-            foreach(Player p in GameJamGameManager.instance.players)
+            if (PhotonNetwork.isMasterClient)
             {
-                if (p.id == player1)
+                foreach(Player p in GameJamGameManager.instance.players)
                 {
-                    p.transform.position = (pos1);
-                }
-                else{
-                    p.transform.position = pos2;
+                    p.transform.position = p.id == player1 ? pos2 : pos1;
+                    Debug.Log("Position p: " + p.transform.position);
+
                 }
             }
         }
