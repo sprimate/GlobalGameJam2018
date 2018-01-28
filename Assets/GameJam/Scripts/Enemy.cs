@@ -196,8 +196,7 @@ public class Enemy : ADamageable {
 		}
 	}
 
-	const float dropProb = .02f;
-	const int numDropTypes = 2;
+	const float dropProb = .05f;
 	private void MaybeDropSomething(){
 		float roll = UnityEngine.Random.Range (0f, 1f);
 		if (roll < dropProb) {
@@ -211,6 +210,9 @@ public class Enemy : ADamageable {
 				break;
 			case 1:
 				item = firingRateDrop;
+				break;
+			case 2:
+				item = speedDrop;
 				break;
 			}
 

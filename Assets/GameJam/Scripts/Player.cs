@@ -14,7 +14,9 @@ namespace CompleteProject
 #region PortedFromPlayerMovement
         public float bufferBetweenDamageTaken;
         float lastDamageTaken;
-        public float speed = 6f;            // The speed that the player will move at.
+
+		public float speed = defaultPlayerSpeed;            // The speed that the player will move at.
+		const float defaultPlayerSpeed = 12f;
 		public int id;
         Vector3 movement;                   // The vector to store the direction of the player's movement.
         Animator anim;                      // Reference to the animator component.
@@ -452,6 +454,17 @@ namespace CompleteProject
 		public void TemporaryFiringRateIncrease()
 		{
 			weapon.TemporaryFiringRateIncrease ();
+		}
+
+		public void TemporarySpeedIncrease()
+		{
+			speed = defaultPlayerSpeed * 1.5f;
+			Invoke ("ResetPlayerSpeed", 10f);
+		}
+
+		private void ResetPlayerSpeed()
+		{
+			speed = defaultPlayerSpeed;
 		}
 
         public Quaternion realRotation = Quaternion.identity;
