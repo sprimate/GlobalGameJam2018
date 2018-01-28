@@ -12,6 +12,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		return PhotonNetwork.player.ID;
 	}}
 
+	bool gameStarted = false;
 	public Transform[] hiveStartingPoints;
 	public string playerLayerName;
 	public GameObject playerPrefab;
@@ -74,7 +75,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			}
 		}
 		
-		if (numPlayers == maxNumPlayers)
+		if (waitForAllPlayers && numPlayers == maxNumPlayers)
 		{
 			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
@@ -87,6 +88,13 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+		if (gameStarted)
+		{
+			return;
+		}
+		
+		gameStarted = true;
+		Debug.Log("ya? " + hiveStartingPoints.Length);
 		int color = UnityEngine.Random.Range(1, 3);
 		foreach(Transform t in hiveStartingPoints)
 		{

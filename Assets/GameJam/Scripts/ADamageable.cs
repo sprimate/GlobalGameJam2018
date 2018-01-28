@@ -79,8 +79,9 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	}	
 
 	[PunRPC]
-	void RemoveDamage(int amount)
+	protected virtual void RemoveDamage(int amount)
 	{
+		Debug.Log("Damage amount: " + amount);
 		currentHealth -= amount;
 	}
 

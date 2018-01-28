@@ -71,6 +71,13 @@ public class Hive : ADamageable {
 		Debug.Log("HIVE SHOULD BE DEAD");
 		Destroy();
     }
+
+	[PunRPC]
+	protected override void RemoveDamage(int amount)
+	{
+		Debug.Log("Damage amount: " + amount);
+		currentHealth -= amount;
+	}
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{
 		GameJamGameManager gm = GameJamGameManager.instance;
