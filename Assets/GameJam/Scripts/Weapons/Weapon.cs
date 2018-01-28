@@ -19,8 +19,9 @@ public class Weapon : Photon.MonoBehaviour {
 	RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
 	int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
 	 public int damagePerShot = 20;                  // The damage inflicted by each bullet.
-	public float timeBetweenBullets = 0.15f;        // The time between each shot.
+	public float timeBetweenBullets = defaultTimeBetweenBullets;        // The time between each shot.
 	int playerColorId;
+	const float defaultTimeBetweenBullets = 0.15f;
 
 
 	// Use this for initialization
@@ -152,4 +153,19 @@ public class Weapon : Photon.MonoBehaviour {
 		object[] parameters = new object[] {nextColor};
 		GetComponent<PhotonView>().RPC("SetColor", PhotonTargets.All, parameters );
 	}
+
+	public void TemporaryFiringRateIncrease()
+	{
+		timeBetweenBullets = timeBetweenBullets / 2;
+		gunAudio.pitch = 2;
+
+		Invoke ("ResetFiringRate", 10f);
+
+	}
+
+	private void ResetFiringRate(){
+		timeBetweenBullets = defaultTimeBetweenBullets;
+		gunAudio.pitch = 1;
+	}
+
 }

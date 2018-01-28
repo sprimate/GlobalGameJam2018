@@ -185,11 +185,40 @@ public class Enemy : ADamageable {
 			// Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
 			enemyAudio.clip = deathClip;
 			enemyAudio.Play ();
+
+			//low chance of dropping powerup
+			MaybeDropSomething();
+
 		}
 		catch(Exception)
 		{
 			
 		}
+	}
+
+	const float dropProb = .02f;
+	const int numDropTypes = 2;
+	private void MaybeDropSomething(){
+		float roll = UnityEngine.Random.Range (0f, 1f);
+		if (roll < dropProb) {
+			
+			GameObject item = healthDrop;
+			int whichItem = (int)UnityEngine.Random.Range (0f, numDropTypes);
+			Debug.Log ("dropping item "+whichItem);
+			switch (whichItem) {
+			case 0:
+				item = healthDrop;
+				break;
+			case 1:
+				item = firingRateDrop;
+				break;
+			}
+
+
+
+			Instantiate(item, gameObject.transform.position, Quaternion.identity);
+		}
+
 	}
 
 	public void StartSinking ()

@@ -448,6 +448,11 @@ namespace CompleteProject
 			weapon.GetComponent<PhotonView>().RPC("SetColor", PhotonTargets.All, parameters );
 		}
 
+		public void TemporaryFiringRateIncrease()
+		{
+			weapon.TemporaryFiringRateIncrease ();
+		}
+
         public Quaternion realRotation = Quaternion.identity;
         public Quaternion rotationAtLastPacket = Quaternion.identity;
         public Vector3 realPosition = Vector3.zero;
