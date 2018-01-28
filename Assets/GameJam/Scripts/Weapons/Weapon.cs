@@ -4,6 +4,9 @@ using UnityEngine;
 
 [RequireComponent(typeof (PhotonView))]
 public class Weapon : Photon.MonoBehaviour {
+
+	public float autoAimRadius = .7f;
+	public LayerMask shootableLayers;
 	ParticleSystem gunParticles;                    // Reference to the particle system.
 	LineRenderer gunLine;                           // Reference to the line renderer.
 	AudioSource gunAudio;                           // Reference to the audio source.
@@ -79,7 +82,8 @@ public class Weapon : Photon.MonoBehaviour {
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
 		// Perform the raycast against gameobjects on the shootable layer and if it hits something...
-		if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+		//if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+		if (Physics.SphereCast(shootRay.origin, autoAimRadius, shootRay.direction, out shootHit, range, shootableMask ))
 		{
 			if (GameJamGameManager.LocalPlayerId == playerId )
 			{
