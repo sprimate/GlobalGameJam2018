@@ -369,8 +369,37 @@ namespace CompleteProject
             // Turn off the movement and shooting scripts.
             playerMovement.enabled = false;
             weapon.enabled = false;
+            object[] parameters = new object[1] {id};
+            GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
         }
 
+    [PunRPC]
+	public void KillPlayer(int playerId)
+	{
+        Debug.Log("Ded");
+        Player player = null;
+
+        GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+        foreach(Player p in GameJamGameManager.instance.players)
+        {
+            if (playerId == p.id)
+            {
+                player = p;
+                Debug.Log("Am I here?");
+                if (PhotonNetwork.isMasterClient)
+                {
+                    Debug.Log("Was photonn destroying?");
+                    PhotonNetwork.Destroy(player.gameObject);
+                }
+            }
+        }
+        
+        if (player != null)
+        {
+            GameJamGameManager.instance.players.Remove(player);
+        }
+
+	}
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.

@@ -106,6 +106,23 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		PauseManager.instance.Unpause();
 	}
 
+	public void KillPlayer(Player player)
+	{
+		foreach(Player p in players)
+		{
+			if (player == p)
+			{
+				PhotonNetwork.Destroy(player.gameObject);
+			}
+		}
+
+		if (player.id == LocalPlayerId)
+		{
+
+		}
+		players.Remove(player);
+	}
+
 	void CreatePlayer()
 	{
 		Instantiate(playerPrefab);

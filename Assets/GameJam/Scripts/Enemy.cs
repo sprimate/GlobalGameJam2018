@@ -131,8 +131,13 @@ public class Enemy : ADamageable {
 			Attack ();
 		}
 
+		if (target == null)
+		{
+			
+		}
+
 		// If the player has zero or less health...
-		if(target.currentHealth <= 0)
+		if(target != null && target.currentHealth <= 0)
 		{
 			// ... tell the animator the player is dead.
 			anim.SetTrigger ("PlayerDead");
