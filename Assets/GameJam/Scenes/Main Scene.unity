@@ -3235,22 +3235,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: instantiationId
       value: 2
@@ -3258,11 +3258,6 @@ Prefab:
     - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114680890187567402, guid: 83e86d924f5a54230a5154f7a3f6a160,
-        type: 2}
-      propertyPath: id
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
@@ -3980,7 +3975,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 114668996035347458, guid: 990d83f393b963642bb8c641bcb0cfdc, type: 2}
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
-  - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
+  - {fileID: 114481785881680840, guid: c4db686b4cb5ab641a8f6ae0157cdf39, type: 2}
   - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
   spawnDistanceFromEdge: 1
   maxSpawnRate: 1.5
