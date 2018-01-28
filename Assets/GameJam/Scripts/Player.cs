@@ -277,7 +277,6 @@ namespace CompleteProject
         {
             var allPlayers = FindObjectsOfType<Player>();
 
-
 //            List<Vector3> players = new List<Vector3>();
             Player otherPlayer = null;
             foreach(Player x in allPlayers)//TODO - this is so shitty. Do better, priyal. 
@@ -296,11 +295,12 @@ namespace CompleteProject
             Vector3 tempPos = transform.position;
             object[] parameters = new object[1] {otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            
             //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
             parameters[0] = tempPos;
-            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            //GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+           // otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+           otherPlayer. GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
 
             /*if (PhotonNetwork.player.IsMasterClient)
