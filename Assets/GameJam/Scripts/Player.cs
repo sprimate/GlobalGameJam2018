@@ -230,7 +230,6 @@ namespace CompleteProject
         {
             if (!GetComponent<PhotonView>().isMine)
             {
-                Debug.Log("Teleporting: " + teleportPosition.HasValue);
                 if (teleportPosition.HasValue)
                 {
                     transform.position = teleportPosition.Value;
