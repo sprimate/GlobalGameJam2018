@@ -85,12 +85,22 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		}
 		else
 		{
-			Debug.Log("Waiting for more players to join");
+			displayWaitingnForPlayersMessage = true;
+		}
+	}
+
+	bool displayWaitingnForPlayersMessage;
+	void OnGUI()
+	{
+		if (displayWaitingnForPlayersMessage)
+		{
+			GUI.Label(new Rect(10, 10, 100, 20), "Waiting for more players to join");
 		}
 	}
 
 	void StartGame()
 	{
+		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
 		{
 			return;
