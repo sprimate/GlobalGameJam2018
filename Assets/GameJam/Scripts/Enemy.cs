@@ -1,48 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using CompleteProject;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : ADamageable {
  	public float timeBetweenAttacks = 0.5f;     // The time in seconds between each attack.
 	public int attackDamage = 10;               // The amount of health taken away per attack.
-
-
 	Animator anim;                              // Reference to the animator component.
 	Player target;                  // Reference to the player's health.
 	float timer;                                // Timer for counting up to the next attack.
 	UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
 	
-	public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-	public int currentHealth;                   // The current health the enemy has.
 	public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
 	public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
 	public AudioClip deathClip;                 // The sound to play when the enemy dies.
-
-
-	AudioSource enemyAudio;                     // Reference to the audio source.
-	ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
 	CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
-	bool isDead;                                // Whether the enemy is dead.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
-
-	public int enemyColorId;
 	IList<Player> playersInRange = new List<Player>();
 
 
-	void Awake ()
+	protected override void Awake()
 	{
 		// Setting up the references.
 		
 		anim = GetComponent <Animator> ();
 		nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
-		enemyAudio = GetComponent <AudioSource> ();
-		hitParticles = GetComponentInChildren <ParticleSystem> ();
 		capsuleCollider = GetComponent <CapsuleCollider> ();
-
 		// Setting the current health when the enemy first spawns.
 		currentHealth = startingHealth;
-
 	}
 
 
@@ -71,10 +57,8 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-
 	void Update ()
 	{
-
 		float closestDistance = float.MaxValue;
 		foreach(Player p in GameJamGameManager.instance.players)
 		{
@@ -123,7 +107,6 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-
 	void Attack ()
 	{
 		// Reset the timer.
@@ -139,57 +122,29 @@ public class Enemy : MonoBehaviour {
 		}
 		// If the player has health to lose...
 	}
-			
-	public void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
-	{
-		// If the enemy is dead...
-		if(isDead)
-			// ... no need to take damage so exit the function.
-			return;
-
-		if (playerColor != enemyColorId) {
-			//dont take damage if the shooting player isnt your type
-			return;
-		}
-
-		// Play the hurt sound effect.
-		enemyAudio.Play ();
-
-		// Reduce the current health by the amount of damage sustained.
-		currentHealth -= amount;
-		
-		// Set the position of the particle system to where the hit was sustained.
-		hitParticles.transform.position = hitPoint;
-
-		// And play the particles.
-		hitParticles.Play();
-
-		// If the current health is less than or equal to zero...
-		if(currentHealth <= 0)
-		{
-			// ... the enemy is dead.
-			GetComponent<PhotonView>().RPC("Death", PhotonTargets.All);
-		}
-	}
 
 	[PunRPC]
-	void Death ()
+	protected override void Death ()
 	{
-		Debug.Log("Death");
-		// The enemy is dead.
-		isDead = true;
+		try{
+			// The enemy is dead.
+			isDead = true;
 
-		// Turn the collider into a trigger so shots can pass through it.
-		capsuleCollider.isTrigger = true;
+			// Turn the collider into a trigger so shots can pass through it.
+			capsuleCollider.isTrigger = true;
 
-		// Tell the animator that the enemy is dead.
-		anim.SetTrigger ("Dead");
+			// Tell the animator that the enemy is dead.
+			anim.SetTrigger ("Dead");
 
-		// Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
-		enemyAudio.clip = deathClip;
-		enemyAudio.Play ();
+			// Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
+			enemyAudio.clip = deathClip;
+			enemyAudio.Play ();
+		}
+		catch(Exception e)
+		{
+			
+		}
 	}
-
 
 	public void StartSinking ()
 	{
@@ -210,26 +165,32 @@ public class Enemy : MonoBehaviour {
 	}
 
 	[PunRPC]
-	void Destroy()
+	void DestroyRemotely()
 	{		
 		PhotonView pv = GetComponent<PhotonView>();
 		if (pv.isMine)
 		{
-			Debug.Log("Destroingn from RPC");
+			Debug.Log("Destroying from RPC");
 			PhotonNetwork.Destroy (gameObject);
+		}
+	}
+
+	void Destroy()
+	{
+		PhotonView pv = GetComponent<PhotonView>();
+		if (pv.isMine)
+		{
+			PhotonNetwork.Destroy (gameObject);
+		}
+		else
+		{
+			pv.RPC("DestroyRemotely", PhotonTargets.All);
 		}
 	}
 
 	IEnumerator DestroyAfterSeconds(float time)
 	{
 		yield return new WaitForSeconds(time);
-		PhotonView pv = GetComponent<PhotonView>();
-		if (pv.isMine)
-		{
-			PhotonNetwork.Destroy (gameObject);
-		}
-		else{
-			pv.RPC("Destroy", PhotonTargets.All);
-		}
+		Destroy();
 	}
 }

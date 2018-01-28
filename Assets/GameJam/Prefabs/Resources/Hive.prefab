@@ -22,7 +22,9 @@ GameObject:
   - component: {fileID: 33178237415200634}
   - component: {fileID: 135244288937798526}
   - component: {fileID: 23032462234677652}
-  m_Layer: 0
+  - component: {fileID: 114047188783068840}
+  - component: {fileID: 114909970675399030}
+  m_Layer: 9
   m_Name: Hive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,8 +38,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1376236416235052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.42256808, y: 0.6326103, z: 0.60846376}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -28.1, y: 1.7, z: -27.3}
+  m_LocalScale: {x: 13.693946, y: 13.693939, z: 13.693939}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -83,6 +85,55 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1376236416235052}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114047188783068840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376236416235052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32c125e611d649e28a7c51d7eb73a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyColorId: 0
+  startingHealth: 10000
+  currentHealth: 10000
+  enemies:
+  - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
+  - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
+  hiveOriginalColor: 1
+  numChanges: 4
+  hiveMinScale: 1
+  hiveMaxScale: 1
+  spawnDistanceFromEdge: 5
+  hiveSpawnRate: 3
+--- !u!114 &114909970675399030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376236416235052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 0
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 0}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!135 &135244288937798526
 SphereCollider:
   m_ObjectHideFlags: 1

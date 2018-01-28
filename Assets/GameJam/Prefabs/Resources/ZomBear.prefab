@@ -7416,14 +7416,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b976a6dac32b4e619a91f4940d10c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenAttacks: 0.5
-  attackDamage: 15
+  enemyColorId: 2
   startingHealth: 100
   currentHealth: 0
+  timeBetweenAttacks: 0.5
+  attackDamage: 15
   sinkSpeed: 2.5
   scoreValue: 10
   deathClip: {fileID: 8300000, guid: 62366b8d2c37a49dca550841c741317f, type: 3}
-  enemyColorId: 2
 --- !u!114 &114829755880575020
 MonoBehaviour:
   m_ObjectHideFlags: 1

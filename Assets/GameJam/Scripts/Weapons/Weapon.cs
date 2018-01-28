@@ -10,18 +10,14 @@ public class Weapon : Photon.MonoBehaviour {
 	Light gunLight;                                 // Reference to the light component.
 	public Light faceLight;								// Duh
 	public float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
-
 	public float range = 100f;                      // The distance the gun can fire.
-
 	float timer;                                    // A timer to determine when to fire.
 	Ray shootRay = new Ray();                       // A ray from the gun end forwards.
 	RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
 	int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
 	 public int damagePerShot = 20;                  // The damage inflicted by each bullet.
 	public float timeBetweenBullets = 0.15f;        // The time between each shot.
-
 	int playerColorId;
-
 
 
 	// Use this for initialization
@@ -88,13 +84,17 @@ public class Weapon : Photon.MonoBehaviour {
 			if (GameJamGameManager.LocalPlayerId == playerId )
 			{
 				// Try and find an EnemyHealth script on the gameobject hit.
-				Enemy enemy = shootHit.collider.GetComponent <Enemy> ();
+				ADamageable enemy = shootHit.collider.GetComponent <ADamageable> ();
 
 				// If the EnemyHealth component exist...
 				if(enemy != null)
 				{
 					// ... the enemy should take damage.
 					enemy.TakeDamage (playerColorId, damagePerShot, shootHit.point);
+				}
+				else
+				{
+					Debug.Log("Enemy is null tho");
 				}
 			}
 			else
