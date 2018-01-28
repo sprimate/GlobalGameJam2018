@@ -31,7 +31,6 @@ namespace CompleteProject
             // Create a layer mask for the floor layer.
             floorMask = LayerMask.GetMask ("Floor");
 #endif
-
             // Set up references.
             anim = GetComponent <Animator> ();
             playerRigidbody = GetComponent <Rigidbody> ();
@@ -45,8 +44,8 @@ namespace CompleteProject
             currentHealth = startingHealth;
             damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
 			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+            healthSlider.maxValue = startingHealth;
         }
-
 
         void FixedUpdate ()
         {
@@ -171,7 +170,6 @@ namespace CompleteProject
                 // ... transition the colour back to clear.
                 damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
             }
-
 
             // Reset the damaged flag.
             damaged = false;

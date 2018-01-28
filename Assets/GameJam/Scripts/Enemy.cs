@@ -24,9 +24,10 @@ public class Enemy : ADamageable {
 	public float maxSpeed;
 	public float timeAliveUntilMaxSpeed;
 
-	public float angulatSpeedMin;
+	public float angularSpeedMin;
 	public float angularSpeedMax;
 	public float timeAliveUntilMaxAngularSpeed;
+	float spawnTime;
 
 
 	protected override void Awake()
@@ -38,9 +39,10 @@ public class Enemy : ADamageable {
 		capsuleCollider = GetComponent <CapsuleCollider> ();
 		// Setting the current health when the enemy first spawns.
 		currentHealth = startingHealth;
+		nav.speed = minSpeed;
+		nav.angularSpeed = minSpeed;
 		UpdateTarget();
 	}
-
 
 	void OnTriggerEnter (Collider other)
 	{
@@ -55,7 +57,6 @@ public class Enemy : ADamageable {
 			playersInRange.Add(player);
 		}
 	}
-
 
 	void OnTriggerExit (Collider other)
 	{
@@ -84,7 +85,7 @@ public class Enemy : ADamageable {
 
 	void FixedUpdate()
 	{
-
+		UpdateSpeedValues();
 		// If the enemy and the player have health left...
 		if(currentHealth > 0 && target.currentHealth > 0)
 		{
@@ -101,10 +102,21 @@ public class Enemy : ADamageable {
 			// ... disable the nav mesh agent.
 		}
 	}
+
+	void UpdateSpeedValues()
+	{
+		if (minSpeed == 0)
+		{
+			return;
+		}
+//		float maxSpeedTimePercentage = 1 - (Time.time-spawnTime)/(timeAliveUntilMaxSpeed);
+		//Debug.Log("MaxSpeedTimePercentage: " + maxSpeedTimePercentage);
+		nav.speed = minSpeed + ((maxSpeed - minSpeed) * ((Time.time-spawnTime)/(timeAliveUntilMaxSpeed)));
+		nav.angularSpeed = angularSpeedMin + ((angularSpeedMax - angularSpeedMin) * ((Time.time-spawnTime)/(timeAliveUntilMaxAngularSpeed)));
+	}
 	float lastTargetCheck;
 	void Update ()
 	{
-
 		if (lastTargetCheck + Time.fixedDeltaTime > Time.time)
 		{
 			UpdateTarget();

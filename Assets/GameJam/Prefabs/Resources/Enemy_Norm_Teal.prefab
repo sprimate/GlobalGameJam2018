@@ -7379,14 +7379,14 @@ MonoBehaviour:
   attackDamage: 10
   sinkSpeed: 2.5
   scoreValue: 10
-  deathClip: {fileID: 8300000, guid: d5530ebe4bbc84ab09d4021498d1306e, type: 3}
+  deathClip: {fileID: 8300000, guid: 31b64db7e4f1f42f2842b309903d5cfe, type: 3}
   destroyEnemyGameObjectAfterKilledTime: 0.5
-  minSpeed: 0
-  maxSpeed: 0
-  timeAliveUntilMaxSpeed: 0
-  angulatSpeedMin: 0
-  angularSpeedMax: 0
-  timeAliveUntilMaxAngularSpeed: 0
+  minSpeed: 8
+  maxSpeed: 16
+  timeAliveUntilMaxSpeed: 120
+  angularSpeedMin: 320
+  angularSpeedMax: 450
+  timeAliveUntilMaxAngularSpeed: 120
 --- !u!114 &114997091927550794
 MonoBehaviour:
   m_ObjectHideFlags: 1
