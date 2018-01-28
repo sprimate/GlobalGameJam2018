@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hive : ADamageable {
 	public Enemy[] enemies;
-	public int hiveOriginalColor = 1;
+	//public int hiveOriginalColor = 1;
 
 	public int numChanges = 4;
 	public float hiveMinScale = 1f;
@@ -26,7 +26,18 @@ public class Hive : ADamageable {
 	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
 	{
 		base.TakeDamage(playerColor, amount, hitPoint);
-	} 
+		float healthPercentage = currentHealth/startingHealth;
+		if (((1/numChanges) % healthPercentage - 1) % 2 == 0)
+		{
+			SetEnemyColor(enemyColorId == 1 ? 2 : 1);
+		}
+	}
+	
+	public void SetEnemyColor(int id)
+	{
+		enemyColorId = id;
+		GetComponent<Renderer>().material.color = PlayerColor.getColorForId(enemyColorId);
+	}
 
 	void HandleSpawns()
 	{

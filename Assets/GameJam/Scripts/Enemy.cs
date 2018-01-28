@@ -140,7 +140,7 @@ public class Enemy : ADamageable {
 			enemyAudio.clip = deathClip;
 			enemyAudio.Play ();
 		}
-		catch(Exception e)
+		catch(Exception)
 		{
 			
 		}

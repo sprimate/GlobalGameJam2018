@@ -265,7 +265,7 @@ namespace CompleteProject
         public void Swap(int playerTarget)
         {
             var allPlayers = FindObjectsOfType<Player>();
-            List<Vector3> players = new List<Vector3>();
+//            List<Vector3> players = new List<Vector3>();
             Player otherPlayer = null;
             foreach(Player x in allPlayers)//TODO - this is so shitty. Do better, priyal. 
             {
@@ -337,8 +337,6 @@ namespace CompleteProject
 
         void Death ()
         {
-            Debug.Log("Death played");
-
             // Set the death flag so this function won't be called again.
             isDead = true;
 
