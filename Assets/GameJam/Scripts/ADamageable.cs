@@ -5,6 +5,12 @@ using UnityEngine;
 
 [RequireComponent (typeof(PhotonView))]
 public abstract class ADamageable : MonoBehaviour{
+
+	protected virtual bool SendDamageAcrossNetwork {
+		get {
+			return false;
+		}
+	} 
 	protected bool isDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
@@ -42,7 +48,15 @@ public abstract class ADamageable : MonoBehaviour{
 		// Play the hurt sound effect.
 
 		// Reduce the current health by the amount of damage sustained.
-		currentHealth -= amount;
+		if (SendDamageAcrossNetwork)
+		{
+			object[] parameters = new object[1] {amount};
+			GetComponent<PhotonView>().RPC("RemoveDamage", PhotonTargets.All, parameters);
+		}
+		else
+		{
+			currentHealth -= amount;
+		}
 
 		// If the current health is less than or equal to zero...
 		if(currentHealth <= 0)
@@ -63,6 +77,12 @@ public abstract class ADamageable : MonoBehaviour{
 			Debug.Log("Exception caught: " + e);
 		}
 	}	
+
+	[PunRPC]
+	void RemoveDamage(int amount)
+	{
+		currentHealth -= amount;
+	}
 
 	protected void Destroy()
 	{
