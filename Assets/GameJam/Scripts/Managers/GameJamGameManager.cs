@@ -92,16 +92,14 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		{
 			return;
 		}
-		
+
 		gameStarted = true;
-		Debug.Log("ya? " + hiveStartingPoints.Length);
 		int color = UnityEngine.Random.Range(1, 3);
 		foreach(Transform t in hiveStartingPoints)
 		{
 			object[] parameters = new object[] {color};
 			PhotonNetwork.InstantiateSceneObject(hivePrefab.name, t.position, Quaternion.identity, 0, parameters);				
 			color = color == 1 ? 2 : 1;
-
 		}
 		PauseManager.instance.Unpause();
 	}

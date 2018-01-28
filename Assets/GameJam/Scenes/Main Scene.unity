@@ -3207,8 +3207,8 @@ MonoBehaviour:
     type: 2}
   hivePrefab: {fileID: 1376236416235052, guid: 5c207a25242f949b3806898506cb8731, type: 2}
   players: []
-  maxNumPlayers: 2
-  waitForAllPlayers: 0
+  maxNumPlayers: 1
+  waitForAllPlayers: 1
 --- !u!1 &1591794898
 GameObject:
   m_ObjectHideFlags: 0

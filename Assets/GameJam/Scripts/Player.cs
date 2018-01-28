@@ -83,47 +83,53 @@ namespace CompleteProject
 
         void Turning ()
         {
-#if !MOBILE_INPUT
-            // Create a ray from the mouse cursor on screen in the direction of the camera.
-            Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
-
-            // Create a RaycastHit variable to store information about what was hit by the ray.
-            RaycastHit floorHit;
-
-            // Perform the raycast and if it hits something on the floor layer...
-            if(Physics.Raycast (camRay, out floorHit, camRayLength, floorMask))
+            if (Input.GetJoystickNames().Length ==  0)
             {
-                // Create a vector from the player to the point on the floor the raycast from the mouse hit.
-                Vector3 playerToMouse = floorHit.point - transform.position;
+                // Create a ray from the mouse cursor on screen in the direction of the camera.
+                Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
-                // Ensure the vector is entirely along the floor plane.
-                playerToMouse.y = 0f;
+                // Create a RaycastHit variable to store information about what was hit by the ray.
+                RaycastHit floorHit;
 
-                // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
-                Quaternion newRotatation = Quaternion.LookRotation (playerToMouse);
+                // Perform the raycast and if it hits something on the floor layer...
+                if(Physics.Raycast (camRay, out floorHit, camRayLength, floorMask))
+                {
+                    // Create a vector from the player to the point on the floor the raycast from the mouse hit.
+                    Vector3 playerToMouse = floorHit.point - transform.position;
 
-                // Set the player's rotation to this new rotation.
-                playerRigidbody.MoveRotation (newRotatation);
+                    // Ensure the vector is entirely along the floor plane.
+                    playerToMouse.y = 0f;
+
+                    // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
+                    Quaternion newRotatation = Quaternion.LookRotation (playerToMouse);
+
+                    // Set the player's rotation to this new rotation.
+                    playerRigidbody.MoveRotation (newRotatation);
+                }
             }
-#else
-
-            Vector3 turnDir = new Vector3(CrossPlatformInputManager.GetAxisRaw("Mouse X") , 0f , CrossPlatformInputManager.GetAxisRaw("Mouse Y"));
-
-            if (turnDir != Vector3.zero)
+            else
             {
-                // Create a vector from the player to the point on the floor the raycast from the mouse hit.
-                Vector3 playerToMouse = (transform.position + turnDir) - transform.position;
+                Vector3 turnDir = new Vector3(Input.GetAxisRaw("Right Stick Horizontal") , 0f , Input.GetAxisRaw("Right Stick Vertical"));
+                Debug.Log("Joystic discovered");
+                if (turnDir != Vector3.zero)
+                {
+                    // Create a vector from the player to the point on the floor the raycast from the mouse hit.
+                    Vector3 playerToMouse = (transform.position + turnDir) - transform.position;
 
-                // Ensure the vector is entirely along the floor plane.
-                playerToMouse.y = 0f;
+                    // Ensure the vector is entirely along the floor plane.
+                    playerToMouse.y = 0f;
 
-                // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
-                Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
+                    // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
+                    Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
 
-                // Set the player's rotation to this new rotation.
-                playerRigidbody.MoveRotation(newRotatation);
+                    // Set the player's rotation to this new rotation.
+                    playerRigidbody.MoveRotation(newRotatation);
+                }
+                else
+                {
+                    Debug.Log("Null and shit");
+                }
             }
-#endif
         }
 
 
@@ -185,40 +191,42 @@ namespace CompleteProject
             #region PlayerShooting
              // Add the time since Update was last called to the timer.
 
-#if !MOBILE_INPUT
-            // If the Fire1 button is being press and it's time to fire...
-			if(GameJamGameManager.LocalPlayerId == id)
+            if (Input.GetJoystickNames().Length == 0)
             {
-                if (Input.GetButton ("Fire1") && Time.timeScale != 0)
+                // If the Fire1 button is being press and it's time to fire...
+                if(GameJamGameManager.LocalPlayerId == id)
                 {
-                    // ... shoot the gun.
-                    object[] parameters = new object[] {id};
-                    weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
-                    //weapon.Shoot (id);
-                }
-                if (Input.GetButtonUp("Swap"))
-                {                  
-                  //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
-                    Swap(id == 1 ? 2 : 1);
-                    //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
-                }
+                    if (Input.GetButton ("Fire1") && Time.timeScale != 0)
+                    {
+                        // ... shoot the gun.
+                        object[] parameters = new object[] {id};
+                        weapon.GetComponent<PhotonView>().RPC("Shoot", PhotonTargets.All, parameters );
+                        //weapon.Shoot (id);
+                    }
+                    if (Input.GetButtonUp("Swap"))
+                    {                  
+                    //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
+                        Swap(id == 1 ? 2 : 1);
+                        //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
+                    }
 
-//				if(Input.GetButtonUp ("Fire2"))
-//				{
-//					weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
-//				}
+    //				if(Input.GetButtonUp ("Fire2"))
+    //				{
+    //					weapon.GetComponent<PhotonView>().RPC("SwapColor", PhotonTargets.All );
+    //				}
+                }
+                    
             }
-				
-#else
-            // If there is input on the shoot direction stick and it's time to fire...
-            if ((CrossPlatformInputManager.GetAxisRaw("Mouse X") != 0 || CrossPlatformInputManager.GetAxisRaw("Mouse Y") != 0) && timer >= timeBetweenBullets)
+            else
             {
-                // ... shoot the gun
-                weapon.Shoot(id);
+                // If there is input on the shoot direction stick and it's time to fire...
+                if ((CrossPlatformInputManager.GetAxisRaw("Right Stick Horizontal") != 0 || CrossPlatformInputManager.GetAxisRaw("Right Stick Vertical") != 0))
+                {
+                    // ... shoot the gun
+                    weapon.Shoot(id);
+                }
             }
-#endif
             #endregion
-        
         }
 
         void SmoothLag()

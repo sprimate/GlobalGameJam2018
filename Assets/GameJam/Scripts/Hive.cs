@@ -20,15 +20,16 @@ public class Hive : ADamageable {
 	float lastSpawn;
 
     // Use this for initialization
-    void Start () {
+    void Start () 
+	{
  		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		HandleSpawns();
 	}
-
 	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
 	{
 		base.TakeDamage(playerColor, amount, hitPoint);
