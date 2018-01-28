@@ -20,6 +20,9 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
 	PhotonView pv;
 
+	public GameObject healthDrop;
+	public GameObject firingRateDrop;
+
 	protected virtual void Awake()
 	{
 		currentHealth = startingHealth;
@@ -107,4 +110,5 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 
 	[PunRPC]
 	protected abstract void Death();
+
 }
