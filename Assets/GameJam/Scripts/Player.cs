@@ -385,15 +385,13 @@ namespace CompleteProject
             if (playerId == p.id)
             {
                 player = p;
-                Debug.Log("Am I here?");
                 if (PhotonNetwork.isMasterClient)
                 {
-                    Debug.Log("Was photonn destroying?");
                     PhotonNetwork.Destroy(player.gameObject);
                 }
             }
         }
-        
+
         if (player != null)
         {
             GameJamGameManager.instance.players.Remove(player);

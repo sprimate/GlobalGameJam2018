@@ -87,13 +87,12 @@ public class Enemy : ADamageable {
 	{
 		UpdateSpeedValues();
 		// If the enemy and the player have health left...
-		if(currentHealth > 0 && target.currentHealth > 0)
+		if(currentHealth > 0 && target != null && target.currentHealth > 0)
 		{
 			// ... set the destination of the nav mesh agent to the player.
 			nav.SetDestination (target.transform.position);
 		}
-		// Otherwise...
-		else
+		else //Otherwise
 		{
 			if (target == null)
 			{
@@ -133,7 +132,7 @@ public class Enemy : ADamageable {
 
 		if (target == null)
 		{
-			
+
 		}
 
 		// If the player has zero or less health...

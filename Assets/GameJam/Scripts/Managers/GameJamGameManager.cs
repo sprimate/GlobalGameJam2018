@@ -11,7 +11,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public static int LocalPlayerId {get {
 		return PhotonNetwork.player.ID;
 	}}
-
+	int destroyedEnemies;
+	int destroyedHives;
 	public float hiveRegenerationTime;
 	bool gameStarted = false;
 	public Transform[] hiveStartingPoints;
@@ -117,12 +118,18 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	public void HiveAboutToBeDestroyed(Hive h)
 	{
+		GameObject.Find("HivesDestroyed").GetComponent<Text>().text = "Hives: " + ++destroyedHives;
 		int newHiveColor = h.enemyColorId;
 		if (h.numChanges % 2 != 0 )
 		{
 			newHiveColor = newHiveColor == 1 ? 2 : 1;
 		}
 		StartCoroutine(RegenerateHive(newHiveColor, h.transform.position));
+	}
+
+	public void RecordEnemyDestroyed()
+	{
+		GameObject.Find("EnemiesDestroyed").GetComponent<Text>().text = "Enemies: " + ++destroyedEnemies;
 	}
 
 	IEnumerator RegenerateHive(int color, Vector3 position)
