@@ -409,7 +409,7 @@ Prefab:
     - target: {fileID: 11423466, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: titleMusic
       value: 
-      objectReference: {fileID: 8300000, guid: d2acd196839627d4982b9a8267838398, type: 3}
+      objectReference: {fileID: 8300000, guid: 0009850cbd1c04011962fef77380d858, type: 3}
     - target: {fileID: 11423466, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
       propertyPath: mainMusic
       value: 
@@ -418,6 +418,18 @@ Prefab:
       propertyPath: changeMusicOnStart
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8286744, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11423466, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: mainMusicPlayer1
+      value: 
+      objectReference: {fileID: 8300000, guid: 7452540f8587240a1b00a5bbf94eaf69, type: 3}
+    - target: {fileID: 11423466, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
+      propertyPath: mainMusicPlayer2
+      value: 
+      objectReference: {fileID: 8300000, guid: 29a05fa07171f4be3a3751fc86c0952d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45616935e4fe10f48b62da1347801a16, type: 2}
   m_IsPrefabParent: 0
