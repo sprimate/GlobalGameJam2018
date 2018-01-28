@@ -7416,7 +7416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b976a6dac32b4e619a91f4940d10c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyColorId: 1
+  enemyColorId: 2
   startingHealth: 30
   healthDrop: {fileID: 1894737646982756, guid: 82510f794d0d6470fa80cb06ebbcb8c5, type: 2}
   firingRateDrop: {fileID: 1819517846112802, guid: 467e3331f04234a669d40cd2c23ef5b4,
@@ -7434,6 +7434,7 @@ MonoBehaviour:
   angularSpeedMin: 95
   angularSpeedMax: 160
   timeAliveUntilMaxAngularSpeed: 120
+  dropProb: 0.05
 --- !u!114 &114829755880575020
 MonoBehaviour:
   m_ObjectHideFlags: 1

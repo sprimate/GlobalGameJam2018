@@ -150,6 +150,13 @@ public class Enemy : ADamageable {
 		}
 	}
 
+	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
+	{
+		base.TakeDamage(playerColor, amount, hitPoint);
+		//low chance of dropping powerup
+		MaybeDropSomething();
+	}
+
 	void Attack ()
 	{
 		foreach(var p in playersInRange)
@@ -185,10 +192,6 @@ public class Enemy : ADamageable {
 			// Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
 			enemyAudio.clip = deathClip;
 			enemyAudio.Play ();
-
-			//low chance of dropping powerup
-			MaybeDropSomething();
-
 		}
 		catch(Exception)
 		{
@@ -196,14 +199,13 @@ public class Enemy : ADamageable {
 		}
 	}
 
-	const float dropProb = .05f;
+	public float dropProb = .05f;
 	private void MaybeDropSomething(){
 		float roll = UnityEngine.Random.Range (0f, 1f);
 		if (roll < dropProb) {
 			
 			GameObject item = healthDrop;
 			int whichItem = (int)UnityEngine.Random.Range (0f, numDropTypes);
-			Debug.Log ("dropping item "+whichItem);
 			switch (whichItem) {
 			case 0:
 				item = healthDrop;
@@ -249,19 +251,6 @@ public class Enemy : ADamageable {
 		{
 			Debug.Log("Destroying from RPC");
 			PhotonNetwork.Destroy (gameObject);
-		}
-	}
-
-	void Destroy()
-	{
-		PhotonView pv = GetComponent<PhotonView>();
-		if (pv.isMine)
-		{
-			PhotonNetwork.Destroy (gameObject);
-		}
-		else
-		{
-			pv.RPC("DestroyRemotely", PhotonTargets.All);
 		}
 	}
 

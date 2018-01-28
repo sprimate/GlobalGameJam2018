@@ -72,6 +72,8 @@ MonoBehaviour:
   speedDrop: {fileID: 0}
   enemies:
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
+  - {fileID: 114668996035347458, guid: 990d83f393b963642bb8c641bcb0cfdc, type: 2}
+  - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
   numChanges: 3
   hiveMinScale: 3
@@ -101,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemies:
-  - {fileID: 0}
+  - {fileID: 114668996035347458, guid: 990d83f393b963642bb8c641bcb0cfdc, type: 2}
   - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
   - {fileID: 114481785881680840, guid: e5171f72421770240bd7c3989fe351e3, type: 2}
   - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
