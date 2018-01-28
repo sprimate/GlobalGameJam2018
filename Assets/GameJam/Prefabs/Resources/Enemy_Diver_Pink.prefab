@@ -35,7 +35,7 @@ GameObject:
   - component: {fileID: 114322137657581664}
   - component: {fileID: 114997091927550794}
   m_Layer: 9
-  m_Name: ZomBunny
+  m_Name: Enemy_Diver_Pink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
