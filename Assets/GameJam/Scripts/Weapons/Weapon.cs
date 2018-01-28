@@ -56,7 +56,11 @@ public class Weapon : Photon.MonoBehaviour {
 	[PunRPC]
 	public void Shoot (int playerId)
 	{
-
+		if (playerId != GameJamGameManager.LocalPlayerId)
+		{
+			return;
+		}
+		
 		if (timer < timeBetweenBullets)
 		{
 			return;
