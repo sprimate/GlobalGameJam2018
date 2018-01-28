@@ -296,11 +296,11 @@ namespace CompleteProject
             Vector3 tempPos = transform.position;
             object[] parameters = new object[1] {otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+            //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
             parameters[0] = tempPos;
             otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
-            GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
+            //GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
 
             /*if (PhotonNetwork.player.IsMasterClient)
