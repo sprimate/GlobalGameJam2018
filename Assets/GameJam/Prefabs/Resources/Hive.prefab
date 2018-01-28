@@ -70,11 +70,7 @@ MonoBehaviour:
   healthDrop: {fileID: 0}
   firingRateDrop: {fileID: 0}
   speedDrop: {fileID: 0}
-  enemies:
-  - {fileID: 114668996035347458, guid: ea3c2728ef33e3a4d99527a86cda6465, type: 2}
-  - {fileID: 114668996035347458, guid: 990d83f393b963642bb8c641bcb0cfdc, type: 2}
-  - {fileID: 114481785881680840, guid: 6e95562fe79dd34409e6eccbf3a729d3, type: 2}
-  - {fileID: 114481785881680840, guid: c4db686b4cb5ab641a8f6ae0157cdf39, type: 2}
+  enemies: []
   numChanges: 3
   hiveMinScale: 3
   hiveMinSpawnRate: 1
