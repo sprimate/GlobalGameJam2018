@@ -89,7 +89,7 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
         CreateRoom();
     }
-
+    int suffixTried = 0;
     void CreateRoom()
     {
         RoomOptions roomOptions = new RoomOptions() { MaxPlayers = Convert.ToByte(GameJamGameManager.instance.maxNumPlayers) };
@@ -99,18 +99,20 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
             PhotonNetwork.CreateRoom(null, roomOptions, null);
             return;
         }
-        int suffix = 1;
+        int suffix = ++suffixTried;
         List<String> names = new List<string>();
         foreach (var r in PhotonNetwork.GetRoomList())
         {
+            Debug.Log("r.Name: " + r.Name);
             names.Add(r.Name);
         }
         do
         {
-            if (!names.Contains(roomName + suffix))
+            if (!names.Contains(GetRoomName(suffix)))
             {
                 Debug.Log("Creating Room " + GetRoomName(suffix));
                 PhotonNetwork.CreateRoom(GetRoomName(suffix), roomOptions, null);
+                suffixTried++;
                 return;
             }
             suffix++;
@@ -132,6 +134,11 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
         Debug.LogError("Cause: " + cause);
     }
 
+    public virtual void OnPhotonCreateRoomFailed()
+    {
+        Debug.Log("Trying to create room again.");
+        CreateRoom();
+    }
     public void OnJoinedRoom()
     {
         Debug.LogWarning("OnJoinedRoom() called by PUN. Now this client is in a room. From here on, your game would be running. For reference, all callbacks are listed in enum: PhotonNetworkingMessage");
