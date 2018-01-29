@@ -295,7 +295,7 @@ namespace CompleteProject
             }        
             Vector3 tempPos = transform.position;
             int otherId = id == 1 ? 2 : 1;
-            Debug.Log("Send " + id + " to " + otherPlayer.transform.position + " and " + otherPlayer.id + " to " + transform.position);
+//            Debug.Log("Send " + id + " to " + otherPlayer.transform.position + " and " + otherPlayer.id + " to " + transform.position);
             object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
@@ -337,7 +337,7 @@ namespace CompleteProject
             if (id == GameJamGameManager.LocalPlayerId)
             {
                 Vector3 position = id == player1 ? pos2 : pos1; ;
-                Debug.Log("Recfeived. Player " + id + " sending to " + position);
+         //       Debug.Log("Recfeived. Player " + id + " sending to " + position);
                 transform.position = position;
             }
             /*if (PhotonNetwork.isMasterClient)

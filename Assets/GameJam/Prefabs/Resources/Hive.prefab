@@ -73,7 +73,7 @@ MonoBehaviour:
   numChanges: 3
   hiveMinScale: 3
   hiveMinSpawnRate: 1
-  hiveMaxSpawnRate: 4
+  hiveMaxSpawnRate: 4.5
 --- !u!114 &114368206319475320
 MonoBehaviour:
   m_ObjectHideFlags: 1
