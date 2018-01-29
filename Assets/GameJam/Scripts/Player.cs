@@ -298,6 +298,7 @@ namespace CompleteProject
             Debug.Log("Send " + id + " to " + otherPlayer.transform.position + " and " + otherPlayer.id + " to " + transform.position);
             object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
+            otherPlayer.GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
 
            //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
