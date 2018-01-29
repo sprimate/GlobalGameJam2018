@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CompleteProject;
@@ -21,15 +21,20 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public GameObject hivePrefab;
 	GameObject playersParent;
 	public List<Player> players = new List<Player>();
+    public static int? maxNumPlayersOverride;
 	public int maxNumPlayers = 2;
 	int numPlayers = 0;
-	public bool waitForAllPlayers = false;
+	bool waitForAllPlayers = true;
 	PlayerRoomIndexing indexer;
 	IList<Hive> hives = new List<Hive>();
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
 	void Awake()
 	{
+        if (maxNumPlayersOverride.HasValue)
+        {
+            maxNumPlayers = maxNumPlayersOverride.Value;
+        }
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		if (waitForAllPlayers)
 		{

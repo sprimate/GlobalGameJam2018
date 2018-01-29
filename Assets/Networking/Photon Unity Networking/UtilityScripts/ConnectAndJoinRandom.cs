@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// This script automatically connects to Photon (using the settings file),
@@ -8,6 +9,7 @@ using System.Collections;
 /// </summary>
 public class ConnectAndJoinRandom : Photon.MonoBehaviour
 {
+    public static string roomName;
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
     public bool AutoConnect = true;
 
@@ -41,19 +43,86 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
     public virtual void OnConnectedToMaster()
     {
         Debug.LogWarning("OnConnectedToMaster() was called by PUN. Now this client is connected and could join a room. Calling: PhotonNetwork.JoinRandomRoom();");
-        PhotonNetwork.JoinRandomRoom();
+//        PhotonNetwork.JoinRoom(roomName);
+        JoinRoom();
     }
 
     public virtual void OnJoinedLobby()
     {
         Debug.LogWarning("OnJoinedLobby(). This client is connected and does get a room-list, which gets stored as PhotonNetwork.GetRoomList(). This script now calls: PhotonNetwork.JoinRandomRoom();");
-        PhotonNetwork.JoinRandomRoom();
+        JoinRoom();
+    }
+
+    void JoinRoom()
+    {
+        if (roomName == null)
+        {
+            Debug.Log("Joining Random Room");
+            PhotonNetwork.JoinRandomRoom();
+            return;
+        }
+        foreach (var r in PhotonNetwork.GetRoomList())
+        {
+            if (r.PlayerCount >= r.MaxPlayers)
+            {
+                continue;
+            }
+            int indexOf = r.Name.IndexOf(roomName);
+            if (indexOf != 0)
+            {
+                continue;
+            }
+            int thisSuffix = -1;
+            if (r.Name.IndexOf("_") == indexOf + roomName.Length && int.TryParse(r.Name.Substring(roomName.Length + 1), out thisSuffix))
+            {
+                Debug.Log("Joining room " + r.Name);
+                PhotonNetwork.JoinRoom(r.Name);
+            }
+        }
+        CreateRoom();
+
     }
 
     public virtual void OnPhotonRandomJoinFailed()
     {
         Debug.LogWarning("OnPhotonRandomJoinFailed() was called by PUN. No random room available, so we create one. Calling: PhotonNetwork.CreateRoom(null, new RoomOptions() {maxPlayers = 4}, null);");
-        PhotonNetwork.CreateRoom(null, new RoomOptions() { MaxPlayers = 4 }, null);
+
+        CreateRoom();
+    }
+
+    void CreateRoom()
+    {
+        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = Convert.ToByte(GameJamGameManager.instance.maxNumPlayers) };
+        if (roomName == null)
+        {
+            Debug.Log("Creating Random Room: " + roomOptions);
+            PhotonNetwork.CreateRoom(null, roomOptions, null);
+            return;
+        }
+        int suffix = 1;
+        List<String> names = new List<string>();
+        foreach (var r in PhotonNetwork.GetRoomList())
+        {
+            names.Add(r.Name);
+        }
+        do
+        {
+            if (!names.Contains(roomName + suffix))
+            {
+                Debug.Log("Creating Room " + GetRoomName(suffix));
+                PhotonNetwork.CreateRoom(GetRoomName(suffix), roomOptions, null);
+                return;
+            }
+            suffix++;
+        } while (suffix <= names.Count);
+        Debug.LogError("Unable to create room from given name " + roomName + " for some unknown reason");
+//        PhotonNetwork.CreateRoom(null, roomOptions, null);
+
+    }
+
+    string GetRoomName(int num)
+    {
+        return roomName + "_" + num;
     }
 
     // the following methods are implemented to give you some context. re-implement them as needed.
