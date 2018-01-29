@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -295,6 +295,7 @@ namespace CompleteProject
             }        
             Vector3 tempPos = transform.position;
             int otherId = id == 1 ? 2 : 1;
+            Debug.Log("Send " + id + " to " + otherPlayer.transform.position + " and " + otherPlayer.id + " to " + transform.position);
             object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);
             //otherPlayer.GetComponent<PhotonView>().RPC("SetOtherTeleportPosition", PhotonTargets.All, parameters);
@@ -332,7 +333,13 @@ namespace CompleteProject
         [PunRPC]
         public void SetPosition(int player1, Vector3 pos1, int player2, Vector3 pos2)
         {
-            if (PhotonNetwork.isMasterClient)
+            if (id == GameJamGameManager.LocalPlayerId)
+            {
+                Vector3 position = id == player1 ? pos2 : pos1; ;
+                Debug.Log("Recfeived. Player " + id + " sending to " + position);
+                transform.position = position;
+            }
+            /*if (PhotonNetwork.isMasterClient)
             {
                 foreach(Player p in GameJamGameManager.instance.players)
                 {
@@ -340,7 +347,7 @@ namespace CompleteProject
                     Debug.Log("Position p: " + p.transform.position);
 
                 }
-            }
+            }*/
         }
 
         Vector3 otherPosition;
