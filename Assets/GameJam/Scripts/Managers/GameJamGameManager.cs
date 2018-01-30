@@ -153,17 +153,24 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     {
         Player closestPlayer = null;
         float closestDistance = float.MaxValue;
-        foreach (Player p in GameJamGameManager.instance.players)
+        foreach (Player p in players)
         {
-            if (p.isDead)
+            try
+            {
+                if (p.isDead)
+                {
+                    continue;
+                }
+                var dist = Vector3.Distance(p.transform.position, position);
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    closestPlayer = p;
+                }
+            }
+            catch (Exception)
             {
                 continue;
-            }
-            var dist = Vector3.Distance(p.transform.position, position);
-            if (dist < closestDistance)
-            {
-                closestDistance = dist;
-                closestPlayer = p;
             }
         }
 
