@@ -380,8 +380,10 @@ namespace CompleteProject
 	{
         Debug.Log("Ded");
         Player player = null;
-
-        GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+        if (id == GameJamGameManager.LocalPlayerId)
+        {
+            GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+        }
         foreach(Player p in GameJamGameManager.instance.players)
         {
             if (playerId == p.id)
