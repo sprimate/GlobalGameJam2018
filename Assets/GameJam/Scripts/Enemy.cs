@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CompleteProject;
@@ -8,7 +8,6 @@ public class Enemy : ADamageable {
  	public float timeBetweenAttacks = 0.5f;     // The time in seconds between each attack.
 	public int attackDamage = 10;               // The amount of health taken away per attack.
 	Animator anim;                              // Reference to the animator component.
-	Player target;                  // Reference to the player's health.
 	float timer;                                // Timer for counting up to the next attack.
 	UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
 	
@@ -28,6 +27,7 @@ public class Enemy : ADamageable {
 	public float angularSpeedMax;
 	public float timeAliveUntilMaxAngularSpeed;
 	float spawnTime;
+    int targetId;
 
 
 	protected override void Awake()
@@ -41,7 +41,7 @@ public class Enemy : ADamageable {
 		currentHealth = startingHealth;
 		nav.speed = minSpeed;
 		nav.angularSpeed = minSpeed;
-		UpdateTarget();
+        targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -68,24 +68,10 @@ public class Enemy : ADamageable {
 		}
 	}
 
-	void UpdateTarget()
-	{
-		target = null;
-		float closestDistance = float.MaxValue;
-		foreach(Player p in GameJamGameManager.instance.players)
-		{
-			var dist = Vector3.Distance(p.transform.position, transform.position);
-			if (dist < closestDistance)
-			{
-				closestDistance = dist;
-				target = p;
-			}
-		}
-	}
-
 	void FixedUpdate()
 	{
 		UpdateSpeedValues();
+        Player target = GameJamGameManager.instance.GetTarget(targetId);
 		// If the enemy and the player have health left...
 		if(currentHealth > 0 && target != null && target.currentHealth > 0)
 		{
@@ -113,13 +99,14 @@ public class Enemy : ADamageable {
 		nav.speed = minSpeed + ((maxSpeed - minSpeed) * ((Time.time-spawnTime)/(timeAliveUntilMaxSpeed)));
 		nav.angularSpeed = angularSpeedMin + ((angularSpeedMax - angularSpeedMin) * ((Time.time-spawnTime)/(timeAliveUntilMaxAngularSpeed)));
 	}
-	float lastTargetCheck;
 	void Update ()
 	{
-		if (lastTargetCheck + Time.fixedDeltaTime > Time.time)
-		{
-			UpdateTarget();
-		}
+        Player target = GameJamGameManager.instance.GetTarget(targetId);
+
+        if (target.id != GameJamGameManager.LocalPlayerId)
+        {
+            return;
+        }
 		// Add the time since Update was last called to the timer.
 		timer += Time.deltaTime;
 

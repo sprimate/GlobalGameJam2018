@@ -337,18 +337,9 @@ namespace CompleteProject
             if (id == GameJamGameManager.LocalPlayerId)
             {
                 Vector3 position = id == player1 ? pos2 : pos1; ;
-         //       Debug.Log("Recfeived. Player " + id + " sending to " + position);
                 transform.position = position;
+                GameJamGameManager.instance.Swap();
             }
-            /*if (PhotonNetwork.isMasterClient)
-            {
-                foreach(Player p in GameJamGameManager.instance.players)
-                {
-                    p.transform.position = p.id == player1 ? pos2 : pos1;
-                    Debug.Log("Position p: " + p.transform.position);
-
-                }
-            }*/
         }
 
         Vector3 otherPosition;

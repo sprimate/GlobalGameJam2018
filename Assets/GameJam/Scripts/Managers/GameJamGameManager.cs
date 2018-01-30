@@ -29,6 +29,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	IList<Hive> hives = new List<Hive>();
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
+    bool swapped = false;
 	void Awake()
 	{
         if (maxNumPlayersOverride.HasValue)
@@ -147,7 +148,42 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		GameObject.Find("EnemiesDestroyed").GetComponent<Text>().text = "Enemies: " + ++destroyedEnemies;
 	}
 
-	IEnumerator RegenerateHive(int color, Vector3 position)
+    public int GetClosestTargetId(Vector3 position)
+    {
+        Player closestPlayer = null;
+        float closestDistance = float.MaxValue;
+        foreach (Player p in GameJamGameManager.instance.players)
+        {
+            var dist = Vector3.Distance(p.transform.position, position);
+            if (dist < closestDistance)
+            {
+                closestDistance = dist;
+                closestPlayer = p;
+            }
+        }
+
+        if (swapped)
+        {
+            return closestPlayer.id == 1 ? 2 : 1;
+        }
+        return closestPlayer.id;
+    }
+
+    public void Swap()
+    {
+        swapped = !swapped;
+    }
+
+    public Player GetTarget(int targetId)
+    {
+        if (swapped)
+        {
+            targetId = targetId == 1 ? 2 : 1;
+        }
+        return players[targetId - 1];
+    }
+
+    IEnumerator RegenerateHive(int color, Vector3 position)
 	{
 		yield return new WaitForSeconds(hiveRegenerationTime);
 		CreateHive(color, position);
