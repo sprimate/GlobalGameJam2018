@@ -8,19 +8,19 @@ using UnityEngine.UI;
 
 public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
-	public static int LocalPlayerId {get {
-		return PhotonNetwork.player.ID;
-	}}
-	int destroyedEnemies;
-	int destroyedHives;
-	public float hiveRegenerationTime;
-	bool gameStarted = false;
-	public Transform[] hiveStartingPoints;
-	public string playerLayerName;
-	public GameObject playerPrefab;
-	public GameObject hivePrefab;
-	GameObject playersParent;
-	public List<Player> players = new List<Player>();
+    public static int LocalPlayerId { get {
+            return PhotonNetwork.player.ID;
+        } }
+    int destroyedEnemies;
+    int destroyedHives;
+    public float hiveRegenerationTime;
+    bool gameStarted = false;
+    public Transform[] hiveStartingPoints;
+    public string playerLayerName;
+    public GameObject playerPrefab;
+    public GameObject hivePrefab;
+    GameObject playersParent;
+    public List<Player> players { get; set; }
     public static int? maxNumPlayersOverride;
 	public int maxNumPlayers = 2;
 	int numPlayers = 0;
@@ -32,6 +32,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     bool swapped = false;
 	void Awake()
 	{
+        players = new List<Player>();
         if (maxNumPlayersOverride.HasValue)
         {
             maxNumPlayers = maxNumPlayersOverride.Value;
