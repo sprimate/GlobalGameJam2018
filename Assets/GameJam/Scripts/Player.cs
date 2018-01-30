@@ -375,32 +375,32 @@ namespace CompleteProject
             GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
         }
 
-    [PunRPC]
-	public void KillPlayer(int playerId)
-	{
-        Debug.Log("Ded");
-        Player player = null;
-        if (id == GameJamGameManager.LocalPlayerId)
+        [PunRPC]
+        public void KillPlayer(int playerId)
         {
-            GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
-        }
-        foreach(Player p in GameJamGameManager.instance.players)
-        {
-            if (playerId == p.id)
+            Debug.Log("Ded");
+            Player player = null;
+            if (id == GameJamGameManager.LocalPlayerId)
             {
-                player = p;
-                if (PhotonNetwork.isMasterClient)
-                {
-                    PhotonNetwork.Destroy(player.gameObject);
-                }
+                GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+            }
+            Destroy();
+        }
+
+        protected void Destroy()
+        {
+            PhotonView pv = GetComponent<PhotonView>();
+            if (pv.isMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 
-       /* if (player != null)
-        {
-            GameJamGameManager.instance.players.Remove(player);
-        }*/
-	}
+
+        /* if (player != null)
+         {
+             GameJamGameManager.instance.players.Remove(player);
+         }*/
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
