@@ -154,6 +154,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         float closestDistance = float.MaxValue;
         foreach (Player p in GameJamGameManager.instance.players)
         {
+            if (p.isDead)
+            {
+                continue;
+            }
             var dist = Vector3.Distance(p.transform.position, position);
             if (dist < closestDistance)
             {
@@ -179,6 +183,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         if (swapped)
         {
             targetId = targetId == 1 ? 2 : 1;
+        }
+        if (players[targetId - 1].isDead)
+        {
+            return players[targetId == 1 ? 1 : 0];
         }
         return players[targetId - 1];
     }
