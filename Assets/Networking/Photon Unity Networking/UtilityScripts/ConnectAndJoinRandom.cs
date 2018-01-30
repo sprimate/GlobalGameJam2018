@@ -55,10 +55,9 @@ public class ConnectAndJoinRandom : Photon.MonoBehaviour
 
     void JoinRoom()
     {
-        if (roomName == null)
+        if (GameJamGameManager.instance.maxNumPlayers == 1)
         {
-            Debug.Log("Joining Random Room");
-            PhotonNetwork.JoinRandomRoom();
+            CreateRoom();
             return;
         }
         foreach (var r in PhotonNetwork.GetRoomList())

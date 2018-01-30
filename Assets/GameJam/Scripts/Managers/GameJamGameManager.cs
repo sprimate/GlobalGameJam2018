@@ -94,7 +94,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
 		}
-		else
+		else if (!gameStarted)
 		{
 			displayWaitingnForPlayersMessage = true;
 		}

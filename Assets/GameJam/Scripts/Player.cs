@@ -47,10 +47,20 @@ namespace CompleteProject
             damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
 			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
             healthSlider.maxValue = startingHealth;
+
+            if (id != GameJamGameManager.LocalPlayerId)
+            {
+                Debug.Log("Removing dumb physics if not needed");
+                Destroy(GetComponent<Rigidbody>());
+            }
         }
 
         void FixedUpdate ()
         {
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+            if (rigidbody == null)
+            {}
            // Debug.Log("Fixed");
 			if (GameJamGameManager.LocalPlayerId != id)
 			{
@@ -240,16 +250,24 @@ namespace CompleteProject
                 {
                     timeToReachGoal = currentPacketTime - lastPacketTime;
                     currentTime += Time.deltaTime;
-                    try
+                    if (float.IsNaN(positionAtLastPacket.x) || float.IsInfinity(positionAtLastPacket.x))
+                    {
+                        positionAtLastPacket = transform.position;
+                        Debug.LogError("fucked up: " + transform.position + " and now " + positionAtLastPacket);
+                    }
+                    else
+                    {
+                        Debug.LogError(positionAtLastPacket + ">" + realPosition);
+                    }
+                    if (timeToReachGoal != 0f)
                     {
                         transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                        try
+                        {
+                            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+                        } 
+                        catch (Exception) { }
                     }
-                    catch (Exception) { }
-                    try
-                    {
-                        transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
-                    }
-                    catch (Exception) { }
                 }
             }
         }
