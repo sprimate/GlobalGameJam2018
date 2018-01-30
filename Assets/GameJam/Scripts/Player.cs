@@ -240,8 +240,16 @@ namespace CompleteProject
                 {
                     timeToReachGoal = currentPacketTime - lastPacketTime;
                     currentTime += Time.deltaTime;
-                    transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
-                    transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime/timeToReachGoal));
+                    try
+                    {
+                        transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                    }
+                    catch (Exception) { }
+                    try
+                    {
+                        transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+                    }
+                    catch (Exception) { }
                 }
             }
         }
