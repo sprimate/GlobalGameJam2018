@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114901611805888092}
   - component: {fileID: 114777365072736466}
   - component: {fileID: 114368206319475320}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: Hive
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +17,7 @@ public class Weapon : Photon.MonoBehaviour {
 	float timer;                                    // A timer to determine when to fire.
 	Ray shootRay = new Ray();                       // A ray from the gun end forwards.
 	RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
-	int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
+	//int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
 	 public int damagePerShot = 20;                  // The damage inflicted by each bullet.
 	public float timeBetweenBullets = defaultTimeBetweenBullets;        // The time between each shot.
 	int playerColorId;
@@ -37,7 +37,7 @@ public class Weapon : Photon.MonoBehaviour {
 		gunLine = GetComponent <LineRenderer> ();
 		gunAudio = GetComponent<AudioSource> ();
 		gunLight = GetComponent<Light> ();
-		shootableMask = LayerMask.GetMask ("Shootable");
+		//shootableMask = LayerMask.GetMask ("Shootable");
 
 		//faceLight = GetComponentInChildren<Light> ();
 	}
@@ -87,9 +87,9 @@ public class Weapon : Photon.MonoBehaviour {
 		// Set the shootRay so that it starts at the end of the gun and points forward from the barrel.
 		shootRay.origin = transform.position;
 		shootRay.direction = transform.forward;
-		// Perform the raycast against gameobjects on the shootable layer and if it hits something...
-		//if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
-		if (Physics.SphereCast(shootRay.origin, autoAimRadius, shootRay.direction, out shootHit, range, shootableMask ))
+        // Perform the raycast against gameobjects on the shootable layer and if it hits something...
+        //if(Physics.Raycast (shootRay, out shootHit, range, shootableLayers))
+        if (Physics.SphereCast(shootRay.origin, autoAimRadius, shootRay.direction, out shootHit, range, shootableLayers ))
 		{
 			if (GameJamGameManager.LocalPlayerId == playerId )
 			{
