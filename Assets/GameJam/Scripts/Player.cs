@@ -394,11 +394,10 @@ namespace CompleteProject
             }
         }
 
-        if (player != null)
+       /* if (player != null)
         {
             GameJamGameManager.instance.players.Remove(player);
-        }
-
+        }*/
 	}
         public void RestartLevel ()
         {

@@ -171,6 +171,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         {
             return closestPlayer.id == 1 ? 2 : 1;
         }
+        if (closestPlayer == null)
+        {
+            return 0;
+        }
         return closestPlayer.id;
     }
 
@@ -181,15 +185,22 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
     public Player GetTarget(int targetId)
     {
-        if (swapped)
+        try
         {
-            targetId = targetId == 1 ? 2 : 1;
+            if (swapped)
+            {
+                targetId = targetId == 1 ? 2 : 1;
+            }
+            if (players[targetId - 1] == null || players[targetId - 1].isDead)
+            {
+                return players[targetId == 1 ? 1 : 0];
+            }
+            return players[targetId - 1];
         }
-        if (players[targetId - 1].isDead)
+        catch (Exception)
         {
-            return players[targetId == 1 ? 1 : 0];
+            return null;
         }
-        return players[targetId - 1];
     }
 
     IEnumerator RegenerateHive(int color, Vector3 position)

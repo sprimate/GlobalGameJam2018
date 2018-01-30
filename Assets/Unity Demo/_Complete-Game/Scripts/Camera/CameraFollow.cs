@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace CompleteProject
@@ -21,6 +21,10 @@ namespace CompleteProject
 
         void FixedUpdate ()
         {
+            if (target == null)
+            {
+                return;
+            }
             // Create a postion the camera is aiming for based on the offset from the target.
             Vector3 targetCamPos = target.position + offset;
 

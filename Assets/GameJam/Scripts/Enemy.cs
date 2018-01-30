@@ -102,7 +102,10 @@ public class Enemy : ADamageable {
 	void Update ()
 	{
         Player target = GameJamGameManager.instance.GetTarget(targetId);
-
+        if (target == null)
+        {
+            return;
+        }
         if (target.id != GameJamGameManager.LocalPlayerId)
         {
             return;
