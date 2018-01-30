@@ -11,6 +11,10 @@ public class HealthPickup : APickup {
 	protected override void DoPowerUp(Player receiver)
 	{
 		receiver.currentHealth += healthAmount;
+		if (receiver.startingHealth > receiver.currentHealth)
+		{
+			receiver.currentHealth = receiver.startingHealth;
+		}
 	}
 
 }
