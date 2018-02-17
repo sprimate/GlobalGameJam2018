@@ -423,9 +423,14 @@ namespace CompleteProject
                 transform.position = position;
                 GameJamGameManager.instance.Swap();
             }
+            else
+            {
+                teleportPosition = id == player1 ? pos1 : pos2;
+            }
         }
 
-        Vector3 otherPosition;
+        /*Vector3 otherPosition;
+
         [PunRPC]
         public void SetOtherTeleportPosition(Vector3 pos)
         {
@@ -434,7 +439,7 @@ namespace CompleteProject
                 Debug.Log(id + ".) Setting Other Positionn: " + otherPosition);
                 otherPosition = pos;
             }
-        }
+        }*/
 
         void Death ()
         {
