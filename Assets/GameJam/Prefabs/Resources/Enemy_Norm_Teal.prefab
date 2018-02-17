@@ -7373,6 +7373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b976a6dac32b4e619a91f4940d10c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 30
+  soul: {fileID: 114530559174382538, guid: 723808ba368764b7f898a74e32460939, type: 2}
   enemyColorId: 1
   startingHealth: 30
   healthDrop: {fileID: 1894737646982756, guid: 82510f794d0d6470fa80cb06ebbcb8c5, type: 2}

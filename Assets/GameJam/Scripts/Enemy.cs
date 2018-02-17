@@ -80,18 +80,18 @@ public class Enemy : ADamageable {
 		UpdateSpeedValues();
         Player target = GameJamGameManager.instance.GetTarget(targetId);
 		// If the enemy and the player have health left...
-		if(currentHealth > 0 && target != null && target.currentHealth > 0)
+		if(currentHealth > 0 && target != null && !target.isDead)
 		{
 			// ... set the destination of the nav mesh agent to the player.
 			nav.SetDestination (target.transform.position);
 		}
-		else //Otherwise
+		else //Otherwise, try to switch targets. If you can't, just be dead.
 		{
-			if (target == null)
+			targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
+			if (targetId == 0)
 			{
 				nav.enabled = false;
 			}
-			// ... disable the nav mesh agent.
 		}
 	}
 

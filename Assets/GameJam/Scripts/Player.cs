@@ -14,7 +14,14 @@ namespace CompleteProject
 #region PortedFromPlayerMovement
         public float bufferBetweenDamageTaken;
         float lastDamageTaken;
+        int numTimesDied = 0;
+        float soulValueMultiplier = 1;
 
+        //If this bool is set to false, the soulDepreciationValue will be subtracted from soulValueMultiplier each death
+        //If set to true, the soulValueMultiplier will be divided by the soulDepreciationValue each death;
+        public bool soulDepreciationExponential = true; 
+        float soulDepreciationValue = 2f; //After deaths, how do the souls depreciate in value?' Adjust the soulHealthRatio by this much each time
+        public float minHealthPercentageForResurrection = 33;
 		public float speed = defaultPlayerSpeed;            // The speed that the player will move at.
 		const float defaultPlayerSpeed = 12f;
 		public int id;
@@ -25,8 +32,6 @@ namespace CompleteProject
         int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
         float camRayLength = 100f;          // The length of the ray from the camera into the scene.
 #endif
-
-    
         void Awake ()
         {
 #if !MOBILE_INPUT
@@ -39,7 +44,6 @@ namespace CompleteProject
 
 			 // Setting up the references.
             playerAudio = GetComponent <AudioSource> ();
-            playerMovement = GetComponent <Player> ();
             weapon = GetComponentInChildren <Weapon> ();
 
             // Set the initial health of the player.
@@ -47,6 +51,14 @@ namespace CompleteProject
             damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
 			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
             healthSlider.maxValue = startingHealth;
+        }
+
+        void Resurrect()
+        {
+            soulValueMultiplier = soulDepreciationExponential ? soulValueMultiplier / soulDepreciationValue : soulValueMultiplier - soulDepreciationValue;
+            currentHealth = startingHealth;
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            isDead = false;
         }
 
         void FixedUpdate ()
@@ -64,6 +76,7 @@ namespace CompleteProject
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
+            Debug.Log("FixedUpdate?");
             // Move the player around the scene.
             Move (h, v);
 
@@ -146,8 +159,22 @@ namespace CompleteProject
 #endregion
 		#region PortedFromPlayerHealth
 
-        public int startingHealth = 100;                            // The amount of health the player starts the game with.
-        public int currentHealth;                                   // The current health the player has.
+        public float startingHealth = 100;                            // The amount of health the player starts the game with.
+        [SerializeField] float _currentHealth;
+        public float currentHealth {
+            get 
+            { 
+                return _currentHealth;
+            } 
+            set 
+            {
+                _currentHealth = value;
+                if (healthSlider != null)
+                {
+                    healthSlider.value = _currentHealth;
+                }
+            }
+        }                                   // The current health the player has.
         public Slider healthSlider;                                 // Reference to the UI's health bar.
         public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
         public AudioClip deathClip;                                 // The audio clip to play when the player dies.
@@ -156,7 +183,7 @@ namespace CompleteProject
 
                                           // Reference to the Animator component.
         AudioSource playerAudio;                                    // Reference to the AudioSource component.
-        Player playerMovement;                              // Reference to the player's movement.
+     //   Player playerMovement;                              // Reference to the player's movement.
         Weapon weapon;                              // Reference to the PlayerShooting script.
         public bool isDead;                                                // Whether the player is dead.
         bool damaged;                                               // True when the player gets damaged.
@@ -189,7 +216,6 @@ namespace CompleteProject
                 
             }
 
-
             #region PlayerShooting
              // Add the time since Update was last called to the timer.
             if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
@@ -199,9 +225,24 @@ namespace CompleteProject
                 //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
             }
 
+            if (isDead)
+            {
+                if (Input.GetButtonUp("Resurrect"))
+                {
+                    if (currentHealth >= minHealthPercentageForResurrection/100 * startingHealth)
+                    {
+                        Resurrect();
+                    }
+                    else
+                    {
+                        Debug.Log("Unable to ressurrect - Not enough health yet.");
+                    }
+                }
+                return;
+            }
 			//only process input here if its from this player...
-			if(GameJamGameManager.LocalPlayerId == id){
-
+			if(GameJamGameManager.LocalPlayerId == id)
+            {
 	            if (Input.GetJoystickNames().Length == 0)
 	            {
 	                // If the Fire1 button is being press and it's time to fire...
@@ -262,6 +303,18 @@ namespace CompleteProject
             }
         }
 
+
+        public void CollectSoul(float amount)
+        {
+            currentHealth += amount * soulValueMultiplier;
+            if (currentHealth >= startingHealth)
+            {
+                currentHealth = startingHealth;
+                Resurrect();
+                return;
+            }
+        } 
+
         public bool TakeDamage (int amount)
         {
             if (lastDamageTaken + bufferBetweenDamageTaken > Time.time)
@@ -274,9 +327,6 @@ namespace CompleteProject
 
             // Reduce the current health by the damage amount.
             currentHealth -= amount;
-
-            // Set the health bar's value to the current health.
-            healthSlider.value = currentHealth;
 
             // Play the hurt sound effect.
             playerAudio.Play ();
@@ -373,7 +423,6 @@ namespace CompleteProject
         {
             // Set the death flag so this function won't be called again.
             isDead = true;
-
             // Turn off any remaining shooting effects.
             weapon.DisableEffects ();
 
@@ -385,7 +434,7 @@ namespace CompleteProject
             playerAudio.Play ();
 
             // Turn off the movement and shooting scripts.
-            playerMovement.enabled = false;
+            //playerMovement.enabled = false;
             weapon.enabled = false;
             object[] parameters = new object[1] {id};
             GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
@@ -397,28 +446,29 @@ namespace CompleteProject
             bool allDead = true;
             foreach (var p in GameJamGameManager.instance.players)
             {
-                if (!p.isDead)
+                if (p.id == playerId)
+                {
+                    p.isDead = true;
+                }
+                else if (!p.isDead)
                 {
                     allDead = false;
-                    break;
                 }
             }
             if (allDead)
             {
                 GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
-                return;
             }
-           // Player player = null;
-            if (id == GameJamGameManager.LocalPlayerId)
+            else if (id == GameJamGameManager.LocalPlayerId)
             {
                 EnterGhostMode();           
             }
-            Destroy();
         }
 
         void EnterGhostMode()
         {
             Debug.Log("In the ghost mode now");
+            transform.position = new Vector3(transform.position.x, GameJamGameManager.instance.underworldFloor.transform.position.y, transform.position.z);
         }
 
         protected void Destroy()

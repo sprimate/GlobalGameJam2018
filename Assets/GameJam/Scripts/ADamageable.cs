@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CompleteProject;
 using UnityEngine;
 
 [RequireComponent (typeof(PhotonView))]
@@ -12,7 +13,8 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		}
 	}
 
-    public GameObject soul;
+	public float soulValue;
+    public Soul soul;
 	protected bool isDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
@@ -114,6 +116,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 
     public void OnDestroy()
     {
+		Debug.Log("Destroying " + this);
         if (soul == null)
             return;
         foreach (var player in GameJamGameManager.instance.players)
@@ -122,8 +125,11 @@ public abstract class ADamageable : Photon.MonoBehaviour{
             {
                 if (player.isDead)
                 {
-                    var s = Instantiate(soul);
-                    s.transform.position = transform.position;
+					Debug.Log("Instantiating");
+                    var sGo = Instantiate(soul.gameObject);
+					var s = sGo.GetComponent<Soul>();
+					s.value = soulValue;
+                    s.transform.position = new Vector3(transform.position.x, GameJamGameManager.instance.underworldFloor.transform.position.y,transform.position.z);
                 }
             }
         }

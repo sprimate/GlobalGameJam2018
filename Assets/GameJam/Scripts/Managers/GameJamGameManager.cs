@@ -30,6 +30,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
     bool swapped = false;
+	public Transform underworldFloor;
 	void Awake()
 	{
         players = new List<Player>();
