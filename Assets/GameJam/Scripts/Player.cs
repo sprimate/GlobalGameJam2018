@@ -417,10 +417,11 @@ namespace CompleteProject
         [PunRPC]
         public void SetPosition(int player1, Vector3 pos1, int player2, Vector3 pos2)
         {
+            Vector3 position = id == player1 ? pos2 : pos1; ;
+            transform.position = position;
+
             if (id == GameJamGameManager.LocalPlayerId)
             {
-                Vector3 position = id == player1 ? pos2 : pos1; ;
-                transform.position = position;
                 GameJamGameManager.instance.Swap();
             }
             else
