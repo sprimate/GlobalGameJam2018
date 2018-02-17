@@ -215,21 +215,13 @@ namespace CompleteProject
                 
             }
 
-            #region PlayerShooting
-             // Add the time since Update was last called to the timer.
-            if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
-            {                  
-            //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
-                Swap(id == 1 ? 2 : 1);
-                //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
-            }
-
             if (isDead)
             {
-                if (Input.GetButtonUp("Resurrect"))
+                if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
                 {
                     if (currentHealth >= minHealthPercentageForResurrection/100 * startingHealth)
                     {
+                        Debug.Log("Ressurecting!");
                         Resurrect();
                     }
                     else
@@ -239,6 +231,15 @@ namespace CompleteProject
                 }
                 return;
             }
+            #region PlayerShooting
+             // Add the time since Update was last called to the timer.
+            if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
+            {                  
+            //  object[] parameters = new object[] {id == 1 ? 2 : 1, transform.position};
+                Swap(id == 1 ? 2 : 1);
+                //GetComponent<PhotonView>().RPC("Swap", PhotonTargets.All, parameters);
+            }
+
 			//only process input here if its from this player...
 			if(GameJamGameManager.LocalPlayerId == id)
             {
@@ -477,7 +478,7 @@ namespace CompleteProject
                 PhotonNetwork.Destroy(gameObject);
             }
         }
-        
+
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
