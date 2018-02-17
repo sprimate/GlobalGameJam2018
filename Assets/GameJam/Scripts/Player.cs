@@ -76,7 +76,6 @@ namespace CompleteProject
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
-            Debug.Log("FixedUpdate?");
             // Move the player around the scene.
             Move (h, v);
 
@@ -467,7 +466,6 @@ namespace CompleteProject
 
         void EnterGhostMode()
         {
-            Debug.Log("In the ghost mode now");
             transform.position = new Vector3(transform.position.x, GameJamGameManager.instance.underworldFloor.transform.position.y, transform.position.z);
         }
 
@@ -479,12 +477,7 @@ namespace CompleteProject
                 PhotonNetwork.Destroy(gameObject);
             }
         }
-
-
-        /* if (player != null)
-         {
-             GameJamGameManager.instance.players.Remove(player);
-         }*/
+        
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
