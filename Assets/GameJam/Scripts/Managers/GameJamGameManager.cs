@@ -12,6 +12,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
             return PhotonNetwork.player.ID;
         } }
 
+	public bool allowGhostMode = true;
     public List<Soul> souls;
     int destroyedEnemies;
     int destroyedHives;

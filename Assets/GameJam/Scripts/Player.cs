@@ -185,7 +185,7 @@ namespace CompleteProject
             set 
             {
                 _currentHealth = value;
-                if (healthSlider != null)
+                if (healthSlider != null && id == GameJamGameManager.LocalPlayerId)
                 {
                     healthSlider.value = _currentHealth;
                 }
@@ -486,9 +486,10 @@ namespace CompleteProject
                     allDead = false;
                 }
             }
-            if (allDead)
+            if (allDead || !GameJamGameManager.instance.allowGhostMode)
             {
                 GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+                Destroy();
             }
             else if (id == GameJamGameManager.LocalPlayerId)
             {
