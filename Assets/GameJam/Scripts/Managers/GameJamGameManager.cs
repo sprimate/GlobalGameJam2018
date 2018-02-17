@@ -11,6 +11,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     public static int LocalPlayerId { get {
             return PhotonNetwork.player.ID;
         } }
+
+    public List<Soul> souls;
     int destroyedEnemies;
     int destroyedHives;
     public float hiveRegenerationTime;
@@ -33,6 +35,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public Transform underworldFloor;
 	void Awake()
 	{
+        souls = new List<Soul>();
         players = new List<Player>();
         if (maxNumPlayersOverride.HasValue)
         {
@@ -59,6 +62,15 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		catch(Exception)
 		{}
 	}
+
+    public void ClearSouls()
+    {
+        foreach (var soul in souls)
+        {
+            Destroy(soul);
+        }
+        souls.Clear();
+    }
 	public void UpdatePlayers()
 	{
 		var ogNumPlayers = numPlayers;
@@ -229,4 +241,19 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	{
 		Instantiate(playerPrefab);
 	}
+
+    public bool retargetEnemies = false;
+    public void TriggerEnemyTargetRecalculation()
+    {
+
+        StartCoroutine(TriggerRetarget());
+    }
+
+    IEnumerator TriggerRetarget()
+    {
+        retargetEnemies = true;
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        retargetEnemies = false;
+    }
 }

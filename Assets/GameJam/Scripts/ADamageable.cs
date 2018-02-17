@@ -127,9 +127,10 @@ public abstract class ADamageable : Photon.MonoBehaviour{
                 {
 					Debug.Log("Instantiating");
                     var sGo = Instantiate(soul.gameObject);
-					var s = sGo.GetComponent<Soul>();
+                    Soul s = sGo.GetComponent<Soul>();
 					s.value = soulValue;
                     s.transform.position = new Vector3(transform.position.x, GameJamGameManager.instance.underworldFloor.transform.position.y,transform.position.z);
+                    GameJamGameManager.instance.souls.Add(s);
                 }
             }
         }
