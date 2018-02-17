@@ -59,7 +59,6 @@ namespace CompleteProject
             currentHealth = startingHealth;
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             GetComponent<PhotonView>().RPC("SetIsAlive", PhotonTargets.All);
-
         }
 
         [PunRPC]
