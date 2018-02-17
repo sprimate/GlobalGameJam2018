@@ -56,8 +56,17 @@ namespace CompleteProject
         void Resurrect()
         {
             soulValueMultiplier = soulDepreciationExponential ? soulValueMultiplier / soulDepreciationValue : soulValueMultiplier - soulDepreciationValue;
-            currentHealth = startingHealth;
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            foreach (var p in GameJamGameManager.instance.players)
+            {
+                if (p != this)
+                {
+                    weapon.SetColor(p.weapon.GetColor() == 1 ? 2 : 1);
+                    break;
+                }
+            }
+            GameJamGameManager.instance.ClearSouls();
+            GameJamGameManager.instance.TriggerEnemyTargetRecalculation();
             GetComponent<PhotonView>().RPC("SetIsAlive", PhotonTargets.All);
         }
 
@@ -469,6 +478,7 @@ namespace CompleteProject
             }
             else if (id == GameJamGameManager.LocalPlayerId)
             {
+                GameJamGameManager.instance.TriggerEnemyTargetRecalculation();
                 EnterGhostMode();           
             }
         }

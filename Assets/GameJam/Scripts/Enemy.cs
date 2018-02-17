@@ -108,6 +108,10 @@ public class Enemy : ADamageable {
 	}
 	void Update ()
 	{
+        if (GameJamGameManager.instance.retargetEnemies)
+        {
+            targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
+        }
         Player target = GameJamGameManager.instance.GetTarget(targetId);
         if (target == null)
         {

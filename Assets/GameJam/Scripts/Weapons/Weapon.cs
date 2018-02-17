@@ -135,6 +135,11 @@ public class Weapon : Photon.MonoBehaviour {
 
     }
 
+    public int GetColor()
+    {
+        return playerColorId;
+    }
+
 	[PunRPC]
 	public void SetColor(int colorId){
 
