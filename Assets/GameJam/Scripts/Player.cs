@@ -66,7 +66,6 @@ namespace CompleteProject
                 }
             }
             GameJamGameManager.instance.ClearSouls();
-            GameJamGameManager.instance.TriggerEnemyTargetRecalculation();
             GetComponent<PhotonView>().RPC("SetIsAlive", PhotonTargets.All);
         }
 
@@ -76,6 +75,7 @@ namespace CompleteProject
             isDead = false;
             weapon.SetEffectsEnabled(true);
             weapon.enabled = true;
+            GameJamGameManager.instance.TriggerEnemyTargetRecalculation();
         }
 
         void FixedUpdate ()
