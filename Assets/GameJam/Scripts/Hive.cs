@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -74,5 +74,9 @@ public class Hive : ADamageable {
 		GameJamGameManager.instance.totalHiveStartHealth += startingHealth;
 		GameJamGameManager.instance.totalHiveHealth += startingHealth;
 	}
-	
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+    }
+
+
 }

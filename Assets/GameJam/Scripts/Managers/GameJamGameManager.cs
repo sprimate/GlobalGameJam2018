@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CompleteProject;
@@ -8,28 +8,39 @@ using UnityEngine.UI;
 
 public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
-	public static int LocalPlayerId {get {
-		return PhotonNetwork.player.ID;
-	}}
-	int destroyedEnemies;
-	int destroyedHives;
-	public float hiveRegenerationTime;
-	bool gameStarted = false;
-	public Transform[] hiveStartingPoints;
-	public string playerLayerName;
-	public GameObject playerPrefab;
-	public GameObject hivePrefab;
-	GameObject playersParent;
-	public List<Player> players = new List<Player>();
+    public static int LocalPlayerId { get {
+            return PhotonNetwork.player.ID;
+        } }
+    int destroyedEnemies;
+    int destroyedHives;
+    public float hiveRegenerationTime;
+    bool gameStarted = false;
+    public Transform[] hiveStartingPoints;
+    public string playerLayerName;
+    public GameObject playerPrefab;
+    public GameObject hivePrefab;
+    GameObject playersParent;
+    public List<Player> players { get; set; }
+    public static int? maxNumPlayersOverride;
 	public int maxNumPlayers = 2;
 	int numPlayers = 0;
-	public bool waitForAllPlayers = false;
+	bool waitForAllPlayers = true;
 	PlayerRoomIndexing indexer;
 	IList<Hive> hives = new List<Hive>();
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
+    bool swapped = false;
 	void Awake()
 	{
+        players = new List<Player>();
+        if (maxNumPlayersOverride.HasValue)
+        {
+            maxNumPlayers = maxNumPlayersOverride.Value;
+        }
+		if (maxNumPlayers == 1)
+		{
+			waitMessage = "Initializing";
+		}
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		if (waitForAllPlayers)
 		{
@@ -83,18 +94,21 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
 		}
-		else
+		else if (!gameStarted)
 		{
 			displayWaitingnForPlayersMessage = true;
 		}
 	}
-
-	bool displayWaitingnForPlayersMessage;
+	string waitMessage = "Waiting for more players to join";
+	bool displayWaitingnForPlayersMessage = true;
 	void OnGUI()
 	{
 		if (displayWaitingnForPlayersMessage)
 		{
-			GUI.Label(new Rect(10, 10, 100, 20), "Waiting for more players to join");
+			var centeredStyle = GUI.skin.GetStyle("Label");
+   			centeredStyle.alignment = TextAnchor.UpperCenter;
+			centeredStyle.fontSize = 50;
+			GUI.Label(new Rect(50, Screen.height/2-25, Screen.width-50, Screen.height), waitMessage, centeredStyle);
 		}
 	}
 
@@ -142,7 +156,68 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		GameObject.Find("EnemiesDestroyed").GetComponent<Text>().text = "Enemies: " + ++destroyedEnemies;
 	}
 
-	IEnumerator RegenerateHive(int color, Vector3 position)
+    public int GetClosestTargetId(Vector3 position)
+    {
+        Player closestPlayer = null;
+        float closestDistance = float.MaxValue;
+        foreach (Player p in players)
+        {
+            try
+            {
+                if (p.isDead)
+                {
+                    continue;
+                }
+                var dist = Vector3.Distance(p.transform.position, position);
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    closestPlayer = p;
+                }
+            }
+            catch (Exception)
+            {
+                continue;
+            }
+        }
+
+        if (swapped)
+        {
+            return closestPlayer.id == 1 ? 2 : 1;
+        }
+        if (closestPlayer == null)
+        {
+            return 0;
+        }
+        return closestPlayer.id;
+    }
+
+    public void Swap()
+    {
+        swapped = !swapped;
+    }
+
+    public Player GetTarget(int targetId)
+    {
+        try
+        {
+            if (swapped)
+            {
+                targetId = targetId == 1 ? 2 : 1;
+            }
+            if (players[targetId - 1] == null || players[targetId - 1].isDead)
+            {
+                return players[targetId == 1 ? 1 : 0];
+            }
+            return players[targetId - 1];
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    IEnumerator RegenerateHive(int color, Vector3 position)
 	{
 		yield return new WaitForSeconds(hiveRegenerationTime);
 		CreateHive(color, position);

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4284651637993228}
   - component: {fileID: 33807216405390064}
   - component: {fileID: 23251592449794758}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: doubletap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114840369398683028}
   - component: {fileID: 114427420149095134}
   - component: {fileID: 114876940117453334}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: FiringRateDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,6 +166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 2
+  randomRotation: 1
+  definedRotation: {x: 0, y: 0, z: 0}
 --- !u!135 &135671250574112762
 SphereCollider:
   m_ObjectHideFlags: 1

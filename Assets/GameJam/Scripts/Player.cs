@@ -51,6 +51,10 @@ namespace CompleteProject
 
         void FixedUpdate ()
         {
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+            if (rigidbody == null)
+            {}
            // Debug.Log("Fixed");
 			if (GameJamGameManager.LocalPlayerId != id)
 			{
@@ -240,8 +244,20 @@ namespace CompleteProject
                 {
                     timeToReachGoal = currentPacketTime - lastPacketTime;
                     currentTime += Time.deltaTime;
-                    transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
-                    transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime/timeToReachGoal));
+                    if (float.IsNaN(positionAtLastPacket.x) || float.IsInfinity(positionAtLastPacket.x))
+                    {
+                        positionAtLastPacket = transform.position;
+                    }
+                    
+                    if (timeToReachGoal != 0f)
+                    {
+                        transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                        try
+                        {
+                            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+                        } 
+                        catch (Exception) { }
+                    }
                 }
             }
         }
@@ -337,18 +353,9 @@ namespace CompleteProject
             if (id == GameJamGameManager.LocalPlayerId)
             {
                 Vector3 position = id == player1 ? pos2 : pos1; ;
-         //       Debug.Log("Recfeived. Player " + id + " sending to " + position);
                 transform.position = position;
+                GameJamGameManager.instance.Swap();
             }
-            /*if (PhotonNetwork.isMasterClient)
-            {
-                foreach(Player p in GameJamGameManager.instance.players)
-                {
-                    p.transform.position = p.id == player1 ? pos2 : pos1;
-                    Debug.Log("Position p: " + p.transform.position);
-
-                }
-            }*/
         }
 
         Vector3 otherPosition;
@@ -384,31 +391,32 @@ namespace CompleteProject
             GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
         }
 
-    [PunRPC]
-	public void KillPlayer(int playerId)
-	{
-        Debug.Log("Ded");
-        Player player = null;
-
-        GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
-        foreach(Player p in GameJamGameManager.instance.players)
+        [PunRPC]
+        public void KillPlayer(int playerId)
         {
-            if (playerId == p.id)
+            Debug.Log("Ded");
+            Player player = null;
+            if (id == GameJamGameManager.LocalPlayerId)
             {
-                player = p;
-                if (PhotonNetwork.isMasterClient)
-                {
-                    PhotonNetwork.Destroy(player.gameObject);
-                }
+                GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+            }
+            Destroy();
+        }
+
+        protected void Destroy()
+        {
+            PhotonView pv = GetComponent<PhotonView>();
+            if (pv.isMine)
+            {
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 
-        if (player != null)
-        {
-            GameJamGameManager.instance.players.Remove(player);
-        }
 
-	}
+        /* if (player != null)
+         {
+             GameJamGameManager.instance.players.Remove(player);
+         }*/
         public void RestartLevel ()
         {
             // Reload the level that is currently loaded.
