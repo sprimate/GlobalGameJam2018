@@ -182,14 +182,16 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
             }
         }
 
-        if (swapped)
-        {
-            return closestPlayer.id == 1 ? 2 : 1;
-        }
         if (closestPlayer == null)
         {
             return 0;
         }
+		
+        if (swapped)
+        {
+            return closestPlayer.id == 1 ? 2 : 1;
+        }
+
         return closestPlayer.id;
     }
 

@@ -48,7 +48,7 @@ public class Weapon : Photon.MonoBehaviour {
 		if(timer >= timeBetweenBullets * effectsDisplayTime)
 		{
 			// ... disable the effects.
-			DisableEffects ();
+			SetEffectsEnabled (false);
 		}
 		timer += Time.deltaTime;
 	}
@@ -123,12 +123,11 @@ public class Weapon : Photon.MonoBehaviour {
 		}
 	}
 
-	public void DisableEffects ()
+	public void SetEffectsEnabled(bool val)
 	{
-		// Disable the line renderer and the light.
-		gunLine.enabled = false;
-		faceLight.enabled = false;
-		gunLight.enabled = false;
+		gunLine.enabled = val;
+		faceLight.enabled = val;
+		gunLight.enabled = val;
 	}
 
 	void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

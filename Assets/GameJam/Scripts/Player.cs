@@ -66,6 +66,8 @@ namespace CompleteProject
         void SetIsAlive()
         {
             isDead = false;
+            weapon.SetEffectsEnabled(true);
+            weapon.enabled = true;
         }
 
         void FixedUpdate ()
@@ -431,7 +433,8 @@ namespace CompleteProject
             // Set the death flag so this function won't be called again.
             isDead = true;
             // Turn off any remaining shooting effects.
-            weapon.DisableEffects ();
+            weapon.SetEffectsEnabled(false);
+            weapon.enabled = false;
 
             // Tell the animator that the player is dead.
             anim.SetTrigger ("Die");
@@ -442,7 +445,6 @@ namespace CompleteProject
 
             // Turn off the movement and shooting scripts.
             //playerMovement.enabled = false;
-            weapon.enabled = false;
             object[] parameters = new object[1] {id};
             GetComponent<PhotonView>().RPC("KillPlayer", PhotonTargets.All, parameters );            
         }
