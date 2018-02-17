@@ -68,7 +68,13 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     {
         foreach (var soul in souls)
         {
-            Destroy(soul.gameObject);
+            try
+            {
+                Destroy(soul.gameObject);
+            }
+            catch (Exception)
+            {
+            }
         }
         souls.Clear();
     }

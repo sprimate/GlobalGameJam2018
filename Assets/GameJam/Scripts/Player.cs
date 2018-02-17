@@ -238,7 +238,6 @@ namespace CompleteProject
                 {
                     if (currentHealth >= minHealthPercentageForResurrection/100 * startingHealth)
                     {
-                        Debug.Log("Resurecting!");
                         Resurrect();
                     }
                     else
