@@ -58,7 +58,14 @@ namespace CompleteProject
             soulValueMultiplier = soulDepreciationExponential ? soulValueMultiplier / soulDepreciationValue : soulValueMultiplier - soulDepreciationValue;
             currentHealth = startingHealth;
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-            isDead = false;
+            GetComponent<PhotonView>().RPC("SetIsAlive", PhotonTargets.All);
+
+        }
+
+        [PunRPC]
+        void SetIsAlive()
+        {
+            isDead = true;
         }
 
         void FixedUpdate ()
@@ -221,12 +228,12 @@ namespace CompleteProject
                 {
                     if (currentHealth >= minHealthPercentageForResurrection/100 * startingHealth)
                     {
-                        Debug.Log("Ressurecting!");
+                        Debug.Log("Resurecting!");
                         Resurrect();
                     }
                     else
                     {
-                        Debug.Log("Unable to ressurrect - Not enough health yet.");
+                        Debug.Log("Unable to resurrect - Not enough health yet.");
                     }
                 }
                 return;
