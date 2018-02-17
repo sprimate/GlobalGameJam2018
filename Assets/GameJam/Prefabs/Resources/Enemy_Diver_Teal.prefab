@@ -34,7 +34,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400002}
   - component: {fileID: 13700000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Zombear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 400004}
   - component: {fileID: 19800000}
   - component: {fileID: 19900000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DeathParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 400006}
   - component: {fileID: 19800002}
   - component: {fileID: 19900002}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HitParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 437982}
   - component: {fileID: 10832232}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113398}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0, b: 0.84827566, a: 1}
@@ -342,9 +342,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Height: 2.6
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.22}
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

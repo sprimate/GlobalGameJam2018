@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class EnemyHealth : MonoBehaviour
     Animator anim;
     AudioSource enemyAudio;
     ParticleSystem hitParticles;
-    CapsuleCollider capsuleCollider;
+    Collider physicsCollider;
     bool isDead;
     bool isSinking;
 
@@ -22,8 +22,14 @@ public class EnemyHealth : MonoBehaviour
         anim = GetComponent <Animator> ();
         enemyAudio = GetComponent <AudioSource> ();
         hitParticles = GetComponentInChildren <ParticleSystem> ();
-        capsuleCollider = GetComponent <CapsuleCollider> ();
-
+        foreach (var c in GetComponents<Collider>())
+        {
+            if (!c.isTrigger)
+            {
+                physicsCollider = c;
+                break;
+            }
+        }
         currentHealth = startingHealth;
     }
 
@@ -60,7 +66,7 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
 
-        capsuleCollider.isTrigger = true;
+        physicsCollider.isTrigger = true;
 
         anim.SetTrigger ("Dead");
 

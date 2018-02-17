@@ -14,7 +14,7 @@ public class Enemy : ADamageable {
 	public float sinkSpeed = 2.5f;              // The speed at which the enemy sinks through the floor when dead.
 	public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
 	public AudioClip deathClip;                 // The sound to play when the enemy dies.
-	CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
+	Collider physicsCollider;            // Reference to the capsule collider.
 	bool isSinking;                             // Whether the enemy has started sinking through the floor.
 	IList<Player> playersInRange = new List<Player>();
 	public float destroyEnemyGameObjectAfterKilledTime = 1f;
@@ -36,7 +36,14 @@ public class Enemy : ADamageable {
 		// Setting up the references.
 		anim = GetComponent <Animator> ();
 		nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
-		capsuleCollider = GetComponent <CapsuleCollider> ();
+        foreach (var c in GetComponents<Collider>())
+        {
+            if (!c.isTrigger)
+            {
+                physicsCollider = c;
+                break;
+            }
+        }
 		// Setting the current health when the enemy first spawns.
 		currentHealth = startingHealth;
 		nav.speed = minSpeed;
@@ -173,7 +180,7 @@ public class Enemy : ADamageable {
 			isDead = true;
 
 			// Turn the collider into a trigger so shots can pass through it.
-			capsuleCollider.isTrigger = true;
+			physicsCollider.isTrigger = true;
 
 			// Tell the animator that the enemy is dead.
 			anim.SetTrigger ("Dead");
