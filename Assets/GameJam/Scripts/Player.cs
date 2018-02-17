@@ -65,7 +65,7 @@ namespace CompleteProject
         [PunRPC]
         void SetIsAlive()
         {
-            isDead = true;
+            isDead = false;
         }
 
         void FixedUpdate ()
