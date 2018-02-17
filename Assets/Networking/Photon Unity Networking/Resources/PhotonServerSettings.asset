@@ -54,4 +54,5 @@ MonoBehaviour:
   - DestroyRemotely
   - RemoveDamage
   - KillPlayer
+  - SetIsAlive
   DisableAutoOpenWizard: 1

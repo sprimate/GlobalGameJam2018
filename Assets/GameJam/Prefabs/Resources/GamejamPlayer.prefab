@@ -743,10 +743,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bufferBetweenDamageTaken: 0.5
+  soulDepreciationExponential: 1
+  minHealthPercentageForResurrection: 50
   speed: 12
   id: 2
-  startingHealth: 200
-  currentHealth: 0
+  startingHealth: 100
+  _currentHealth: 0
   healthSlider: {fileID: 0}
   damageImage: {fileID: 0}
   deathClip: {fileID: 0}

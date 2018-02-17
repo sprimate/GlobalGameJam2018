@@ -116,7 +116,6 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 
     public void OnDestroy()
     {
-		Debug.Log("Destroying " + this);
         if (soul == null)
             return;
         foreach (var player in GameJamGameManager.instance.players)
@@ -125,7 +124,6 @@ public abstract class ADamageable : Photon.MonoBehaviour{
             {
                 if (player.isDead)
                 {
-					Debug.Log("Instantiating");
                     var sGo = Instantiate(soul.gameObject);
                     Soul s = sGo.GetComponent<Soul>();
 					s.value = soulValue;

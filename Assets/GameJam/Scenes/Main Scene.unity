@@ -3296,6 +3296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e04ded5bd3df2462b88fedc9ca9f5ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowGhostMode: 1
+  souls: []
   hiveRegenerationTime: 20
   hiveStartingPoints:
   - {fileID: 880011563}
@@ -3310,6 +3312,7 @@ MonoBehaviour:
   totalHiveHealth: 0
   totalHiveStartHealth: 0
   underworldFloor: {fileID: 2089644941}
+  retargetEnemies: 0
 --- !u!1 &1591794898
 GameObject:
   m_ObjectHideFlags: 0
