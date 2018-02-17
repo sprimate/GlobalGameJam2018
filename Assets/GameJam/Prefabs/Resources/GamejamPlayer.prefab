@@ -801,7 +801,7 @@ MonoBehaviour:
   autoAimRadius: 0.7
   shootableLayers:
     serializedVersion: 2
-    m_Bits: 66048
+    m_Bits: 459264
   faceLight: {fileID: 108267993583747078}
   effectsDisplayTime: 0.2
   range: 100
