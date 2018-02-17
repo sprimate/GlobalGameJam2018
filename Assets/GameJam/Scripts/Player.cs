@@ -51,6 +51,10 @@ namespace CompleteProject
 
         void FixedUpdate ()
         {
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+
+            if (rigidbody == null)
+            {}
            // Debug.Log("Fixed");
 			if (GameJamGameManager.LocalPlayerId != id)
 			{
@@ -240,16 +244,20 @@ namespace CompleteProject
                 {
                     timeToReachGoal = currentPacketTime - lastPacketTime;
                     currentTime += Time.deltaTime;
-                    try
+                    if (float.IsNaN(positionAtLastPacket.x) || float.IsInfinity(positionAtLastPacket.x))
+                    {
+                        positionAtLastPacket = transform.position;
+                    }
+                    
+                    if (timeToReachGoal != 0f)
                     {
                         transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                        try
+                        {
+                            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+                        } 
+                        catch (Exception) { }
                     }
-                    catch (Exception) { }
-                    try
-                    {
-                        transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
-                    }
-                    catch (Exception) { }
                 }
             }
         }

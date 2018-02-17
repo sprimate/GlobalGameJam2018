@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4179102832917420}
   - component: {fileID: 33769669508622314}
   - component: {fileID: 23473073463293804}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: healthbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114166406210786024}
   - component: {fileID: 114290366646878284}
   - component: {fileID: 114209679312197060}
-  m_Layer: 12
+  m_Layer: 17
   m_Name: HealthDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 2
+  randomRotation: 1
+  definedRotation: {x: 0, y: 0, z: 0}
 --- !u!114 &114290366646878284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c8b8b6fe77f04c0998473a8ed2e01cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAmount: 100
+  healthAmount: 50
 --- !u!135 &135731171698603456
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -37,6 +37,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         {
             maxNumPlayers = maxNumPlayersOverride.Value;
         }
+		if (maxNumPlayers == 1)
+		{
+			waitMessage = "Initializing";
+		}
 		PhotonNetwork.autoCleanUpPlayerObjects = false;
 		if (waitForAllPlayers)
 		{
@@ -90,18 +94,21 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			Debug.Log("Going to start game with player ids: "+realPlayers);
 			StartGame();
 		}
-		else
+		else if (!gameStarted)
 		{
 			displayWaitingnForPlayersMessage = true;
 		}
 	}
-
-	bool displayWaitingnForPlayersMessage;
+	string waitMessage = "Waiting for more players to join";
+	bool displayWaitingnForPlayersMessage = true;
 	void OnGUI()
 	{
 		if (displayWaitingnForPlayersMessage)
 		{
-			GUI.Label(new Rect(10, 10, 100, 20), "Waiting for more players to join");
+			var centeredStyle = GUI.skin.GetStyle("Label");
+   			centeredStyle.alignment = TextAnchor.UpperCenter;
+			centeredStyle.fontSize = 50;
+			GUI.Label(new Rect(50, Screen.height/2-25, Screen.width-50, Screen.height), waitMessage, centeredStyle);
 		}
 	}
 
