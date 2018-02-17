@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +10,9 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		get {
 			return false;
 		}
-	} 
+	}
 
+    public GameObject soul;
 	protected bool isDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
@@ -111,7 +112,24 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		Destroy();
 	}
 
-	[PunRPC]
+    public void OnDestroy()
+    {
+        if (soul == null)
+            return;
+        foreach (var player in GameJamGameManager.instance.players)
+        {
+            if (player.id == GameJamGameManager.LocalPlayerId)
+            {
+                if (player.isDead)
+                {
+                    var s = Instantiate(soul);
+                    s.transform.position = transform.position;
+                }
+            }
+        }
+    }
+
+    [PunRPC]
 	protected abstract void Death();
 
 }

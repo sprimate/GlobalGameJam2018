@@ -394,13 +394,31 @@ namespace CompleteProject
         [PunRPC]
         public void KillPlayer(int playerId)
         {
-            Debug.Log("Ded");
-            Player player = null;
-            if (id == GameJamGameManager.LocalPlayerId)
+            bool allDead = true;
+            foreach (var p in GameJamGameManager.instance.players)
+            {
+                if (!p.isDead)
+                {
+                    allDead = false;
+                    break;
+                }
+            }
+            if (allDead)
             {
                 GameObject.FindGameObjectWithTag("HUD").GetComponent<Animator>().SetTrigger("GameOver");
+                return;
+            }
+           // Player player = null;
+            if (id == GameJamGameManager.LocalPlayerId)
+            {
+                EnterGhostMode();           
             }
             Destroy();
+        }
+
+        void EnterGhostMode()
+        {
+            Debug.Log("In the ghost mode now");
         }
 
         protected void Destroy()
@@ -431,7 +449,6 @@ namespace CompleteProject
             // e.g. store this gameobject as this player's charater in PhotonPlayer.TagObject
             PhotonView pv = GetComponent<PhotonView>();
             id = (int) pv.instantiationData[0];
-            Debug.Log("ID: " + id);
            // gameObject.transform.SetParent(playersParent.transform);
             gm.players.Add(this);
             if (id == GameJamGameManager.LocalPlayerId)
