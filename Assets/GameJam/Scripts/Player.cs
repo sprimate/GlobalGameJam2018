@@ -294,11 +294,11 @@ namespace CompleteProject
         {
             if (!GetComponent<PhotonView>().isMine)
             {
-                if (teleportPosition.HasValue)
+                /*if (teleportPosition.HasValue)
                 {
                     transform.position = teleportPosition.Value;
                 }
-                else
+                else*/
                 {
                     timeToReachGoal = currentPacketTime - lastPacketTime;
                     currentTime += Time.deltaTime;
@@ -426,7 +426,15 @@ namespace CompleteProject
             }
             else
             {
-                teleportPosition = id == player1 ? pos1 : pos2;
+                teleportPosition = position;
+            }
+        }
+
+        void LateUpdate() //NEed this in late update to override the Photon placing of the position
+        {
+            if (teleportPosition.HasValue)
+            {
+                transform.position = teleportPosition.Value; 
             }
         }
 
@@ -590,10 +598,16 @@ namespace CompleteProject
             {
                 if (teleportPosition.HasValue)
                 {
+                    transform.position = teleportPosition.Value;
                     if (shouldReset) 
                     {
                         teleportPosition = null;
+                        Debug.Log("resetting");
                     }  
+                    else
+                    {
+                        Debug.Log("Received before resetting");
+                    }
                     shouldReset = !shouldReset; 
                 }
                 currentTime = 0.0;
