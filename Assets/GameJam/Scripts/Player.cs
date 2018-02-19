@@ -184,7 +184,7 @@ namespace CompleteProject
             } 
             set 
             {
-                _currentHealth = value;
+                _currentHealth = value <= startingHealth ? value : startingHealth;
                 if (healthSlider != null && id == GameJamGameManager.LocalPlayerId)
                 {
                     healthSlider.value = _currentHealth;
