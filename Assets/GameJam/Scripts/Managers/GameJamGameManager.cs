@@ -13,6 +13,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         } }
 
 	public bool allowGhostMode = true;
+    public Dictionary<int, List<Enemy>> enemies;
     public List<Soul> souls;
     int destroyedEnemies;
     int destroyedHives;
@@ -36,6 +37,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public Transform underworldFloor;
 	void Awake()
 	{
+        enemies = new Dictionary<int, List<Enemy>>();
         souls = new List<Soul>();
         players = new List<Player>();
         if (maxNumPlayersOverride.HasValue)
@@ -63,6 +65,28 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		catch(Exception)
 		{}
 	}
+
+    public void AddEnemy(Enemy e)
+    {
+        if (!enemies.ContainsKey(e.enemyColorId))
+        {
+            enemies[e.enemyColorId] = new List<Enemy>();
+        }
+        enemies[e.enemyColorId].Add(e);
+    }
+
+    public void EnemyDestroyed(Enemy e)
+    {
+        enemies[e.enemyColorId].Remove(e);
+    }
+
+    public void AttackAllEnemiesByColor(int color, int damage = int.MaxValue)
+    {
+        foreach (var enemy in enemies[color])
+        {
+            enemy.TakeDamage(color, damage, enemy.transform.position);
+        }
+    }
 
     public void ClearSouls()
     {
@@ -163,6 +187,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	public void HiveAboutToBeDestroyed(Hive h)
 	{
 		GameObject.Find("HivesDestroyed").GetComponent<Text>().text = "Hives: " + ++destroyedHives;
+        AttackAllEnemiesByColor(h.enemyColorId, h.hiveDestroyedDamage);
 		int newHiveColor = h.enemyColorId;
 		if (h.numChanges % 2 != 0 )
 		{

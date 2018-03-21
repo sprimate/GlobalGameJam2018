@@ -42,7 +42,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	public virtual void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
 	{
 		// If the enemy is dead...
-		if(isDead)
+		if(amount == 0 || isDead)
 		{
 			// ... no need to take damage so exit the function.
 			return;
@@ -114,7 +114,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		Destroy();
 	}
 
-    public void OnDestroy()
+    public virtual void OnDestroy()
     {
         if (soul == null)
             return;

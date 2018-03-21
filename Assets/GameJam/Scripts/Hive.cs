@@ -15,6 +15,7 @@ public class Hive : ADamageable {
 	public float hiveMinScale = 1f;
 	public float hiveMinSpawnRate = 1f; 
 	public float hiveMaxSpawnRate = 4f;
+    public int hiveDestroyedDamage = int.MaxValue;
 	float lastSpawn;
 	float ogScaleValue;
 	BorderSpawner borderSpawner;
@@ -65,6 +66,7 @@ public class Hive : ADamageable {
 		transform.localScale = new Vector3(scale, scale, scale);
 		GameJamGameManager.instance.totalHiveHealth -= amount;
 	}
+
 	void OnPhotonInstantiate(PhotonMessageInfo info) 
 	{
 		GameJamGameManager gm = GameJamGameManager.instance;

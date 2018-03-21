@@ -32,7 +32,8 @@ public class Enemy : ADamageable {
 
 	protected override void Awake()
 	{
-		base.Awake ();
+        GameJamGameManager.instance.AddEnemy(this);
+        base.Awake ();
 		// Setting up the references.
 		anim = GetComponent <Animator> ();
 		nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
@@ -51,12 +52,14 @@ public class Enemy : ADamageable {
         targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
 	}
 
-	void OnTriggerEnter (Collider other)
-	{
-		//Destroy(other.gameObject);
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        GameJamGameManager.instance.EnemyDestroyed(this);
+    }
 
-	//	Debug.Log("Umm: " + target, other.gameObject);
-		// If the entering collider is the player...
+    void OnTriggerEnter (Collider other)
+	{
 		var player = other.gameObject.GetComponent<Player>();
 		if(player != null)
 		{
@@ -149,12 +152,6 @@ public class Enemy : ADamageable {
 			// ... move the enemy down by the sinkSpeed per second.
 			transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
 		}
-	}
-
-	public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
-	{
-		base.TakeDamage(playerColor, amount, hitPoint);
-
 	}
 
 	void Attack ()
