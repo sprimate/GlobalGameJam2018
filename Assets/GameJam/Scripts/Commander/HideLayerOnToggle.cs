@@ -6,9 +6,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Toggle))]
 public class HideLayerOnToggle : MonoBehaviour {
 
-    public GameObject layerObjectReference;
+    public LayerMask layerMask;
     public Camera mainCamera;
-    int layer;
 	// Use this for initialization
 	void Awake () {
         GetComponent<Toggle>().onValueChanged.AddListener(AdjustDisplayedObjects);
@@ -16,18 +15,20 @@ public class HideLayerOnToggle : MonoBehaviour {
         {
             mainCamera = Camera.main;
         }
-        layer = layerObjectReference.layer;
 	}
 
     void AdjustDisplayedObjects(bool val)
     {
+
         if (val)
         {
-            mainCamera.cullingMask |= (1 << layer);// associatedLayer.value);
+            mainCamera.cullingMask = layerMask.AddToLayer(mainCamera.cullingMask);
+           // mainCamera.cullingMask |= (1 << layer);// associatedLayer.value);
         }
         else
         {
-            mainCamera.cullingMask &= ~(1 << layer);// associatedLayer.value);
+            mainCamera.cullingMask = layerMask.RemoveFromLayer(mainCamera.cullingMask);
+//            mainCamera.cullingMask &= ~(1 << layer);// associatedLayer.value);
         }
     }
 }
