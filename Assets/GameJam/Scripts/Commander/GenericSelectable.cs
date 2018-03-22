@@ -31,11 +31,25 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         {
             DeselectAll(eventData);
         }
-        else if (shifting && selected)
+
+        bool justDeselected = selected;
+        if (selected)
         {
             OnDeselect(eventData);
         }
-        else
+
+        if (eventData.clickCount == 2)
+        {
+            foreach (var selectable in allMySelectables)
+            {
+                Type t = GetType();
+                if (GetType() == selectable.GetType())
+                {
+                    selectable.OnSelect(eventData);
+                }
+            }
+        }
+        else if (!justDeselected)
         {
             OnSelect(eventData);
         }
@@ -54,11 +68,14 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         myRenderer.material = unselectedMaterial;
     }
 
-    public static void DeselectAll(BaseEventData eventData)
+    public static void DeselectAll(BaseEventData eventData, GameObject except = null)
     {
         foreach (GenericSelectable selectable in currentlySelected)
         {
-            selectable.OnDeselect(eventData);
+            if (selectable.gameObject != except)
+            {
+                selectable.OnDeselect(eventData);
+            }
         }
         currentlySelected.Clear();
     }

@@ -93,6 +93,16 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        onPointerUpOnce.Invoke();
+        GameObject nextObject = GetNextRaycastedObject(eventData);
+        if (nextObject)
+        {
+            ExecuteEvents.Execute<IPointerClickHandler>(nextObject, eventData, (x, y) => { x.OnPointerClick((PointerEventData)y); });
+        }
+    }
+
+    GameObject GetNextRaycastedObject(PointerEventData eventData)
+    {
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
 
@@ -118,18 +128,24 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
                 maxDistance = result.distance;
             }
         }
-
-        if (nextObject)
-        {
-            ExecuteEvents.Execute<IPointerClickHandler>(nextObject, eventData, (x, y) => { x.OnPointerClick((PointerEventData)y); });
-        }
+        return nextObject;
     }
 
+    Action onPointerUpOnce;
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!Shifting())
         {
-            GenericSelectable.DeselectAll(new BaseEventData(EventSystem.current));
+            GameObject nextObject = GetNextRaycastedObject(eventData);
+            onPointerUpOnce = () =>
+            {
+                GenericSelectable.DeselectAll(new BaseEventData(EventSystem.current), nextObject);
+                onPointerUpOnce = null;
+            };
+        }
+        else
+        {
+            onPointerUpOnce = () => { };
         }
     }
 
