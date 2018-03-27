@@ -86,7 +86,7 @@ public class PowerWebManager : MonoSingleton<PowerWebManager> {
         {
             untargetedWeb = null;
         }
-        else
+        else if (web.target != null)
         {
             webs.Remove(web.target);
         }
