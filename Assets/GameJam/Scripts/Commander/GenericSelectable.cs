@@ -9,19 +9,46 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
 
     public static HashSet<GenericSelectable> allMySelectables = new HashSet<GenericSelectable>();
     public static HashSet<GenericSelectable> currentlySelected = new HashSet<GenericSelectable>();
-
+    public MenuButtonContainer contextMenu;
     Renderer myRenderer;
 
+    public bool alive { get; protected set; }
+    public int power;
     Material unselectedMaterial;
     [SerializeField]
     Material selectedMaterial;
     public bool selected { get; set; }
     protected virtual void Awake()
     {
+        alive = true;
         allMySelectables.Add(this);
         myRenderer = transform.GetComponentsInChildren<Renderer>()[0];
         unselectedMaterial = myRenderer.material;
+    }
 
+    public static HashSet<Type> GetSelectableTypes()
+    {
+        HashSet<Type> ret = new HashSet<Type>();
+        foreach (var s in currentlySelected)
+        {
+            ret.Add(s.GetType());
+        }
+        return ret;
+    }
+
+    public static bool IsAllSelectedThisType(GenericSelectable selectable)
+    {
+        HashSet<Type> types = GetSelectableTypes();
+        if (types.Count != 1)
+        {
+            return false;
+        }
+        return types.Contains(selectable.GetType());
+    }
+
+    public bool IsAllSelectedThisType()
+    {
+        return IsAllSelectedThisType(this);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -62,7 +89,7 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         myRenderer.material = selectedMaterial;
     }
 
-    public void OnDeselect(BaseEventData eventData)
+    public void OnDeselect(BaseEventData eventData = null)
     {
         selected = false;
         myRenderer.material = unselectedMaterial;
@@ -78,6 +105,14 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
             }
         }
         currentlySelected.Clear();
+        if (except)
+        {
+            var selectable = except.GetComponent<GenericSelectable>();
+            if (selectable != null)
+            {
+                currentlySelected.Add(selectable);
+            }
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

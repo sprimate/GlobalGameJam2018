@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
 
-public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler
+public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler, IPointerDownHandler
 {
 
     [SerializeField]
@@ -13,7 +13,7 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     Vector2 startPosition;
     Rect selectionRect;
-
+    GenericSelectable draggingForwardTarget;
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!Input.GetKey(KeyCode.Mouse0))
@@ -21,6 +21,29 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
             return;
         }
 
+        //Only one type of selectable is selected
+        if (GenericSelectable.GetSelectableTypes().Count == 1)
+        {
+            var nextObject = GetNextRaycastedObject(eventData);
+            if (nextObject != null)
+            {
+                GenericSelectable selectable = nextObject.GetComponent<GenericSelectable>();
+                if (selectable is IDragHandler)
+                {
+                    draggingForwardTarget = selectable;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Types: " + GenericSelectable.GetSelectableTypes().Count);
+        }
+
+        if (draggingForwardTarget != null)
+        {
+            ExecuteEvents.Execute<IBeginDragHandler>(draggingForwardTarget.gameObject, eventData, (x, y) => { x.OnBeginDrag((PointerEventData)y); });
+            return;
+        }
         selectionBoxImage.gameObject.SetActive(true);
         startPosition = eventData.position;
         selectionRect = new Rect();
@@ -32,6 +55,13 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
         {
             return;
         }
+
+        if (draggingForwardTarget != null)
+        {
+            ExecuteEvents.Execute<IDragHandler>(draggingForwardTarget.gameObject, eventData, (x, y) => { x.OnDrag((PointerEventData)y); });
+            return;
+        }
+
         if (eventData.position.x < startPosition.x)
         {
             selectionRect.xMin = eventData.position.x;
@@ -86,8 +116,15 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
             return;
         }
 
-        selectionBoxImage.gameObject.SetActive(false);
+        if (draggingForwardTarget != null)
+        {
+            GenericSelectable.DeselectAll(new BaseEventData(EventSystem.current));
+            ExecuteEvents.Execute<IEndDragHandler>(draggingForwardTarget.gameObject, eventData, (x, y) => { x.OnEndDrag((PointerEventData)y); });
+            draggingForwardTarget = null;
+            return;
+        }
 
+        selectionBoxImage.gameObject.SetActive(false);
         CheckSelections(eventData);
     }
 
@@ -101,7 +138,7 @@ public class DragSelectionHandler : MonoBehaviour, IBeginDragHandler, IDragHandl
         }
     }
 
-    GameObject GetNextRaycastedObject(PointerEventData eventData)
+    public GameObject GetNextRaycastedObject(PointerEventData eventData)
     {
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, results);
