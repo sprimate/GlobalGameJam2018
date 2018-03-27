@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69023550}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.378862, y: 11.94, z: -3.9622986}
+  m_LocalPosition: {x: 3.060001, y: 0.19556439, z: -4.8999996}
   m_LocalScale: {x: 1.7351105, y: 1.7351096, z: 1.7351096}
   m_Children: []
   m_Father: {fileID: 278454462}
@@ -411,7 +411,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 186769396}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.578862, y: 13.064435, z: 5.4177012}
+  m_LocalPosition: {x: -1.7399995, y: 1.3199998, z: 4.4799995}
   m_LocalScale: {x: 1.7351105, y: 1.7351096, z: 1.7351096}
   m_Children: []
   m_Father: {fileID: 278454462}
@@ -742,7 +742,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 270752294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.908862, y: 13.064435, z: 5.4177012}
+  m_LocalPosition: {x: 4.5900006, y: 1.3199998, z: 4.4799995}
   m_LocalScale: {x: 1.7351105, y: 1.7351096, z: 1.7351096}
   m_Children: []
   m_Father: {fileID: 278454462}
@@ -837,7 +837,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 278454461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.948862, y: -11.514435, z: -0.6377012}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 69023551}
@@ -1736,10 +1736,10 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: -2
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4292870143
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1760,7 +1760,8 @@ Transform:
   m_LocalRotation: {x: -0.29371202, y: 0.6465495, z: -0.29761645, w: -0.6380685}
   m_LocalPosition: {x: 7.842531, y: 9.2703495, z: -0.4027815}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 753402679}
   m_Father: {fileID: 2031182582}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1779,6 +1780,71 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!1 &753402678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 753402679}
+  - component: {fileID: 753402685}
+  m_Layer: 0
+  m_Name: Power Camera
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &753402679
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753402678}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 746290872}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &753402685
+Camera:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 753402678}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 3
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 2097152
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 0
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &911008449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,7 +2631,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1398253793}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.578862, y: 13.764435, z: 1.8277013}
+  m_LocalPosition: {x: -1.74, y: 2.02, z: 0.89}
   m_LocalScale: {x: 1.7351105, y: 1.7351096, z: 1.7351096}
   m_Children: []
   m_Father: {fileID: 278454462}
@@ -3742,3 +3808,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   percentagePowerTransferredPerUnitPerSecond: 1
+  lineRendererPrefab: {fileID: 120947062875842844, guid: b6774e89258d66649a4548926516c700,
+    type: 2}

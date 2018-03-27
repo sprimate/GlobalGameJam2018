@@ -6,6 +6,7 @@ using System.Linq;
 
 public class PowerWeb : MonoBehaviour {
     public Dictionary<BaseSelectable, int> powerDict { get; private set; }
+    Dictionary<BaseSelectable, LineRenderer> lineRendererDict = new Dictionary<BaseSelectable, LineRenderer>();
     public int totalPower {get; private set;}
     BaseSelectable _target;
     public BaseSelectable target {
@@ -40,6 +41,12 @@ public class PowerWeb : MonoBehaviour {
         }
         selectable.power -= powerToTransfer;
         totalPower += powerToTransfer;
+        LineRenderer newLineRenderer = Instantiate(PowerWebManager.instance.lineRendererPrefab, transform);
+        newLineRenderer.transform.name = "PowerLine Renderer (" + lineRendererDict.Count + ")";
+        newLineRenderer.SetPositions(new Vector3[2]);
+        newLineRenderer.SetPosition(0, selectable.transform.position);
+        newLineRenderer.SetPosition(1, selectable.transform.position);
+        lineRendererDict[selectable] = newLineRenderer;
     }
 
     public void AbsorbWeb(PowerWeb web)
@@ -49,6 +56,15 @@ public class PowerWeb : MonoBehaviour {
             AddPower(pair.Key, pair.Value);
         }
         Destroy(web.gameObject);
+    }
+
+    public void SetTargetPosition(Vector3 targetPos)
+    {
+        foreach (var key in lineRendererDict.Keys.ToArray<BaseSelectable>())
+        {
+            lineRendererDict[key].SetPosition(0, key.transform.position);
+            lineRendererDict[key].SetPosition(1, targetPos);
+        }
     }
 
     public void CancelAllTransfers()
@@ -138,6 +154,9 @@ public class PowerWeb : MonoBehaviour {
             List<BaseSelectable> toRemoveFromDict = new List<BaseSelectable>();
             foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
             {
+                lineRendererDict[sender].SetPosition(0, sender.transform.position);
+                lineRendererDict[sender].SetPosition(1, target.transform.position);
+
                 var remainingPower = powerDict[sender];
                 float thisUnitsPowerTransfer = Time.deltaTime * Vector3.Distance(target.transform.position, sender.transform.position) * PowerWebManager.instance.percentagePowerTransferredPerUnitPerSecond;
                 bool lastTransfer = thisUnitsPowerTransfer > remainingPower;
@@ -149,6 +168,9 @@ public class PowerWeb : MonoBehaviour {
                 powerDict[sender] -= Mathf.CeilToInt(thisUnitsPowerTransfer);
                 if (lastTransfer)
                 {
+                    var lineRendererToDestroy = lineRendererDict[sender];
+                    Destroy(lineRendererToDestroy);
+                    lineRendererDict.Remove(sender);
                     powerDict.Remove(sender);
                 }
             }
@@ -156,6 +178,17 @@ public class PowerWeb : MonoBehaviour {
             if (powerDict.Count <= 0)
             {
                 DestroyWeb();
+            }
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            // Casts the ray and get the first game object hit
+            Physics.Raycast(ray, out hit);
+            if (hit.collider != null)
+            {
+                SetTargetPosition(hit.point);
             }
         }
     }

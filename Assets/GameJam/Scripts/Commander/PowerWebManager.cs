@@ -6,7 +6,7 @@ using System.Linq;
 public class PowerWebManager : MonoSingleton<PowerWebManager> {
 
     public float percentagePowerTransferredPerUnitPerSecond = 1f;
-
+    public LineRenderer lineRendererPrefab;
     Dictionary<BaseSelectable, PowerWeb> webs = new Dictionary<BaseSelectable, PowerWeb>();
     PowerWeb untargetedWeb;
     // Use this for initialization
