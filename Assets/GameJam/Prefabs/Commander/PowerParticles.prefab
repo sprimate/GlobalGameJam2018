@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 198444156100407744}
   - component: {fileID: 199458616321128890}
   - component: {fileID: 114258617960972824}
-  m_Layer: 0
-  m_Name: Flames
+  m_Layer: 21
+  m_Name: PowerParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,13 +39,13 @@ GameObject:
   - component: {fileID: 4671562620566772}
   - component: {fileID: 198288417908850940}
   - component: {fileID: 199857991101429796}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: FireEmbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4597723159844328
 Transform:
   m_ObjectHideFlags: 1
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1513484603074768}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac2c1771b189d58428ed69c606e123b9, type: 3}
   m_Name: 
@@ -3482,7 +3482,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 20
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3798,7 +3798,7 @@ ParticleSystem:
         m_RotationOrder: 4
   ShapeModule:
     serializedVersion: 5
-    enabled: 1
+    enabled: 0
     type: 4
     angle: 0.5
     length: 0.65
@@ -3916,7 +3916,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 75
+      scalar: 150
       minScalar: 10
       maxCurve:
         serializedVersion: 2

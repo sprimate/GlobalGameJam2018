@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -196,6 +196,7 @@ namespace Assets.Elenesski.Camera.Utilities {
 
                 _RotateX.Update();
                 _RotateY.Update();
+                ResetMovement();
             }
 
 
