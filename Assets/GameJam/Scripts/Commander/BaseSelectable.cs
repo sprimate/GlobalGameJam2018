@@ -9,7 +9,6 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
     public GenericSelectable turret;
     public GenericSelectable unit;
     public CircleCollider2D radiusCalculation;
-    public static float powerPercentageOnDrag = 50;
     Dictionary<BaseSelectable, int> movingPower = new Dictionary<BaseSelectable, int>();
     bool currentlyDraggingPower;
     public void OnBeginDrag(PointerEventData eventData)
@@ -20,7 +19,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
             PowerWeb web = PowerWebManager.instance.GetNewPowerWeb();
             foreach (var selectable in currentlySelected)
             {
-                web.AddPower(selectable as BaseSelectable, Mathf.RoundToInt(selectable.power * powerPercentageOnDrag / 100f));
+                web.AddPower(selectable as BaseSelectable, Mathf.RoundToInt(selectable.power * PowerPercentageSlider.instance.powerPercentageOnDrag / 100f));
             }
         }
     }
@@ -76,7 +75,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
     {
         return GetComponent<SphereCollider>().radius * transform.lossyScale.z;
     }
-
+    float lastRegenTime = 0f;
     void Update()
     {
         if (buildableBeingPlaced != null)
@@ -145,6 +144,13 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         {
             PlaceGameObject(unit);
         }
+
+        if (Time.time > lastRegenTime + basePowerRegenerationRate)
+        {
+            lastRegenTime = Time.time;
+            power++;
+        }
+        BasePowerDisplayer.instance.DisplayPower(this);
     }
     bool sendPowerCancelled;
     public IEnumerator SendPower(BaseSelectable target, int powerToSend)
