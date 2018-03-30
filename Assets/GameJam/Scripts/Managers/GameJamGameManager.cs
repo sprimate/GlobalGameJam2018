@@ -30,7 +30,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	int numPlayers = 0;
 	bool waitForAllPlayers = true;
 	PlayerRoomIndexing indexer;
-	IList<Hive> hives = new List<Hive>();
+	//IList<Hive> hives = new List<Hive>();
 	public int totalHiveHealth;
 	public int totalHiveStartHealth;
     bool swapped = false;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
 
-public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHandler, IPointerEnterHandler, IDeselectHandler
+public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHandler, IPointerEnterHandler, IDeselectHandler, IBuildable
 {
 
     public static HashSet<GenericSelectable> allMySelectables = new HashSet<GenericSelectable>();
@@ -12,6 +12,12 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
     public MenuButtonContainer contextMenu;
     Renderer myRenderer;
 
+    [SerializeField]int buildPowerCost;
+    public int PowerCost {
+        get{
+            return buildPowerCost;
+        }
+    }
     public bool alive { get; protected set; }
     public int power;
     Material unselectedMaterial;
@@ -24,6 +30,20 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         allMySelectables.Add(this);
         myRenderer = transform.GetComponentsInChildren<Renderer>()[0];
         unselectedMaterial = myRenderer.material;
+    }
+
+	public IBuildable CreateBuildableInstance()
+    {
+        return Instantiate(this);
+    }
+    public float GetObjectDepth()
+    {
+        BoxCollider bc = GetComponent<BoxCollider>();
+        if (bc != null)
+        {
+           return bc.size.z * transform.lossyScale.z;
+        }
+        return 0f;//Assume boxCollider?
     }
 
     public static HashSet<Type> GetSelectableTypes()
@@ -69,7 +89,6 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         {
             foreach (var selectable in allMySelectables)
             {
-                Type t = GetType();
                 if (GetType() == selectable.GetType())
                 {
                     selectable.OnSelect(eventData);

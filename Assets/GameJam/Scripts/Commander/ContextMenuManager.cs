@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
 
-    Dictionary<ContextMenuButton, int> activeButtons = new Dictionary<ContextMenuButton, int>();
+    Dictionary<AContextMenuButton, int> activeButtons = new Dictionary<AContextMenuButton, int>();
     int maxNum = 0;
     bool contextMenuBuildAlreadyTriggered;
     public void AddToCurrentContextMenu(params MenuButtonContainer[] menus)
@@ -37,7 +37,7 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
     {
         contextMenuBuildAlreadyTriggered = true;
         yield return null;
-        List<ContextMenuButton> buttons = new List<ContextMenuButton>();
+        List<AContextMenuButton> buttons = new List<AContextMenuButton>();
         foreach (var pair in activeButtons)
         {
             if (pair.Value == maxNum)

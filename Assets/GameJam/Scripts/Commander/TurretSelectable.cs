@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class TurretSelectable : GenericSelectable {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public new float GetObjectDepth(){
+		return GetComponent<CapsuleCollider>().radius * transform.lossyScale.z;
 	}
 }
