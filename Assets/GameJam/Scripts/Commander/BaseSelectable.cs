@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler, IEndDragHandler {
     
+    public int basePowerRegenerationRate;
     public GenericSelectable turret;
     public GenericSelectable unit;
     public CircleCollider2D radiusCalculation;

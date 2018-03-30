@@ -161,6 +161,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 367973218}
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!23 &101361373
@@ -439,6 +440,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 1263706755}
@@ -543,6 +545,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 0}
@@ -696,7 +699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &205298451
@@ -880,6 +883,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 0}
@@ -1099,7 +1103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!23 &335557749
@@ -1339,7 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &484618349
@@ -1475,7 +1479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &565710833
@@ -1830,7 +1834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 60
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &665568829
@@ -1931,7 +1935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 60
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &736481637
@@ -3110,6 +3114,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 1981364808}
@@ -3263,7 +3268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &1570991795
@@ -3391,7 +3396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!23 &1610398480
@@ -3495,6 +3500,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 1672083530}
@@ -3848,6 +3854,7 @@ MonoBehaviour:
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  basePowerRegenerationRate: 0
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 736481639}
@@ -4001,7 +4008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 30
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &1775261248
@@ -4170,7 +4177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contextMenu: {fileID: 0}
-  buildPowerCost: 0
+  buildPowerCost: 60
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!1 &1783229295
