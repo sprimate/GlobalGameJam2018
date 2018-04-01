@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
 
@@ -30,6 +31,54 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
         if (!contextMenuBuildAlreadyTriggered)
         {
             StartCoroutine(BuildContextMenu());
+        }
+    }
+
+    HorizontalLayoutGroup horizontalLayoutGroup;
+
+    public void AddMenu(IEnumerable<AContextMenuButton> buttons, bool duplicate = true)
+    {
+        StartCoroutine(NextFrame(buttons, duplicate));
+        
+    }
+
+    IEnumerator NextFrame(IEnumerable<AContextMenuButton> buttons, bool duplicate)
+    {
+        if (horizontalLayoutGroup == null)
+        {
+            GameObject g = new GameObject("Menu");
+            horizontalLayoutGroup = g.AddComponent<HorizontalLayoutGroup>();
+            g.transform.SetParent(transform, false);
+        }
+        GameObject newGroup = new GameObject("Vertical Layout Group");
+        var vertLayoutGroup = newGroup.AddComponent<VerticalLayoutGroup>();
+        vertLayoutGroup.transform.SetParent(horizontalLayoutGroup.transform);
+        yield return null;
+        foreach(var b in buttons)
+        {
+            var button = b;
+            if (duplicate)
+            {
+                button = Instantiate(b);
+            }
+            button.transform.SetParent(vertLayoutGroup.transform);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            CloseMenu();
+        }
+    }
+
+    public void CloseMenu()
+    {
+        if (horizontalLayoutGroup != null)
+        {
+            Destroy(horizontalLayoutGroup.gameObject);
+            horizontalLayoutGroup = null;
         }
     }
 

@@ -53,8 +53,9 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         movingPower = new Dictionary<BaseSelectable, int>();
     }
 
+    int frameOfBuildableStart;
     IBuildable buildableBeingPlaced;
-    public void PlaceGameObject(IBuildable buildable)
+    public void PlaceBuildable(IBuildable buildable)
     {
         if (buildableBeingPlaced != null)
         {
@@ -69,6 +70,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         buildableBeingPlaced = buildable.CreateBuildableInstance();
         power -= buildableBeingPlaced.PowerCost;
         radiusCalculation.gameObject.SetActive(true);
+        frameOfBuildableStart = Time.frameCount;
     }
 
     public new float GetObjectDepth()
@@ -130,7 +132,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
                 radiusCalculation.gameObject.SetActive(false);
             }
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && Time.frameCount > frameOfBuildableStart + 1)
             {
                 buildableBeingPlaced = null;
                 radiusCalculation.gameObject.SetActive(false);
@@ -138,11 +140,11 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         }
         else if (selected && Input.GetKeyUp(KeyCode.T))
         {
-            PlaceGameObject(turret);
+            PlaceBuildable(turret);
         }
         else if (selected && Input.GetKeyUp(KeyCode.U))
         {
-            PlaceGameObject(unit);
+            PlaceBuildable(unit);
         }
 
         if (Time.time > lastRegenTime + basePowerRegenerationRate)
@@ -152,6 +154,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         }
         BasePowerDisplayer.instance.DisplayPower(this);
     }
+    
     bool sendPowerCancelled;
     public IEnumerator SendPower(BaseSelectable target, int powerToSend)
     {

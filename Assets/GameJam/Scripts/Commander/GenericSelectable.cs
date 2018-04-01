@@ -7,6 +7,8 @@ using System;
 public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHandler, IPointerEnterHandler, IDeselectHandler, IBuildable
 {
 
+    public List<AContextMenuButton> menu;
+
     public static HashSet<GenericSelectable> allMySelectables = new HashSet<GenericSelectable>();
     public static HashSet<GenericSelectable> currentlySelected = new HashSet<GenericSelectable>();
     public MenuButtonContainer contextMenu;
@@ -101,17 +103,26 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
         }
     }
 
-    public void OnSelect(BaseEventData eventData)
+    public virtual void OnSelect(BaseEventData eventData)
     {
         selected = true;
         currentlySelected.Add(this);
         myRenderer.material = selectedMaterial;
+        if (menu != null && menu.Count > 0)
+        {
+            ContextMenuManager.instance.AddMenu(menu);
+        }
+        else
+        {
+            ContextMenuManager.instance.CloseMenu();
+        }
     }
 
     public void OnDeselect(BaseEventData eventData = null)
     {
         selected = false;
         myRenderer.material = unselectedMaterial;
+        ContextMenuManager.instance.CloseMenu();
     }
 
     public static void DeselectAll(BaseEventData eventData, GameObject except = null)
