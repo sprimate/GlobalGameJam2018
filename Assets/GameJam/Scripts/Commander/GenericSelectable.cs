@@ -11,7 +11,6 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
 
     public static HashSet<GenericSelectable> allMySelectables = new HashSet<GenericSelectable>();
     public static HashSet<GenericSelectable> currentlySelected = new HashSet<GenericSelectable>();
-    public MenuButtonContainer contextMenu;
     Renderer myRenderer;
 
     [SerializeField]int buildPowerCost;

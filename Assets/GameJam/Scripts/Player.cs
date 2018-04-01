@@ -376,7 +376,6 @@ namespace CompleteProject
                 return;
             }        
             Vector3 tempPos = transform.position;
-            int otherId = id == 1 ? 2 : 1;
 //            Debug.Log("Send " + id + " to " + otherPlayer.transform.position + " and " + otherPlayer.id + " to " + transform.position);
             object[] parameters = new object[4] {id, transform.position, otherPlayer.id, otherPlayer.transform.position};
             GetComponent<PhotonView>().RPC("SetPosition", PhotonTargets.All, parameters);

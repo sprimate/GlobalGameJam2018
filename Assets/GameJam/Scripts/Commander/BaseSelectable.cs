@@ -9,7 +9,6 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
     public GenericSelectable turret;
     public GenericSelectable unit;
     public CircleCollider2D radiusCalculation;
-    Dictionary<BaseSelectable, int> movingPower = new Dictionary<BaseSelectable, int>();
     bool currentlyDraggingPower;
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -50,7 +49,6 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
                 PowerWebManager.instance.CancelUntargetedPowerTransfer();
             }
         }
-        movingPower = new Dictionary<BaseSelectable, int>();
     }
 
     int frameOfBuildableStart;
@@ -153,15 +151,5 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
             power++;
         }
         BasePowerDisplayer.instance.DisplayPower(this);
-    }
-    
-    bool sendPowerCancelled;
-    public IEnumerator SendPower(BaseSelectable target, int powerToSend)
-    {
-        while (!sendPowerCancelled && alive)
-        {
-
-            yield return null;
-        }
     }
 }

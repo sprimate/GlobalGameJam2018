@@ -150,7 +150,6 @@ public class PowerWeb : MonoBehaviour {
         if (target != null)
         {
             int powerToMove = 0;
-            List<BaseSelectable> toRemoveFromDict = new List<BaseSelectable>();
             foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
             {
                 powerUIDict[sender].transform.position = sender.transform.position;
