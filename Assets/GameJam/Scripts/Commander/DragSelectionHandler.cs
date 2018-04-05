@@ -36,7 +36,7 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
         }
         else
         {
-            Debug.Log("Types: " + GenericSelectable.GetSelectableTypes().Count);
+           // Debug.Log("Types: " + GenericSelectable.GetSelectableTypes().Count);
         }
 
         if (draggingForwardTarget != null)

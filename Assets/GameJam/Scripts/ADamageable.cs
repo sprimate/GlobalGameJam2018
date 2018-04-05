@@ -15,7 +15,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 
 	public float soulValue;
     public Soul soul;
-	protected bool isDead;                                // Whether the enemy is dead.
+	public bool IsDead;                                // Whether the enemy is dead.
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
 	public int startingHealth = 100;            // The amount of health the enemy starts the game with.
@@ -32,7 +32,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	{
 		currentHealth = startingHealth;
 		pv = GetComponent<PhotonView>();
-		if (!pv.ObservedComponents.Contains(this))
+		if (pv != null && !pv.ObservedComponents.Contains(this))
 		{
 			pv.ObservedComponents.Add(this);
 		}
@@ -42,7 +42,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	public virtual void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
 	{
 		// If the enemy is dead...
-		if(amount == 0 || isDead)
+		if(amount == 0 || IsDead)
 		{
 			// ... no need to take damage so exit the function.
 			return;
@@ -72,8 +72,16 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		if(currentHealth <= 0)
 		{
 			GameJamGameManager.instance.RecordEnemyDestroyed();
+			if (GetComponent<PhotonView>())
+			{
 			// ... the enemy is dead.
-			GetComponent<PhotonView>().RPC("Death", PhotonTargets.All);
+				GetComponent<PhotonView>().RPC("Death", PhotonTargets.All);
+			}
+			else
+			{
+				Debug.LogError("Can't find PhotonView on object '" + gameObject, gameObject);
+				Death();
+			}
 		}
 		try{
 			enemyAudio.Play ();
@@ -98,7 +106,11 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	protected void Destroy()
 	{
 		PhotonView pv = GetComponent<PhotonView>();
-		if (pv.isMine)
+		if (pv == null)
+		{
+			GameObject.Destroy(gameObject);
+		}
+		else if (pv.isMine)
 		{
 			PhotonNetwork.Destroy (gameObject);
 		}
@@ -135,6 +147,9 @@ public abstract class ADamageable : Photon.MonoBehaviour{
     }
 
     [PunRPC]
-	protected abstract void Death();
-
+	protected virtual void Death()
+	{
+		IsDead = true;
+		Destroy();
+	}
 }

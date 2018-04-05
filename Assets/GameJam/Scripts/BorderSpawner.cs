@@ -8,6 +8,9 @@ public class BorderSpawner : MonoBehaviour {
 	public float spawnRate {protected get; set;}
 	float lastSpawn;
 
+	public System.Action OnSpawn;
+	
+
 	protected virtual void Update () 
 	{
 		HandleSpawns();
@@ -43,6 +46,10 @@ public class BorderSpawner : MonoBehaviour {
 			}
 			//toSpawn.enemyColorId = Random.Range(1, 3); //3 is exclusive
 			PhotonNetwork.InstantiateSceneObject(toSpawn.gameObject.name, spawnPosition, Quaternion.LookRotation(randomDirection), 0, null);
+			if (OnSpawn != null)
+			{
+				OnSpawn.Invoke();
+			}
 			lastSpawn = Time.time;
 		}
 	}

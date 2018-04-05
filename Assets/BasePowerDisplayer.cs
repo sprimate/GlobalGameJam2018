@@ -12,9 +12,11 @@ public class BasePowerDisplayer : MonoSingleton<BasePowerDisplayer> {
 		{
 			GameObject g = new GameObject();
 			g.transform.SetParent(transform);
+			g.name = baseSelectable.gameObject.name + " (Power)";
 			textToBaseDict[baseSelectable] = g.AddComponent<TextMeshProUGUI>();
 			textToBaseDict[baseSelectable].color = Color.black;
 			textToBaseDict[baseSelectable].alignment = TextAlignmentOptions.Center;
+			textToBaseDict[baseSelectable].fontSize = 28f;
 		}
 		
 		Vector3 screenPos = Camera.main.WorldToScreenPoint(baseSelectable.transform.TransformPoint(baseSelectable.GetComponent<SphereCollider>().center));

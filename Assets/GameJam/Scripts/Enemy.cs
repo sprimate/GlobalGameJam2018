@@ -178,7 +178,7 @@ public class Enemy : ADamageable {
 	{
 		try{
 			// The enemy is dead.
-			isDead = true;
+			IsDead = true;
 
 			// Turn the collider into a trigger so shots can pass through it.
 			physicsCollider.isTrigger = true;

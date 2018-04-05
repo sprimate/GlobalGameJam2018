@@ -45,6 +45,7 @@ namespace CompleteProject
             // If the Fire1 button is being press and it's time to fire...
 			if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
             {
+                Debug.Log("Firing");
                 // ... shoot the gun.
                 Shoot ();
             }
@@ -76,6 +77,7 @@ namespace CompleteProject
 
         void Shoot ()
         {
+            Debug.Log("Shooting");
             // Reset the timer.
             timer = 0f;
 

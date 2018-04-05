@@ -158,6 +158,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+
 		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
 		{
@@ -186,7 +187,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	public void HiveAboutToBeDestroyed(Hive h)
 	{
-		GameObject.Find("HivesDestroyed").GetComponent<Text>().text = "Hives: " + ++destroyedHives;
+        if (GameObject.Find("HivesDestroyed") != null)
+    		GameObject.Find("HivesDestroyed").GetComponent<Text>().text = "Hives: " + ++destroyedHives;
         AttackAllEnemiesByColor(h.enemyColorId, h.hiveDestroyedDamage);
 		int newHiveColor = h.enemyColorId;
 		if (h.numChanges % 2 != 0 )
@@ -198,7 +200,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	public void RecordEnemyDestroyed()
 	{
-		GameObject.Find("EnemiesDestroyed").GetComponent<Text>().text = "Enemies: " + ++destroyedEnemies;
+        if (GameObject.Find("EnemiesDestroyed") != null)
+    		GameObject.Find("EnemiesDestroyed").GetComponent<Text>().text = "Enemies: " + ++destroyedEnemies;
 	}
 
     public int GetClosestTargetId(Vector3 position)

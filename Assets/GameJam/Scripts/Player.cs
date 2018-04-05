@@ -12,6 +12,7 @@ namespace CompleteProject
     {
 
 #region PortedFromPlayerMovement
+
         public float bufferBetweenDamageTaken;
         float lastDamageTaken;
         int numTimesDied = 0;
@@ -48,9 +49,12 @@ namespace CompleteProject
 
             // Set the initial health of the player.
             currentHealth = startingHealth;
-            damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
-			healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
-            healthSlider.maxValue = startingHealth;
+            if (GameObject.Find("DamageImage") != null)
+            {
+                damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
+                healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+                healthSlider.maxValue = startingHealth;
+            }
         }
 
         void Resurrect()
@@ -208,16 +212,19 @@ namespace CompleteProject
         {
          //   Debug.Log("Update");
             // If the player has just been damaged...
-            if(damaged)
+            if (damageImage != null)
             {
-                // ... set the colour of the damageImage to the flash colour.
-                damageImage.color = flashColour;
-            }
-            // Otherwise...
-            else
-            {
-                // ... transition the colour back to clear.
-                damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+                if(damaged)
+                {
+                    // ... set the colour of the damageImage to the flash colour.
+                    damageImage.color = flashColour;
+                }
+                // Otherwise...
+                else
+                {
+                    // ... transition the colour back to clear.
+                    damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+                }
             }
 
             // Reset the damaged flag.

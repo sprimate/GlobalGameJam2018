@@ -102,10 +102,6 @@ public class Weapon : Photon.MonoBehaviour {
 					// ... the enemy should take damage.
 					enemy.TakeDamage (playerColorId, damagePerShot, shootHit.point);
 				}
-				else
-				{
-					Debug.Log("Enemy is null tho");
-				}
 			}
 			else
 			{

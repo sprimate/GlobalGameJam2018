@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System;
 
-public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHandler, IPointerEnterHandler, IDeselectHandler, IBuildable
+public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandler, IPointerEnterHandler, IDeselectHandler, IBuildable
 {
 
     public List<AContextMenuButton> menu;
@@ -19,18 +19,28 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
             return buildPowerCost;
         }
     }
-    public bool alive { get; protected set; }
     public int power;
     Material unselectedMaterial;
     [SerializeField]
     Material selectedMaterial;
     public bool selected { get; set; }
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        alive = true;
+        base.Awake();
         allMySelectables.Add(this);
         myRenderer = transform.GetComponentsInChildren<Renderer>()[0];
         unselectedMaterial = myRenderer.material;
+    }
+
+    public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
+    {
+        base.TakeDamage(playerColor, amount, hitPoint);
+        power = currentHealth;
+    }
+
+    void Update()
+    {
+        currentHealth = power; //TODO - temporary way of combining power and health into one thing
     }
 
 	public IBuildable CreateBuildableInstance()
@@ -74,6 +84,7 @@ public class GenericSelectable : MonoBehaviour, ISelectHandler, IPointerClickHan
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("ONPOINTERCLICK");
         bool shifting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         if (!shifting)
         {

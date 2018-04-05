@@ -10,6 +10,12 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
     public GenericSelectable unit;
     public CircleCollider2D radiusCalculation;
     bool currentlyDraggingPower;
+    BorderSpawner borderSpawner;
+
+    public GenericSelectable unitToSpawnOnTimer;
+    public float spawnRate;
+    float lastSpawn;
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (IsAllSelectedThisType())
@@ -151,5 +157,33 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
             power++;
         }
         BasePowerDisplayer.instance.DisplayPower(this);
+        HandleSpawns();
     }
+
+void HandleSpawns()
+	{
+		if (!PhotonNetwork.player.IsMasterClient)
+		{
+			return;
+		}
+		
+		if (lastSpawn + spawnRate < Time.time)
+		{
+            if (power < unitToSpawnOnTimer.PowerCost)
+            {
+                return;
+            }
+            float maxDistance = radiusCalculation.radius * radiusCalculation.transform.lossyScale.x;
+            float minDistance = GetObjectDepth() + unitToSpawnOnTimer.GetObjectDepth();
+
+            //Debug.Log("Radius: " + radius);
+			var spawnDistance = Random.Range(minDistance, maxDistance);
+			var randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f,1f));
+			Vector3 spawnPosition = transform.position + (randomDirection * spawnDistance);		
+			//toSpawn.enemyColorId = Random.Range(1, 3); //3 is exclusive
+			PhotonNetwork.InstantiateSceneObject(unitToSpawnOnTimer.name, spawnPosition, Quaternion.LookRotation(randomDirection), 0, null);
+            power -= unitToSpawnOnTimer.PowerCost;	
+            lastSpawn = Time.time;
+		}
+	}
 }

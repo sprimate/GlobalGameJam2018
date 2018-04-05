@@ -81,7 +81,7 @@ public class PowerWeb : MonoBehaviour {
         {
             return;
         }
-        if (sender.alive)
+        if (!sender.IsDead)
         {
             sender.power += powerDict[sender];
         }
