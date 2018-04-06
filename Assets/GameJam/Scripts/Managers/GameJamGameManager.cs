@@ -10,8 +10,10 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
     public static int LocalPlayerId { get {
             return PhotonNetwork.player.ID;
-        } }
+        }
+    }
 
+    public Camera shipCamera;
 	public bool allowGhostMode = true;
     public Dictionary<int, List<Enemy>> enemies;
     public List<Soul> souls;

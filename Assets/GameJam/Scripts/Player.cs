@@ -127,6 +127,11 @@ namespace CompleteProject
         {
             if (Input.GetJoystickNames().Length ==  0)
             {
+                Vector3 target = GameJamGameManager.instance.shipCamera.ScreenToWorldPoint(Input.mousePosition);
+                target.y = playerRigidbody.transform.position.y;
+                playerRigidbody.MoveRotation(Quaternion.LookRotation(target - playerRigidbody.transform.position, playerRigidbody.transform.up));
+//                playerRigidbody.transform.LookAt(target);
+                return;
                 // Create a ray from the mouse cursor on screen in the direction of the camera.
                 Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
@@ -241,8 +246,14 @@ namespace CompleteProject
                 
             }
 
-            if (isDead && !CommanderModeManager.instance.commanderMode)
+            if (CommanderModeManager.instance.commanderMode)
             {
+                return;
+            }
+            
+            if (isDead)
+            {
+                Debug.Log("CommanderMode: " + CommanderModeManager.instance.commanderMode);
                 if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
                 {
                     if (currentHealth >= minHealthPercentageForResurrection/100 * startingHealth)
