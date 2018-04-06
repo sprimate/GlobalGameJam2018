@@ -10,7 +10,6 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
     bool contextMenuBuildAlreadyTriggered;
     public void AddToCurrentContextMenu(params MenuButtonContainer[] menus)
     {
-        Debug.Log("How i get here");
         foreach (var menu in menus)
         {
             foreach (var button in menu.menuButtons)
