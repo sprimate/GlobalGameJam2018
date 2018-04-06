@@ -84,7 +84,6 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("ONPOINTERCLICK");
         bool shifting = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         if (!shifting)
         {
@@ -113,12 +112,17 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
         }
     }
 
-    public virtual void OnSelect(BaseEventData eventData)
+    public void OnSelect(BaseEventData eventData)
+    {
+        OnSelect(eventData, true);
+    }
+
+    public virtual void OnSelect(BaseEventData eventData, bool selectionFinished)
     {
         selected = true;
         currentlySelected.Add(this);
         myRenderer.material = selectedMaterial;
-        if (menu != null && menu.Count > 0)
+        if (menu != null && menu.Count > 0 && selectionFinished)
         {
             ContextMenuManager.instance.AddMenu(menu);
         }

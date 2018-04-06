@@ -137,7 +137,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		
 		if (waitForAllPlayers && numPlayers == maxNumPlayers)
 		{
-			Debug.Log("Going to start game with player ids: "+realPlayers);
+			Debug.Log("Going to start game with player ids: " + realPlayers);
 			StartGame();
 		}
 		else if (!gameStarted)

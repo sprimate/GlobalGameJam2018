@@ -10,6 +10,7 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
     bool contextMenuBuildAlreadyTriggered;
     public void AddToCurrentContextMenu(params MenuButtonContainer[] menus)
     {
+        Debug.Log("How i get here");
         foreach (var menu in menus)
         {
             foreach (var button in menu.menuButtons)
@@ -36,10 +37,29 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
 
     HorizontalLayoutGroup horizontalLayoutGroup;
 
+    Coroutine nextFrameCoroutine;
     public void AddMenu(IEnumerable<AContextMenuButton> buttons, bool duplicate = true)
     {
-        StartCoroutine(NextFrame(buttons, duplicate));
-        
+        if (nextFrameCoroutine == null)
+        {
+            nextFrameCoroutine = StartCoroutine(NextFrame(buttons, duplicate));
+        }
+        else
+        {
+            StartCoroutine(CancelMenuCoroutine());
+        }
+    }
+
+    IEnumerator CancelMenuCoroutine()
+    {
+
+        yield return new WaitForEndOfFrame();
+        if (nextFrameCoroutine == null)
+        {
+            yield break;
+        }
+        StopCoroutine(nextFrameCoroutine);
+        nextFrameCoroutine = null;
     }
 
     IEnumerator NextFrame(IEnumerable<AContextMenuButton> buttons, bool duplicate)
@@ -62,6 +82,7 @@ public class ContextMenuManager : MonoSingleton<ContextMenuManager> {
                 button = Instantiate(b);
             }
             button.transform.SetParent(vertLayoutGroup.transform);
+            nextFrameCoroutine = null;
         }
     }
 

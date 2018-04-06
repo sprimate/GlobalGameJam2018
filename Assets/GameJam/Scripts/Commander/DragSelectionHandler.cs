@@ -86,11 +86,11 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
 
         selectionBoxImage.rectTransform.offsetMin = selectionRect.min;
         selectionBoxImage.rectTransform.offsetMax = selectionRect.max;
-        CheckSelections(eventData);
+        CheckSelections(eventData, false);
        
     }
 
-    void CheckSelections(PointerEventData eventData)
+    void CheckSelections(PointerEventData eventData, bool selectionDone = true)
     {
         foreach (GenericSelectable selectable in GenericSelectable.allMySelectables)
         {
@@ -100,7 +100,7 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
             }
             if (selectionRect.Contains(Camera.main.WorldToScreenPoint(selectable.transform.position)))
             {
-                selectable.OnSelect(eventData);
+                selectable.OnSelect(eventData, selectionDone);
             }
             else if (!Shifting() && selectable.selected)
             {
