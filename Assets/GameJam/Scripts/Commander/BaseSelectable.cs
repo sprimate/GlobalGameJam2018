@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler, IEndDragHandler {
     
+    [SerializeField] Camera commanderCamera;
     public int basePowerRegenerationRate;
     public GenericSelectable turret;
     public GenericSelectable unit;
@@ -90,17 +91,16 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
             float minDistance = GetObjectDepth() + buildableBeingPlaced.GetObjectDepth();
             var mousePos = Input.mousePosition;
             mousePos.z = 1000f;//Camera.current.transform.position.z - transform.position.z;    // we want 2m away from the camera position
-            var objectPos = Camera.main.ScreenToWorldPoint(mousePos);
-
+            var objectPos = commanderCamera.ScreenToWorldPoint(mousePos);
             float t = 0f;
-            if (objectPos.y != Camera.main.transform.position.y) 
+            if (objectPos.y != commanderCamera.transform.position.y) 
             {
-                t = (transform.position.y - Camera.main.transform.position.y) / (objectPos.y - Camera.main.transform.position.y); 
+                t = (transform.position.y - commanderCamera.transform.position.y) / (objectPos.y - commanderCamera.transform.position.y); 
             }
             Vector3 newObjectPos = new Vector3();
-            newObjectPos.x = Camera.main.transform.position.x + (objectPos.x - Camera.main.transform.position.x) * t;
-            newObjectPos.y = Camera.main.transform.position.y + (objectPos.y - Camera.main.transform.position.y) * t;
-            newObjectPos.z = Camera.main.transform.position.z + (objectPos.z - Camera.main.transform.position.z) * t;
+            newObjectPos.x = commanderCamera.transform.position.x + (objectPos.x - commanderCamera.transform.position.x) * t;
+            newObjectPos.y = commanderCamera.transform.position.y + (objectPos.y - commanderCamera.transform.position.y) * t;
+            newObjectPos.z = commanderCamera.transform.position.z + (objectPos.z - commanderCamera.transform.position.z) * t;
 
             var distance = Vector3.Distance(newObjectPos, transform.position);
             Vector3 direction = (newObjectPos - transform.position).normalized; 
@@ -114,20 +114,9 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
                 newObjectPos = transform.position + direction * minDistance;
             }
 
-            buildableBeingPlaced.transform.position = newObjectPos;////Camera.main.transform.position - (direction.normalized * 2f);//objectPos;
+            buildableBeingPlaced.transform.position = newObjectPos;////commanderCameratransform.position - (direction.normalized * 2f);//objectPos;
             buildableBeingPlaced.transform.LookAt(2 * buildableBeingPlaced.transform.position - transform.position);// look away from base.
-            /*var direction =  Camera.main.transform.position - objectPos;
-
-            var yDifference = transform.position.y - objectPos.y;
-            var angle = Mathf.Deg2Rad * Vector3.Angle(Vector3.up, direction);
-            var distance = yDifference/(1/Mathf.Cos(angle));
-            var transformed = (direction.normalized * distance);
-            var newObjectPos = objectPos + (direction.normalized * distance);
-            //Debug.Log(objectPos + " + " + transformed + " = " + newObjectPos);
-
-            //placingGameObject.transform.position = newObjectPos;
-           // Debug.Log(objectPos.y + " - " + transform.position.y);
-           // Vector3 direction = placingGameObject.transform.position - transform.position;*/
+           
             if (Input.GetKeyUp(KeyCode.Escape))
             {
                 power += buildableBeingPlaced.PowerCost;

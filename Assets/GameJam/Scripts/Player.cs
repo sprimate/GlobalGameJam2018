@@ -89,14 +89,16 @@ namespace CompleteProject
             if (rigidbody == null)
             {}
            // Debug.Log("Fixed");
-			if (GameJamGameManager.LocalPlayerId != id)
+			if (GameJamGameManager.LocalPlayerId != id || CommanderModeManager.instance.commanderMode)
 			{
 				return;
 			}
+            
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
             float v = CrossPlatformInputManager.GetAxisRaw("Vertical");
 
+ 
             // Move the player around the scene.
             Move (h, v);
 
@@ -239,7 +241,7 @@ namespace CompleteProject
                 
             }
 
-            if (isDead)
+            if (isDead && !CommanderModeManager.instance.commanderMode)
             {
                 if (id == GameJamGameManager.LocalPlayerId && Input.GetButtonUp("Swap"))
                 {

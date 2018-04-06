@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommanderModeManager : MonoBehaviour {
+public class CommanderModeManager : MonoSingleton<CommanderModeManager> {
 
 	public bool commanderMode;
 	bool lastCommanderMode;
@@ -21,6 +21,11 @@ public class CommanderModeManager : MonoBehaviour {
 			UpdateActiveObjects();
 		}
 		lastCommanderMode = commanderMode;
+
+		if (Input.GetKeyUp(KeyCode.C))
+		{
+			commanderMode = !commanderMode;
+		}
 	}
 
 	void UpdateActiveObjects()
