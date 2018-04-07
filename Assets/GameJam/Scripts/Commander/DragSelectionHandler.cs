@@ -16,7 +16,7 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
     GenericSelectable draggingForwardTarget;
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!Input.GetKey(KeyCode.Mouse0))
+        if (!Input.GetKey(KeyCode.Mouse0) || CommanderModeManager.instance.touchMode != CommanderModeManager.TouchMode.Select)
         {
             return;
         }
@@ -51,7 +51,7 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!Input.GetKey(KeyCode.Mouse0))
+        if (!Input.GetKey(KeyCode.Mouse0) || CommanderModeManager.instance.touchMode != CommanderModeManager.TouchMode.Select)
         {
             return;
         }
@@ -111,7 +111,7 @@ public class DragSelectionHandler : MonoSingleton<DragSelectionHandler>, IBeginD
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!Input.GetKeyUp(KeyCode.Mouse0))
+        if (!Input.GetKeyUp(KeyCode.Mouse0) || CommanderModeManager.instance.touchMode != CommanderModeManager.TouchMode.Select)
         {
             return;
         }

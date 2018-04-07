@@ -12,6 +12,7 @@ public class BasePowerDisplayer : MonoSingleton<BasePowerDisplayer> {
 		{
 			GameObject g = new GameObject();
 			g.transform.SetParent(transform);
+            g.layer = gameObject.layer;
 			g.name = baseSelectable.gameObject.name + " (Power)";
 			textToBaseDict[baseSelectable] = g.AddComponent<TextMeshProUGUI>();
 			textToBaseDict[baseSelectable].color = Color.black;

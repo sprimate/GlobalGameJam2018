@@ -153,7 +153,6 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         var mousePos = Input.mousePosition;
         mousePos.z = 1000f;//Camera.current.transform.position.z - transform.position.z;    // we want 2m away from the camera position
         var objectPos = commanderCamera.ScreenToWorldPoint(mousePos);
-        Debug.Log("ObjectPos: " + objectPos);
         float t = 0f;
         if (objectPos.y != commanderCamera.transform.position.y)
         {
@@ -235,9 +234,11 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         lineRenderer.enabled = false;
     }
 
+    [PunRPC]
     protected override void Death()
     {
         BasePowerDisplayer.instance.BaseDestroyed(this);
         base.Death();
+        //base.Death();
     }
 }

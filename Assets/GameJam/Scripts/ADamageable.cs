@@ -147,9 +147,9 @@ public abstract class ADamageable : Photon.MonoBehaviour{
     }
 
     [PunRPC]
-	protected virtual void Death()
-	{
+    protected abstract void Death();
+/*	{
 		IsDead = true;
 		Destroy();
-	}
+	}*/
 }

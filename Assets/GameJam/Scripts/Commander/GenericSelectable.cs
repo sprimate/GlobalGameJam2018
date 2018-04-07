@@ -163,4 +163,12 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
     {
         Debug.Log("Pointer Entered");
     }
+
+    [PunRPC]
+    protected override void Death()
+    {
+        IsDead = true;
+        Destroy();
+//        throw new NotImplementedException();
+    }
 }
