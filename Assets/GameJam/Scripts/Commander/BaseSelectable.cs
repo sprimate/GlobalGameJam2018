@@ -40,7 +40,19 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
 
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public System.Action OnParticleColissionCallback;
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (OnParticleColissionCallback != null)
+        {
+            ParticleSystem particles = other.GetComponent<ParticleSystem>();
+            Debug.Log("Invoking the callback");
+            OnParticleColissionCallback.Invoke();
+        }
+    }
+
+     public void OnEndDrag(PointerEventData eventData)
     {
         if (currentlyDraggingPower)
         {
@@ -149,6 +161,13 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         HandleSpawns();
     }
 
+    public bool shouldSpawnNow;
+
+    public void SpawnNow()
+    {
+        shouldSpawnNow = true;
+    }
+
 void HandleSpawns()
 	{
 		if (!PhotonNetwork.player.IsMasterClient)
@@ -156,7 +175,7 @@ void HandleSpawns()
 			return;
 		}
 		
-		if (lastSpawn + spawnRate < Time.time)
+		if (lastSpawn + spawnRate < Time.time || shouldSpawnNow)
 		{
             if (power < unitToSpawnOnTimer.PowerCost)
             {
@@ -173,6 +192,13 @@ void HandleSpawns()
 			PhotonNetwork.InstantiateSceneObject(unitToSpawnOnTimer.name, spawnPosition, Quaternion.LookRotation(randomDirection), 0, null);
             power -= unitToSpawnOnTimer.PowerCost;	
             lastSpawn = Time.time;
+            shouldSpawnNow = false;
 		}
 	}
+
+    protected override void Death()
+    {
+        BasePowerDisplayer.instance.BaseDestroyed(this);
+        base.Death();
+    }
 }

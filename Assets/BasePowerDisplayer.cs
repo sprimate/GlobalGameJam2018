@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,7 +21,12 @@ public class BasePowerDisplayer : MonoSingleton<BasePowerDisplayer> {
 		
 		Vector3 screenPos = Camera.main.WorldToScreenPoint(baseSelectable.transform.TransformPoint(baseSelectable.GetComponent<SphereCollider>().center));
 		textToBaseDict[baseSelectable].transform.position = screenPos;	
-		textToBaseDict[baseSelectable].text = baseSelectable.power.ToString();
-		
+		textToBaseDict[baseSelectable].text = Mathf.CeilToInt(baseSelectable.power).ToString();
 	}
+
+    public void BaseDestroyed(BaseSelectable selectable)
+    {
+        Destroy(textToBaseDict[selectable]);
+        textToBaseDict.Remove(selectable);
+    }
 }

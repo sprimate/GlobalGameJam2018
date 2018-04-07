@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 205298452}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571346, b: 0.30692208, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028377, g: 0.22571409, b: 0.30692285, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -113,6 +113,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &41680160
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.081213
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.490551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -2.5070662
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.15923575
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.96729344
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.08961427
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: -0.17594552
+      objectReference: {fileID: 0}
+    - target: {fileID: 4597723159844328, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198444156100407744, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96,
+        type: 2}
+      propertyPath: CollisionModule.quality
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9c0f3e97dedd0ad479ca1b1d2fa49b96, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &69023551 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4254175108354492, guid: 67f96e95c2a4541f08d5886cdda2d754,
@@ -161,6 +208,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -262,14 +317,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 1
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 1263706755}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &138949514
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -367,14 +434,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 0}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &186769399
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -524,6 +603,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -637,14 +724,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 0}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &270752297
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -902,6 +1001,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -1055,6 +1162,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -1138,6 +1253,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4226872171476378, guid: fb196093836ea4bc9b4d7f4aaa96b765, type: 2}
       propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226872171476378, guid: fb196093836ea4bc9b4d7f4aaa96b765, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.45455
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226872171476378, guid: fb196093836ea4bc9b4d7f4aaa96b765, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.45455
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226872171476378, guid: fb196093836ea4bc9b4d7f4aaa96b765, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.45455
+      objectReference: {fileID: 0}
+    - target: {fileID: 114471346742281876, guid: fb196093836ea4bc9b4d7f4aaa96b765,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1239,6 +1371,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -1460,15 +1600,27 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 639563518}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e81b2835ac745b74e86c914d56560d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 60
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  fireRadius: 0
+  fireRate: 0
+  damagePerAttack: 0
+  effectsDisplayTime: 0.2
 --- !u!4 &665568830 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4226872171476378, guid: fb196093836ea4bc9b4d7f4aaa96b765,
@@ -2122,14 +2274,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 0
   turret: {fileID: 0}
   unit: {fileID: 0}
   radiusCalculation: {fileID: 1981364808}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &1398253796
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2293,21 +2457,81 @@ Prefab:
     - target: {fileID: 114079042651276840, guid: 98c110fa903194694accb97bde774324,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114079042651276840, guid: 98c110fa903194694accb97bde774324,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224668530704692938, guid: 98c110fa903194694accb97bde774324,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224174439785685972, guid: 98c110fa903194694accb97bde774324,
         type: 2}
       propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224616867923136480, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224616867923136480, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224616867923136480, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224616867923136480, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038157344229220, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038157344229220, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038157344229220, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 240
+      objectReference: {fileID: 0}
+    - target: {fileID: 224038157344229220, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224779874198439514, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224779874198439514, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224779874198439514, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 224779874198439514, guid: 98c110fa903194694accb97bde774324,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2409,6 +2633,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -2456,6 +2688,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -2557,14 +2797,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 1
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 1672083530}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &1653881280
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2744,6 +2996,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114741184412942808, guid: 327c9b5ed7b594c7cbc221eb5f55480c,
+        type: 2}
+      propertyPath: powerTransferredPerSecond
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 327c9b5ed7b594c7cbc221eb5f55480c, type: 2}
   m_IsPrefabParent: 0
@@ -2791,14 +3048,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1186b72ae3d66747b5ccd7d502a8996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 0
   power: 100
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 1
   turret: {fileID: 665568834}
   unit: {fileID: 550802393}
   radiusCalculation: {fileID: 736481639}
+  unitToSpawnOnTimer: {fileID: 0}
+  spawnRate: 0
+  shouldSpawnNow: 0
 --- !u!23 &1737850246
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3005,6 +3274,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 30
   power: 0
@@ -3101,15 +3378,27 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1779478699}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e81b2835ac745b74e86c914d56560d96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soulValue: 0
+  soul: {fileID: 0}
+  IsDead: 0
+  enemyColorId: 0
+  startingHealth: 100
+  healthDrop: {fileID: 0}
+  firingRateDrop: {fileID: 0}
+  speedDrop: {fileID: 0}
   menu: []
   buildPowerCost: 60
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
+  fireRadius: 0
+  fireRate: 0
+  damagePerAttack: 0
+  effectsDisplayTime: 0.2
 --- !u!1 &1783229295
 GameObject:
   m_ObjectHideFlags: 0

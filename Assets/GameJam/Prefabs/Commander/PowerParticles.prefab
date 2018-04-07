@@ -52,14 +52,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1513484603074768}
-  m_LocalRotation: {x: 0.11340301, y: 0.7425539, z: -0.130118, w: 0.64716524}
+  m_LocalRotation: {x: 0.15923575, y: 0.96729344, z: -0.08961427, w: -0.17594552}
   m_LocalPosition: {x: 4.081213, y: 0.490551, z: -2.5070662}
   m_LocalScale: {x: 1.7351105, y: 1.7351096, z: 1.7351096}
   m_Children:
   - {fileID: 4671562620566772}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 19.878, y: 97.853004, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.7380004, y: 201.80699, z: 19.996}
 --- !u!4 &4671562620566772
 Transform:
   m_ObjectHideFlags: 1
@@ -3446,7 +3446,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1680068691
+  randomSeed: 1764862110
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5674,14 +5674,14 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
     type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     plane0: {fileID: 0}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
@@ -5812,16 +5812,16 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
+    maxKillSpeed: 0
     radiusScale: 0.05
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 65536
     maxCollisionShapes: 256
-    quality: 0
+    quality: 1
     voxelSize: 0.5
-    collisionMessages: 0
-    collidesWithDynamic: 1
+    collisionMessages: 1
+    collidesWithDynamic: 0
     interiorCollisions: 1
   TriggerModule:
     enabled: 0

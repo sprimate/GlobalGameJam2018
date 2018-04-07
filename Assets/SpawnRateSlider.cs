@@ -8,9 +8,11 @@ public class SpawnRateSlider : MonoBehaviour
 {
     [SerializeField] Slider slider;
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] Button spawnNowButton;
     // Use this for initialization
     void Start () {
         slider.onValueChanged.AddListener(SliderValueChanged);
+        spawnNowButton.onClick.AddListener(SpawnNow);
 	}
 	
 	// Update is called once per frame
@@ -28,24 +30,45 @@ public class SpawnRateSlider : MonoBehaviour
             average += b.spawnRate;
         }
 
-        slider.gameObject.SetActive(toShow);
+        slider.transform.parent.gameObject.SetActive(toShow);
 
         if (toShow)
         {
+            valueChangedByAveraging = true;
             slider.value = (average / GenericSelectable.currentlySelected.Count);
         }
     }
+    bool valueChangedByAveraging; //Should only display the change in the slider. Only apply it if manually moved and shit.
 
     void SliderValueChanged(float value)
+    {
+        text.text = value.ToString();
+
+        if (valueChangedByAveraging)
+        {
+            valueChangedByAveraging = false;
+            return;
+        }
+
+        foreach (var s in GenericSelectable.currentlySelected)
+        {
+            if (s is BaseSelectable)
+            {
+                var b = s as BaseSelectable;
+                b.spawnRate = value;
+            }
+        }
+    }
+
+    void SpawnNow()
     {
         foreach (var s in GenericSelectable.currentlySelected)
         {
             if (s is BaseSelectable)
             {
                 var b = s as BaseSelectable;
-                b.spawnRate = Mathf.RoundToInt(value);
+                b.SpawnNow();
             }
         }
-        text.text = Mathf.RoundToInt(value).ToString();
     }
 }

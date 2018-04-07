@@ -19,7 +19,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 	public int enemyColorId;
 	protected AudioSource enemyAudio;                     // Reference to the audio source.
 	public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-	protected int currentHealth;                   // The current health the enemy has.
+	protected float currentHealth;                   // The current health the enemy has.
 	ParticleSystem hitParticles;                // Reference to the particle system that plays when the enemy is damaged.
 	PhotonView pv;
 

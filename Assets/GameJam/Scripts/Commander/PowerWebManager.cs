@@ -5,7 +5,7 @@ using System.Linq;
 
 public class PowerWebManager : MonoSingleton<PowerWebManager> {
 
-    public float percentagePowerTransferredPerUnitPerSecond = 1f;
+    public float powerTransferredPerSecond = 1f;
     public ParticleSystem powerTransferParticleSystemPrefab;
     Dictionary<BaseSelectable, PowerWeb> webs = new Dictionary<BaseSelectable, PowerWeb>();
     PowerWeb untargetedWeb;
@@ -42,7 +42,6 @@ public class PowerWebManager : MonoSingleton<PowerWebManager> {
         {
             untargetedWeb = null;
         }
-        Debug.Log("Sending " + web.totalPower + " to " + target, target);
     }
 
     public List<PowerWeb> GetAllRelatedWebs(BaseSelectable selectable)

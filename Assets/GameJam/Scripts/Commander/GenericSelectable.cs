@@ -19,7 +19,7 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
             return buildPowerCost;
         }
     }
-    public int power;
+    public float power;
     Material unselectedMaterial;
     [SerializeField]
     Material selectedMaterial;

@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 
 public class PowerWeb : MonoBehaviour {
+    public LineRenderer lineRenderer;
     public Dictionary<BaseSelectable, int> powerDict { get; private set; }
     Dictionary<BaseSelectable, ParticleSystem> powerUIDict = new Dictionary<BaseSelectable, ParticleSystem>();
     public int totalPower {get; private set;}
@@ -14,7 +15,12 @@ public class PowerWeb : MonoBehaviour {
             return _target;
         } set {
             _target = value;
-            CancelTransfer(target);
+            if (target != null)
+            {
+                CancelTransfer(target);
+                TransferPower2();
+            }
+
         }
     }
     struct FloatingPower
@@ -39,12 +45,13 @@ public class PowerWeb : MonoBehaviour {
         {
             powerDict[selectable] = powerToTransfer;
         }
-        selectable.power -= powerToTransfer;
+        //selectable.power -= powerToTransfer;
         totalPower += powerToTransfer;
         ParticleSystem newParticleSystem = Instantiate(PowerWebManager.instance.powerTransferParticleSystemPrefab, transform);
         newParticleSystem.transform.name = "PowerLine (" + powerUIDict.Count + ")";
         newParticleSystem.transform.position = selectable.transform.position;
         powerUIDict[selectable] = newParticleSystem;
+        newParticleSystem.Stop();
     }
 
     public void AbsorbWeb(PowerWeb web)
@@ -142,7 +149,93 @@ public class PowerWeb : MonoBehaviour {
 
     public void Update()
     {
-        TransferPower();
+        //TransferPower();
+    }
+
+    void TransferPower2()
+    {
+        SetTargetPosition(target.transform.position);
+        foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
+        {
+
+            var powerToSend = powerDict[sender];
+            float timeforParticlesToStayAlive = powerToSend / PowerWebManager.instance.powerTransferredPerSecond;
+            Debug.Log(powerToSend + "/" + PowerWebManager.instance.powerTransferredPerSecond + " = " + timeforParticlesToStayAlive);
+            Action particleColissionCallback = () => { }; //avoid a nullref
+            particleColissionCallback += () =>
+            {
+                StartCoroutine(TransferPowerOverTime(timeforParticlesToStayAlive, powerDict[sender], target));
+                target.OnParticleColissionCallback -= particleColissionCallback;
+            };
+            target.OnParticleColissionCallback += particleColissionCallback;
+            StartCoroutine(SendPowerForTime(sender, timeforParticlesToStayAlive));
+        }
+    }
+
+    IEnumerator SendPowerForTime(BaseSelectable sender, float time)
+    {
+        ParticleSystem particleSystem = powerUIDict[sender];
+        particleSystem.transform.position = Vector3.MoveTowards(particleSystem.transform.position, target.transform.position, sender.GetObjectDepth() + 1f);
+        particleSystem.Play();
+        var startTime = Time.time;
+        float lastUpdateTime = startTime;
+        yield return StartCoroutine(TransferPowerOverTime(time, powerDict[sender], sender));
+        particleSystem.Stop();
+        powerUIDict.Remove(sender);
+        powerDict.Remove(sender);
+        while (particleSystem.particleCount > 0)
+        {
+            yield return null;
+        }
+        Debug.Log("Destroying system");
+        Destroy(particleSystem);
+        if (powerDict.Count <= 0)
+        {
+            DestroyWeb();
+        }
+    }
+
+    IEnumerator TransferPowerOverTime(float time, float power, BaseSelectable toTransfer)
+    {
+        var startTime = Time.time;
+        float totalPowerTransferred = 0;
+        float lastUpdateTime = Time.time;
+        while (Time.time < startTime + time)
+        {
+            float powerToMove = (Time.time - lastUpdateTime)/ time * power;
+            Debug.Log("Moving " + powerToMove + " (" + ((Time.time - startTime) / time * 100f) + "%" + " - " + time);
+            lastUpdateTime = Time.time;
+            if (totalPowerTransferred + powerToMove > power)
+            {
+                powerToMove = power - totalPowerTransferred;
+            }
+            totalPowerTransferred += powerToMove;
+            if (toTransfer == target)
+            {
+                target.power += powerToMove;
+            }
+            else
+            {
+                toTransfer.power -= powerToMove;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (toTransfer == target)
+        {
+            target.power += power - totalPowerTransferred;
+        }
+        else
+        {
+            toTransfer.power -= (power - totalPowerTransferred);
+        }
+
+
+    }
+
+    public void OnParticleCollisionStarted()
+    {
+        
     }
 
     void TransferPower()
@@ -155,7 +248,7 @@ public class PowerWeb : MonoBehaviour {
                 powerUIDict[sender].transform.position = sender.transform.position;
 
                 var remainingPower = powerDict[sender];
-                float thisUnitsPowerTransfer = Time.deltaTime * Vector3.Distance(target.transform.position, sender.transform.position) * PowerWebManager.instance.percentagePowerTransferredPerUnitPerSecond;
+                float thisUnitsPowerTransfer = Time.deltaTime * Vector3.Distance(target.transform.position, sender.transform.position) * PowerWebManager.instance.powerTransferredPerSecond;
                 bool lastTransfer = thisUnitsPowerTransfer > remainingPower;
                 if (lastTransfer)
                 {
