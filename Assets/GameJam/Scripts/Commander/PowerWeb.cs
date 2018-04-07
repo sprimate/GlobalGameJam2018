@@ -45,7 +45,6 @@ public class PowerWeb : MonoBehaviour {
         {
             powerDict[selectable] = powerToTransfer;
         }
-        //selectable.power -= powerToTransfer;
         totalPower += powerToTransfer;
         ParticleSystem newParticleSystem = Instantiate(PowerWebManager.instance.powerTransferParticleSystemPrefab, transform);
         newParticleSystem.transform.name = "PowerLine (" + powerUIDict.Count + ")";
