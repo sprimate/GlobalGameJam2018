@@ -13,6 +13,9 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         }
     }
 
+    public static int CommanderId { get; set; }
+
+    bool commanderFound;
     public Camera shipCamera;
 	public bool allowGhostMode = true;
     public Dictionary<int, List<Enemy>> enemies;
@@ -124,7 +127,14 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 			return;
 		}
 
-		if (PhotonNetwork.player.IsMasterClient && numPlayers > ogNumPlayers) //players added here
+
+        if (numPlayers == 1)
+        {
+            CommanderId = realPlayers[0];
+
+            Debug.Log("Commander Set!");
+        }
+		else if (PhotonNetwork.player.IsMasterClient && numPlayers > ogNumPlayers) //players added here
 		{
 			if (playersParent.transform.childCount < numPlayers)
 			{
@@ -160,6 +170,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+        CommanderModeManager.instance.commanderMode = CommanderId == LocalPlayerId;
 
 		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
