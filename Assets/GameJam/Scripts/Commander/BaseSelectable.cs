@@ -40,7 +40,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
 
     }
 
-    public System.Action OnParticleColissionCallback;
+    public static System.Action<BaseSelectable> OnParticleColissionCallback;
 
     void OnParticleCollision(GameObject other)
     {
@@ -48,7 +48,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         {
             ParticleSystem particles = other.GetComponent<ParticleSystem>();
             Debug.Log("Invoking the callback");
-            OnParticleColissionCallback.Invoke();
+            OnParticleColissionCallback.Invoke(this);
         }
     }
 
@@ -101,22 +101,9 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         {
             float maxDistance = radiusCalculation.radius * radiusCalculation.transform.lossyScale.x;
             float minDistance = GetObjectDepth() + buildableBeingPlaced.GetObjectDepth();
-            var mousePos = Input.mousePosition;
-            mousePos.z = 1000f;//Camera.current.transform.position.z - transform.position.z;    // we want 2m away from the camera position
-            var objectPos = commanderCamera.ScreenToWorldPoint(mousePos);
-            float t = 0f;
-            if (objectPos.y != commanderCamera.transform.position.y) 
-            {
-                t = (transform.position.y - commanderCamera.transform.position.y) / (objectPos.y - commanderCamera.transform.position.y); 
-            }
-            Vector3 newObjectPos = new Vector3();
-            newObjectPos.x = commanderCamera.transform.position.x + (objectPos.x - commanderCamera.transform.position.x) * t;
-            newObjectPos.y = commanderCamera.transform.position.y + (objectPos.y - commanderCamera.transform.position.y) * t;
-            newObjectPos.z = commanderCamera.transform.position.z + (objectPos.z - commanderCamera.transform.position.z) * t;
-
+            Vector3 newObjectPos = GetWorldPosOfMouse();
             var distance = Vector3.Distance(newObjectPos, transform.position);
             Vector3 direction = (newObjectPos - transform.position).normalized; 
-
             if (Vector3.Distance(newObjectPos, transform.position) > maxDistance)
             {
                 newObjectPos = transform.position + direction * maxDistance;
@@ -161,6 +148,25 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         HandleSpawns();
     }
 
+    public Vector3 GetWorldPosOfMouse()
+    {
+        var mousePos = Input.mousePosition;
+        mousePos.z = 1000f;//Camera.current.transform.position.z - transform.position.z;    // we want 2m away from the camera position
+        var objectPos = commanderCamera.ScreenToWorldPoint(mousePos);
+        Debug.Log("ObjectPos: " + objectPos);
+        float t = 0f;
+        if (objectPos.y != commanderCamera.transform.position.y)
+        {
+            t = (transform.position.y - commanderCamera.transform.position.y) / (objectPos.y - commanderCamera.transform.position.y);
+        }
+        Vector3 newObjectPos = new Vector3();
+        newObjectPos.x = commanderCamera.transform.position.x + (objectPos.x - commanderCamera.transform.position.x) * t;
+        newObjectPos.y = commanderCamera.transform.position.y + (objectPos.y - commanderCamera.transform.position.y) * t;
+        newObjectPos.z = commanderCamera.transform.position.z + (objectPos.z - commanderCamera.transform.position.z) * t;
+
+        return newObjectPos;
+    }
+
     public bool shouldSpawnNow;
 
     public void SpawnNow()
@@ -168,7 +174,7 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         shouldSpawnNow = true;
     }
 
-void HandleSpawns()
+    void HandleSpawns()
 	{
 		if (!PhotonNetwork.player.IsMasterClient)
 		{
@@ -195,6 +201,39 @@ void HandleSpawns()
             shouldSpawnNow = false;
 		}
 	}
+    LineRenderer _lineRenderer;
+    LineRenderer lineRenderer {
+        get {
+            if (_lineRenderer == null)
+            {
+                _lineRenderer = GetComponent<LineRenderer>();
+            }
+            return _lineRenderer;
+        }
+    }
+    public void DrawLineToMosue()
+    {
+        var mousePos = Input.mousePosition;
+        mousePos.z = 1000f;
+        Vector3 endPos = commanderCamera.ScreenToWorldPoint(mousePos);
+        if (GameJamGameManager.instance.players.Count > 0)
+        {
+            var player1 = GameJamGameManager.instance.players[0];
+            endPos.y = player1.transform.position.y;
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, GetWorldPosOfMouse());
+        }
+    }
+
+    public void DisplayLine()
+    {
+        lineRenderer.enabled = true;
+    }
+
+    public void HideLine()
+    {
+        lineRenderer.enabled = false;
+    }
 
     protected override void Death()
     {

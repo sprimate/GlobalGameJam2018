@@ -88,17 +88,15 @@ public class PowerWeb : MonoBehaviour {
         {
             return;
         }
-        if (!sender.IsDead)
-        {
-            sender.power += powerDict[sender];
-        }
-        else
+        sender.HideLine();
+        if (sender.IsDead)
         {
             FloatingPower floater = new FloatingPower();
             floater.powerAmount = powerDict[sender];
             floater.position = (target.transform.position - sender.transform.position) * 0.5f;
             floatingPower.Add(floater);
         }
+
         totalPower -= powerDict[sender];
         powerDict.Remove(sender);
         if (powerDict.Count <= 0)
@@ -149,7 +147,7 @@ public class PowerWeb : MonoBehaviour {
 
     public void Update()
     {
-        //TransferPower();
+        TransferPower();
     }
 
     void TransferPower2()
@@ -157,17 +155,16 @@ public class PowerWeb : MonoBehaviour {
         SetTargetPosition(target.transform.position);
         foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
         {
-
             var powerToSend = powerDict[sender];
             float timeforParticlesToStayAlive = powerToSend / PowerWebManager.instance.powerTransferredPerSecond;
             Debug.Log(powerToSend + "/" + PowerWebManager.instance.powerTransferredPerSecond + " = " + timeforParticlesToStayAlive);
-            Action particleColissionCallback = () => { }; //avoid a nullref
-            particleColissionCallback += () =>
+            Action<BaseSelectable> particleColissionCallback = (b) => { }; //avoid a nullref
+            particleColissionCallback += (b) =>
             {
-                StartCoroutine(TransferPowerOverTime(timeforParticlesToStayAlive, powerDict[sender], target));
-                target.OnParticleColissionCallback -= particleColissionCallback;
+                StartCoroutine(TransferPowerOverTime(timeforParticlesToStayAlive, powerDict[sender], b, true));
+                BaseSelectable.OnParticleColissionCallback -= particleColissionCallback;
             };
-            target.OnParticleColissionCallback += particleColissionCallback;
+            BaseSelectable.OnParticleColissionCallback += particleColissionCallback;
             StartCoroutine(SendPowerForTime(sender, timeforParticlesToStayAlive));
         }
     }
@@ -179,7 +176,7 @@ public class PowerWeb : MonoBehaviour {
         particleSystem.Play();
         var startTime = Time.time;
         float lastUpdateTime = startTime;
-        yield return StartCoroutine(TransferPowerOverTime(time, powerDict[sender], sender));
+        yield return StartCoroutine(TransferPowerOverTime(time, powerDict[sender], sender, false));
         particleSystem.Stop();
         powerUIDict.Remove(sender);
         powerDict.Remove(sender);
@@ -195,7 +192,7 @@ public class PowerWeb : MonoBehaviour {
         }
     }
 
-    IEnumerator TransferPowerOverTime(float time, float power, BaseSelectable toTransfer)
+    IEnumerator TransferPowerOverTime(float time, float power, BaseSelectable toTransfer, bool shouldAddToTarget)
     {
         var startTime = Time.time;
         float totalPowerTransferred = 0;
@@ -203,83 +200,42 @@ public class PowerWeb : MonoBehaviour {
         while (Time.time < startTime + time)
         {
             float powerToMove = (Time.time - lastUpdateTime)/ time * power;
-            Debug.Log("Moving " + powerToMove + " (" + ((Time.time - startTime) / time * 100f) + "%" + " - " + time);
             lastUpdateTime = Time.time;
             if (totalPowerTransferred + powerToMove > power)
             {
                 powerToMove = power - totalPowerTransferred;
             }
             totalPowerTransferred += powerToMove;
-            if (toTransfer == target)
-            {
-                target.power += powerToMove;
-            }
-            else
-            {
-                toTransfer.power -= powerToMove;
-            }
+            powerToMove = shouldAddToTarget ? powerToMove : -powerToMove;
+            toTransfer.power += powerToMove;
             yield return new WaitForFixedUpdate();
         }
 
-        if (toTransfer == target)
+        if (shouldAddToTarget)
         {
-            target.power += power - totalPowerTransferred;
+            toTransfer.power += power - totalPowerTransferred;
         }
         else
         {
             toTransfer.power -= (power - totalPowerTransferred);
         }
-
-
-    }
-
-    public void OnParticleCollisionStarted()
-    {
-        
     }
 
     void TransferPower()
     {
-        if (target != null)
+        if (totalPower > 0 && target == null)
         {
-            int powerToMove = 0;
             foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
             {
-                powerUIDict[sender].transform.position = sender.transform.position;
-
-                var remainingPower = powerDict[sender];
-                float thisUnitsPowerTransfer = Time.deltaTime * Vector3.Distance(target.transform.position, sender.transform.position) * PowerWebManager.instance.powerTransferredPerSecond;
-                bool lastTransfer = thisUnitsPowerTransfer > remainingPower;
-                if (lastTransfer)
-                {
-                    thisUnitsPowerTransfer = remainingPower;
-                }
-                powerToMove += Mathf.CeilToInt(thisUnitsPowerTransfer);
-                powerDict[sender] -= Mathf.CeilToInt(thisUnitsPowerTransfer);
-                if (lastTransfer)
-                {
-                    var lineRendererToDestroy = powerUIDict[sender];
-                    Destroy(lineRendererToDestroy);
-                    powerUIDict.Remove(sender);
-                    powerDict.Remove(sender);
-                }
-            }
-            SetTargetPosition(target.transform.position);
-            target.power += powerToMove;
-            if (powerDict.Count <= 0)
-            {
-                DestroyWeb();
+                sender.DisplayLine();
+                sender.DrawLineToMosue();
             }
         }
         else
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            // Casts the ray and get the first game object hit
-            Physics.Raycast(ray, out hit);
-            if (hit.collider != null)
+            foreach (var sender in powerDict.Keys.ToArray<BaseSelectable>())
             {
-                SetTargetPosition(hit.point);
+                sender.HideLine();
             }
         }
     }

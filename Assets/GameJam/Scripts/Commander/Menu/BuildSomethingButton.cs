@@ -8,6 +8,7 @@ public class BuildSomethingButton : AContextMenuButton
 	public GenericSelectable objectToBuild;
     public override void Action()
     {
+        Debug.Log("Action: " + gameObject);
         foreach (var selectable in GenericSelectable.currentlySelected)
         {
             BaseSelectable s = selectable as BaseSelectable;
@@ -17,7 +18,7 @@ public class BuildSomethingButton : AContextMenuButton
         }
     }
 
-    public void Start()
+    protected void Start()
     {
         GetComponentInChildren<Text>().text += " (" + objectToBuild.PowerCost + ")";
     }
