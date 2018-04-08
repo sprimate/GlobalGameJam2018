@@ -109,6 +109,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     }
 	public void UpdatePlayers()
 	{
+        Debug.Log("Players Updated");
 		var ogNumPlayers = numPlayers;
 		List<int> realPlayers = new List<int>();
 		numPlayers = 0;
@@ -132,7 +133,6 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         {
             CommanderId = realPlayers[0];
 
-            Debug.Log("Commander Set!");
         }
 		else if (PhotonNetwork.player.IsMasterClient && numPlayers > ogNumPlayers) //players added here
 		{
@@ -147,7 +147,6 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		
 		if (waitForAllPlayers && numPlayers == maxNumPlayers)
 		{
-			Debug.Log("Going to start game with player ids: " + realPlayers);
 			StartGame();
 		}
 		else if (!gameStarted)
@@ -171,7 +170,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	void StartGame()
 	{
         CommanderModeManager.instance.commanderMode = CommanderId == LocalPlayerId;
-
+        Debug.Log("Starting! " + LocalPlayerId);
 		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
 		{
@@ -262,6 +261,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
     public Player GetTarget(int targetId)
     {
+        Debug.Log("Players Count: " + players.Count);
+        return players[targetId - 2];
         try
         {
             if (swapped)

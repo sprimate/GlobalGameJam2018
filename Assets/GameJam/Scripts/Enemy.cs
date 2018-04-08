@@ -82,14 +82,17 @@ public class Enemy : ADamageable {
 	{
 		UpdateSpeedValues();
         Player target = GameJamGameManager.instance.GetTarget(targetId);
+        Debug.Log("move Towards " + target);
 		// If the enemy and the player have health left...
 		if(currentHealth > 0 && target != null && !target.isDead)
 		{
+            Debug.Log("Setting Destinaton!");
 			// ... set the destination of the nav mesh agent to the player.
 			nav.SetDestination (target.transform.position);
 		}
 		else //Otherwise, try to switch targets. If you can't, just be dead.
 		{
+            Debug.Log("NOT SETTING DESTINATION!");
 			targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
 			if (targetId == 0)
 			{
