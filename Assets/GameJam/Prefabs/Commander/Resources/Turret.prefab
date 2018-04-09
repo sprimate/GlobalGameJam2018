@@ -190,7 +190,7 @@ MonoBehaviour:
   firingRateDrop: {fileID: 0}
   speedDrop: {fileID: 0}
   menu: []
-  buildPowerCost: 60
+  buildPowerCost: 200
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
   fireRadius: 25

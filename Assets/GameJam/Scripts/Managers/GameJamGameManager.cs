@@ -129,10 +129,9 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 		}
 
 
-        if (numPlayers == 1)
+        if (numPlayers == 1 && maxNumPlayers > 1)
         {
             CommanderId = realPlayers[0];
-
         }
 		else if (PhotonNetwork.player.IsMasterClient && numPlayers > ogNumPlayers) //players added here
 		{
@@ -169,7 +168,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
-        CommanderModeManager.instance.commanderMode = CommanderId == LocalPlayerId;
+        CommanderModeManager.instance.commanderMode = maxNumPlayers == 1 || CommanderId == LocalPlayerId;
         Debug.Log("Starting! " + LocalPlayerId);
 		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
@@ -261,8 +260,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
     public Player GetTarget(int targetId)
     {
-        Debug.Log("Players Count: " + players.Count);
-        return players[targetId - 2];
+        var toSubtract = maxNumPlayers <= 1 ? 1 : 2;
+        return players[targetId - toSubtract];
         try
         {
             if (swapped)
