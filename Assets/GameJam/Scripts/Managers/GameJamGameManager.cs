@@ -13,6 +13,9 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         }
     }
 
+    public int totalGameTime = 300;
+
+    public float startTime { get; protected set; }
     public static int CommanderId { get; set; }
 
     bool commanderFound;
@@ -168,6 +171,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 
 	void StartGame()
 	{
+        startTime = Time.time == 0f ? 0.001f : Time.time; //stupid hack
         CommanderModeManager.instance.commanderMode = maxNumPlayers == 1 || CommanderId == LocalPlayerId;
         Debug.Log("Starting! " + LocalPlayerId);
 		displayWaitingnForPlayersMessage = false;
