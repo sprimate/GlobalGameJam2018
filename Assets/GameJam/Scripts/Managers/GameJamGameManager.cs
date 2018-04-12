@@ -13,6 +13,8 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         }
     }
 
+    public static Player localPlayer;
+
     public int totalGameTime = 300;
 
     public float startTime { get; protected set; }
@@ -173,7 +175,6 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
 	{
         startTime = Time.time == 0f ? 0.001f : Time.time; //stupid hack
         CommanderModeManager.instance.commanderMode = maxNumPlayers == 1 || CommanderId == LocalPlayerId;
-        Debug.Log("Starting! " + LocalPlayerId);
 		displayWaitingnForPlayersMessage = false;
 		if (gameStarted)
 		{
@@ -262,7 +263,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
         swapped = !swapped;
     }
 
-    public Player GetTarget(int targetId)
+    public Player GetPlayer(int targetId)
     {
         var toSubtract = maxNumPlayers <= 1 ? 1 : 2;
         return players[targetId - toSubtract];

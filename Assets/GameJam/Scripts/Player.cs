@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
@@ -17,6 +18,8 @@ namespace CompleteProject
         float lastDamageTaken;
         int numTimesDied = 0;
         float soulValueMultiplier = 1;
+        bool initialized;
+        public GameObject targetVisualizationPoint;
 
         //If this bool is set to false, the soulDepreciationValue will be subtracted from soulValueMultiplier each death
         //If set to true, the soulValueMultiplier will be divided by the soulDepreciationValue each death;
@@ -37,24 +40,15 @@ namespace CompleteProject
         {
 #if !MOBILE_INPUT
             // Create a layer mask for the floor layer.
-            floorMask = LayerMask.GetMask ("Floor");
+            floorMask = LayerMask.GetMask("Floor");
 #endif
             // Set up references.
-            anim = GetComponent <Animator> ();
-            playerRigidbody = GetComponent <Rigidbody> ();
+            anim = GetComponent<Animator>();
+            playerRigidbody = GetComponent<Rigidbody>();
 
-			 // Setting up the references.
-            playerAudio = GetComponent <AudioSource> ();
-            weapon = GetComponentInChildren <Weapon> ();
-
-            // Set the initial health of the player.
-            currentHealth = startingHealth;
-            if (GameObject.Find("DamageImage") != null)
-            {
-                damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
-                healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
-                healthSlider.maxValue = startingHealth;
-            }
+            // Setting up the references.
+            playerAudio = GetComponent<AudioSource>();
+            weapon = GetComponentInChildren<Weapon>();
         }
 
         void Resurrect()
@@ -82,6 +76,37 @@ namespace CompleteProject
             GameJamGameManager.instance.TriggerEnemyTargetRecalculation();
         }
 
+        IEnumerator InitializeAfterFrame()
+        {
+            yield return new WaitForEndOfFrame();
+
+            // Set the initial health of the player.
+            currentHealth = startingHealth;
+            if (GameObject.Find("DamageImage") != null)
+            {
+                damageImage = GameObject.Find("DamageImage").GetComponent<Image>();
+                healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+                healthSlider.maxValue = startingHealth;
+            }
+
+            foreach (var ability in FindObjectsOfType<APaladinAbility>())
+            {
+                if (ability.playerId == GameJamGameManager.LocalPlayerId)
+                {
+                    foreach (var button in FindObjectsOfType<AbilityButton>())
+                    {
+                        if (button.gameObject.name.Contains(ability.abilityNum.ToString()))
+                        {
+                            ability.SetInterface(button);
+                            break;
+                        }
+                    }
+                }
+            }
+            initialized = true;
+
+        }
+
         void FixedUpdate ()
         {
             Rigidbody rigidbody = GetComponent<Rigidbody>();
@@ -93,6 +118,11 @@ namespace CompleteProject
 			{
 				return;
 			}
+
+            if (!initialized)
+            {
+                StartCoroutine(InitializeAfterFrame());
+            }
             
             // Store the input axes.
             float h = CrossPlatformInputManager.GetAxisRaw("Horizontal");
@@ -173,7 +203,6 @@ namespace CompleteProject
                 }
             }
         }
-
 
         void Animating (float h, float v)
         {
@@ -282,7 +311,7 @@ namespace CompleteProject
 	            if (Input.GetJoystickNames().Length == 0)
 	            {
 	                // If the Fire1 button is being press and it's time to fire...
-                    if (Input.GetButton ("Fire1") && Time.timeScale != 0)
+                    if (Input.GetButton ("Fire1") && Time.timeScale != 0 && !EventSystem.current.IsPointerOverGameObject())
                     {
                         // ... shoot the gun.
                         object[] parameters = new object[] {id};

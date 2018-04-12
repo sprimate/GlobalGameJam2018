@@ -81,7 +81,7 @@ public class Enemy : ADamageable {
 	void FixedUpdate()
 	{
 		UpdateSpeedValues();
-        Player target = GameJamGameManager.instance.GetTarget(targetId);
+        Player target = GameJamGameManager.instance.GetPlayer(targetId);
         Debug.Log("move Towards " + target);
 		// If the enemy and the player have health left...
 		if(currentHealth > 0 && target != null && !target.isDead)
@@ -118,7 +118,7 @@ public class Enemy : ADamageable {
         {
             targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
         }
-        Player target = GameJamGameManager.instance.GetTarget(targetId);
+        Player target = GameJamGameManager.instance.GetPlayer(targetId);
         if (target == null)
         {
             return;

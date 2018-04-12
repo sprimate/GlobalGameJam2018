@@ -1,12 +1,86 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public abstract class SpecialAbility : MonoBehaviour {
+public abstract class APaladinAbility : MonoBehaviour {
+    public KeyCode hotkey;
+    public int playerId;
+    public int abilityNum;
 	public float cooldown;
 	public string abilityName;
 	public string description;
-	public Sprite image;
+	public Sprite icon;
+	public Button button;
+	protected float lastUsedTime;
+    public AbilityButton buttonInterface;
+
+	public bool CanUse
+	{
+		get {
+			return Time.time - cooldown >= lastUsedTime;
+		}
+	}
 	
-	public abstract void Action();
+	public virtual void Activate()
+	{
+		if (CanUse)
+		{
+			Use();
+		}
+	}
+    protected virtual void Use()
+    {
+        Confirm();
+    }
+
+
+	protected virtual void Confirm()
+	{
+		lastUsedTime = Time.time;
+        StartCoroutine(UpdateCoutdown());
+	}
+
+    IEnumerator UpdateCoutdown()
+    {
+        while (!CanUse)
+        {
+            buttonInterface.currentCooldown.text = Mathf.CeilToInt(cooldown - (Time.time - lastUsedTime)).ToString();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+	
+	void Update()
+	{
+        if (buttonInterface != null)
+        {
+            buttonInterface.SetInteractable(CanUse);
+            buttonInterface.currentCooldown.text = cooldown.ToString();
+        }
+
+        if (Input.GetKeyUp(hotkey))
+        {
+            Activate();
+        }
+	}
+
+    protected virtual void UpdateAbilityDescription()
+    {
+        AbilityDescription.instance.description.text = description.ToString();
+        AbilityDescription.instance.cooldownText.text = cooldown.ToString();
+        AbilityDescription.instance.damageText.text = "?";
+    }
+
+    void Awake()
+	{
+		lastUsedTime -= cooldown;
+	}
+
+    public void SetInterface(AbilityButton button)
+    {
+        buttonInterface = button;
+        buttonInterface.abilityName.text = abilityName;
+        buttonInterface.AddSelectionListeners(Activate, UpdateAbilityDescription);
+
+    }
 }
