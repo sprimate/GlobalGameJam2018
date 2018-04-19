@@ -39,7 +39,7 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		enemyAudio = GetComponent <AudioSource> ();
 		hitParticles = GetComponentInChildren <ParticleSystem> ();
 	}
-	public virtual void TakeDamage (int playerColor, int amount, Vector3 hitPoint)
+	public virtual void TakeDamage (int playerColor, int amount, Vector3? hitPoint = null)
 	{
 		// If the enemy is dead...
 		if(amount == 0 || IsDead)
@@ -85,11 +85,14 @@ public abstract class ADamageable : Photon.MonoBehaviour{
 		}
 		try{
 			enemyAudio.Play ();
-			// Set the position of the particle system to where the hit was sustained.
-			hitParticles.transform.position = hitPoint;
+            if (hitPoint.HasValue)
+            {
+                // Set the position of the particle system to where the hit was sustained.
+                hitParticles.transform.position = hitPoint.Value;
 
-			// And play the particles.
-			hitParticles.Play();
+                // And play the particles.
+                hitParticles.Play();
+            }
 		}
 		catch(Exception)
 		{

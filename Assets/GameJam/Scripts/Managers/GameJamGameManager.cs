@@ -114,7 +114,6 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     }
 	public void UpdatePlayers()
 	{
-        Debug.Log("Players Updated");
 		var ogNumPlayers = numPlayers;
 		List<int> realPlayers = new List<int>();
 		numPlayers = 0;

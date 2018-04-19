@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Pause : MonoBehaviour {
@@ -21,13 +21,13 @@ public class Pause : MonoBehaviour {
 	void Update () {
 
 		//Check if the Cancel button in Input Manager is down this frame (default is Escape key) and that game is not paused, and that we're not in main menu
-		if (Input.GetButtonDown ("Cancel") && !isPaused && !startScript.inMainMenu) 
+		if (Input.GetButtonDown ("Pause") && !isPaused && !startScript.inMainMenu) 
 		{
 			//Call the DoPause function to pause the game
 			DoPause();
 		} 
 		//If the button is pressed and the game is paused and not in main menu
-		else if (Input.GetButtonDown ("Cancel") && isPaused && !startScript.inMainMenu) 
+		else if (Input.GetButtonDown ("Pause") && isPaused && !startScript.inMainMenu) 
 		{
 			//Call the UnPause function to unpause the game
 			UnPause ();
@@ -38,6 +38,7 @@ public class Pause : MonoBehaviour {
 
 	public void DoPause()
 	{
+        Debug.Log("From wehre");
 		//Set isPaused to true
 		isPaused = true;
 		//Set time.timescale to 0, this will cause animations and physics to stop updating

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Audio;
@@ -20,7 +20,7 @@ public class PauseManager : MonoSingleton<PauseManager> {
 	
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
+		if (Input.GetButtonUp("Pause"))
 		{
 			canvas.enabled = !canvas.enabled;
 			TogglePause();

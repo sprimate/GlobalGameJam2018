@@ -32,7 +32,7 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
         unselectedMaterial = myRenderer.material;
     }
 
-    public override void TakeDamage(int playerColor, int amount, Vector3 hitPoint)
+    public override void TakeDamage(int playerColor, int amount, Vector3? hitPoint)
     {
         base.TakeDamage(playerColor, amount, hitPoint);
         power = currentHealth;

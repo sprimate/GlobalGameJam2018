@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class APaladinAbility : MonoBehaviour {
+    public bool inactiveByDefault;
     public KeyCode hotkey;
     public int playerId;
     public int abilityNum;
@@ -11,9 +12,8 @@ public abstract class APaladinAbility : MonoBehaviour {
 	public string abilityName;
 	public string description;
 	public Sprite icon;
-	public Button button;
 	protected float lastUsedTime;
-    public AbilityButton buttonInterface;
+    protected AbilityButton buttonInterface;
 
 	public bool CanUse
 	{
@@ -37,25 +37,32 @@ public abstract class APaladinAbility : MonoBehaviour {
 
 	protected virtual void Confirm()
 	{
-		lastUsedTime = Time.time;
+        lastUsedTime = Time.time;
         StartCoroutine(UpdateCoutdown());
 	}
 
     IEnumerator UpdateCoutdown()
     {
+        while (buttonInterface == null)
+        {
+            yield return null;
+        }
         while (!CanUse)
         {
-            buttonInterface.currentCooldown.text = Mathf.CeilToInt(cooldown - (Time.time - lastUsedTime)).ToString();
-            yield return new WaitForSeconds(1f);
+            if (buttonInterface != null)
+            {
+                buttonInterface.currentCooldown.text = Mathf.CeilToInt(cooldown - (Time.time - lastUsedTime)).ToString();
+                yield return new WaitForSeconds(1f);
+            }
         }
+        buttonInterface.currentCooldown.text = "";
     }
 	
-	void Update()
+	protected virtual void Update()
 	{
         if (buttonInterface != null)
         {
             buttonInterface.SetInteractable(CanUse);
-            buttonInterface.currentCooldown.text = cooldown.ToString();
         }
 
         if (Input.GetKeyUp(hotkey))
@@ -73,14 +80,27 @@ public abstract class APaladinAbility : MonoBehaviour {
 
     void Awake()
 	{
-		lastUsedTime -= cooldown;
+		lastUsedTime = inactiveByDefault ? 0f :  -cooldown;
 	}
+
+    IEnumerator Start()
+    {
+        while (buttonInterface == null)
+        {
+            yield return null;
+        }
+        yield return new WaitForEndOfFrame();
+        if (inactiveByDefault)
+        {
+            lastUsedTime = Time.time;
+            StartCoroutine(UpdateCoutdown());
+        }
+    }
 
     public void SetInterface(AbilityButton button)
     {
         buttonInterface = button;
         buttonInterface.abilityName.text = abilityName;
         buttonInterface.AddSelectionListeners(Activate, UpdateAbilityDescription);
-
     }
 }
