@@ -99,7 +99,9 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         }
         if (buildable.PowerCost > power)
         {
-            Debug.Log("Not enough power to build this object");
+            CanvasGroupFader fader = FindObjectOfType<CanvasGroupFader>();
+            fader.Init(true, 1f);
+            fader.Crossfade(false);
             return;
         }
         buildableBeingPlaced = buildable.CreateBuildableInstance();

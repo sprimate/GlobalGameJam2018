@@ -6,6 +6,7 @@ public class BaseSpawner : MonoBehaviour {
 
     public Camera commanderCamera;
     public GameObject basePrefab;
+    public AContextMenuButton contextMenuButton;
     public int numberOfBases = 10;
     public Transform centeredTransform;
     public float circleRadius = 30f;
@@ -27,7 +28,10 @@ public class BaseSpawner : MonoBehaviour {
             Vector3 position = new Vector3(centeredTransform.position.x + xOffset, centeredTransform.position.y, centeredTransform.position.z + zOffset);
             Quaternion rotation = Quaternion.LookRotation(position - centeredTransform.position);
             GameObject baseInstance = PhotonNetwork.Instantiate(basePrefab.name, position, rotation, 0, null);
-            baseInstance.GetComponent<BaseSelectable>().commanderCamera = commanderCamera;
+            BaseSelectable b = baseInstance.GetComponent<BaseSelectable>();
+            b.commanderCamera = commanderCamera;
+            b.menu = new List<AContextMenuButton>();
+            b.menu.Add(contextMenuButton);
             baseInstance.transform.SetParent(transform);
         }
     }

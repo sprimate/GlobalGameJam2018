@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,13 @@ public class BuildSomethingButton : AContextMenuButton
 
     protected void Start()
     {
-        GetComponentInChildren<Text>().text += " (" + objectToBuild.PowerCost + ")";
+        try
+        {
+            GetComponentInChildren<Text>().text += " (" + objectToBuild.PowerCost + ")";
+        }
+        catch (Exception)
+        {
+
+        }
     }
 }

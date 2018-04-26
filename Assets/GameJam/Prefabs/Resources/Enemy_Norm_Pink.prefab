@@ -7383,7 +7383,7 @@ MonoBehaviour:
     type: 2}
   speedDrop: {fileID: 1401477287462172, guid: 342c369bf389f47b98ba9bdc4c59b70b, type: 2}
   menu: []
-  buildPowerCost: 10
+  buildPowerCost: 25
   power: 40
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
   timeBetweenAttacks: 0.5
