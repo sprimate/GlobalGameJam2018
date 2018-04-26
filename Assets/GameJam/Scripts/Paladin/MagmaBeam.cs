@@ -4,29 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagmaBeam : AConfirmedPaladinAbility {
+public class MagmaBeam : AConfirmedProjectileAbility
+{
 
-    public Transform rangeVisualizer;
     public GameObject fireProjectile;
     public int numProjectiles = 3;
-    public float untargetedProjectileAngle = 40f;
-
-    protected override bool Setup()
-    {
-        var player = GameJamGameManager.instance.GetPlayer(GameJamGameManager.LocalPlayerId).targetVisualizationPoint;
-        rangeVisualizer.transform.SetParent(GameJamGameManager.instance.GetPlayer(GameJamGameManager.LocalPlayerId).targetVisualizationPoint.transform, true);
-        rangeVisualizer.transform.localPosition = Vector3.zero;
-        rangeVisualizer.transform.localRotation = Quaternion.Euler(Vector3.zero);
-        rangeVisualizer.transform.GetChild(0).gameObject.SetActive(true);
-        StartCoroutine(UpdateMeshRenderersAfterFrame());
-        return true;
-    }
-
-    protected override void RevertSetup()
-    {
-        rangeVisualizer.transform.SetParent(transform);
-        rangeVisualizer.transform.GetChild(0).gameObject.SetActive(false);
-    }
+    public float untargetedProjectileAngle = 40f;   
 
     protected override void Confirm()
     {
@@ -45,7 +28,6 @@ public class MagmaBeam : AConfirmedPaladinAbility {
         {
             BeginEffect(target.transform.position);
         }
-
 
         if (targets.Count == 0)
         {
@@ -66,11 +48,7 @@ public class MagmaBeam : AConfirmedPaladinAbility {
         base.Confirm();
     }
 
-    IEnumerator UpdateMeshRenderersAfterFrame()
-    {
-        yield return new WaitForEndOfFrame();
-        rangeVisualizer.gameObject.GetComponentInChildren<MeshRenderer>().enabled = true;
-    }
+
     private GameObject currentPrefabObject;
     private FireBaseScript currentPrefabScript;
 

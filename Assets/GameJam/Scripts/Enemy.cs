@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using CompleteProject;
 using UnityEngine;
 
-public class Enemy : ADamageable {
+public class Enemy : GenericSelectable {
  	public float timeBetweenAttacks = 0.5f;     // The time in seconds between each attack.
 	public int attackDamage = 10;               // The amount of health taken away per attack.
 	Animator anim;                              // Reference to the animator component.
@@ -82,17 +82,15 @@ public class Enemy : ADamageable {
 	{
 		UpdateSpeedValues();
         Player target = GameJamGameManager.instance.GetPlayer(targetId);
-        Debug.Log("move Towards " + target);
 		// If the enemy and the player have health left...
-		if(currentHealth > 0 && target != null && !target.isDead)
+		if(currentHealth > 0 && target != null && !target.isDead && nav.isActiveAndEnabled)
 		{
-            Debug.Log("Setting Destinaton!");
 			// ... set the destination of the nav mesh agent to the player.
+            
 			nav.SetDestination (target.transform.position);
 		}
 		else //Otherwise, try to switch targets. If you can't, just be dead.
 		{
-            Debug.Log("NOT SETTING DESTINATION!");
 			targetId = GameJamGameManager.instance.GetClosestTargetId(transform.position);
 			if (targetId == 0)
 			{
@@ -176,8 +174,7 @@ public class Enemy : ADamageable {
 		// If the player has health to lose...
 	}
 
-	[PunRPC]
-	protected override void Death ()
+	protected override void OnDeath ()
 	{
 		try{
 			// The enemy is dead.

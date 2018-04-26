@@ -156,14 +156,18 @@ public class PowerWeb : MonoBehaviour {
         {
             var powerToSend = powerDict[sender];
             float timeforParticlesToStayAlive = powerToSend / PowerWebManager.instance.powerTransferredPerSecond;
-            Debug.Log(powerToSend + "/" + PowerWebManager.instance.powerTransferredPerSecond + " = " + timeforParticlesToStayAlive);
-            Action<BaseSelectable> particleColissionCallback = (b) => { }; //avoid a nullref
+           /* Action<BaseSelectable> particleColissionCallback = (b) => { }; //avoid a nullref
             particleColissionCallback += (b) =>
             {
                 StartCoroutine(TransferPowerOverTime(timeforParticlesToStayAlive, powerDict[sender], b, true));
+                BaseSelectable.RemoveCallback(sender);
                 BaseSelectable.OnParticleColissionCallback -= particleColissionCallback;
-            };
-            BaseSelectable.OnParticleColissionCallback += particleColissionCallback;
+            };*/
+            BaseSelectable.AddCallback(sender, powerUIDict[sender].gameObject, (b) =>
+            {
+                StartCoroutine(TransferPowerOverTime(timeforParticlesToStayAlive, powerDict[sender], b, true));
+                BaseSelectable.RemoveCallback(sender);
+            });
             StartCoroutine(SendPowerForTime(sender, timeforParticlesToStayAlive));
         }
     }
@@ -178,15 +182,15 @@ public class PowerWeb : MonoBehaviour {
         yield return StartCoroutine(TransferPowerOverTime(time, powerDict[sender], sender, false));
         particleSystem.Stop();
         powerUIDict.Remove(sender);
-        powerDict.Remove(sender);
         while (particleSystem.particleCount > 0)
         {
             yield return null;
         }
-        Debug.Log("Destroying system");
+        powerDict.Remove(sender);
         Destroy(particleSystem);
         if (powerDict.Count <= 0)
         {
+            Debug.Log("Destroying web");
             DestroyWeb();
         }
     }

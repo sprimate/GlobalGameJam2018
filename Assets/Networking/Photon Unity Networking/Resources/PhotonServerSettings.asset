@@ -55,4 +55,5 @@ MonoBehaviour:
   - RemoveDamage
   - KillPlayer
   - SetIsAlive
+  - OnDeath
   DisableAutoOpenWizard: 1

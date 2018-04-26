@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace DigitalRuby.PyroParticles
@@ -80,6 +80,7 @@ namespace DigitalRuby.PyroParticles
 
             // constant effect, so set the duration really high and add an infinite looping sound
             LoopingAudioSource = new LoopingAudioSource(this, AudioSource, StartTime, StopTime);
+            Debug.Log("DUration is now " + Duration + " -> 9999*");
             Duration = 999999999;
         }
 

@@ -90,12 +90,4 @@ public class PowerWebManager : MonoSingleton<PowerWebManager> {
             webs.Remove(web.target);
         }
     }
-
-    public void Update()
-    {
-        if (untargetedWeb != null)
-        {
-            Debug.Log("Total Untargeted Power: " + untargetedWeb.totalPower);
-        }
-    }
 }

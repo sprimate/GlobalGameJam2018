@@ -36,8 +36,7 @@ public class Hive : ADamageable {
 		GetComponent<Renderer>().material.color = PlayerColor.getColorForId(enemyColorId);
 	}
 
-	[PunRPC]
-    protected override void Death()
+    protected override void OnDeath()
     {
 		GameJamGameManager.instance.HiveAboutToBeDestroyed(this);
 		Destroy();

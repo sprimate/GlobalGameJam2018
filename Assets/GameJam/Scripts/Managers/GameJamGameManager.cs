@@ -28,7 +28,7 @@ public class GameJamGameManager : MonoSingleton<GameJamGameManager> {
     int destroyedEnemies;
     int destroyedHives;
     public float hiveRegenerationTime;
-    bool gameStarted = false;
+    public bool gameStarted = false;
     public Transform[] hiveStartingPoints;
     public string playerLayerName;
     public GameObject playerPrefab;

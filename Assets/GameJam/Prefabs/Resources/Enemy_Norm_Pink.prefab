@@ -34,7 +34,6 @@ GameObject:
   - component: {fileID: 114481785881680840}
   - component: {fileID: 114322137657581664}
   - component: {fileID: 114997091927550794}
-  - component: {fileID: 114794391687040602}
   m_Layer: 17
   m_Name: Enemy_Norm_Pink
   m_TagString: Untagged
@@ -7376,12 +7375,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soulValue: 30
   soul: {fileID: 114530559174382538, guid: 723808ba368764b7f898a74e32460939, type: 2}
+  IsDead: 0
   enemyColorId: 2
   startingHealth: 30
   healthDrop: {fileID: 1894737646982756, guid: 82510f794d0d6470fa80cb06ebbcb8c5, type: 2}
   firingRateDrop: {fileID: 1819517846112802, guid: 467e3331f04234a669d40cd2c23ef5b4,
     type: 2}
   speedDrop: {fileID: 1401477287462172, guid: 342c369bf389f47b98ba9bdc4c59b70b, type: 2}
+  menu: []
+  buildPowerCost: 10
+  power: 40
+  selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
   timeBetweenAttacks: 0.5
   attackDamage: 10
   sinkSpeed: 2.5
@@ -7395,21 +7399,6 @@ MonoBehaviour:
   angularSpeedMax: 450
   timeAliveUntilMaxAngularSpeed: 120
   dropProb: 0.05
---- !u!114 &114794391687040602
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f393a41b7ca993498a10000e770f645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menu: []
-  buildPowerCost: 10
-  power: 40
-  selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
 --- !u!114 &114997091927550794
 MonoBehaviour:
   m_ObjectHideFlags: 1

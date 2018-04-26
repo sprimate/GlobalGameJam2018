@@ -24,7 +24,9 @@ GameObject:
   - component: {fileID: 23264622628918148}
   - component: {fileID: 114068158396473824}
   - component: {fileID: 120948320356245434}
-  - component: {fileID: 208475304922420936}
+  - component: {fileID: 114728541299453906}
+  - component: {fileID: 114989348817907764}
+  - component: {fileID: 208404907743562268}
   m_Layer: 16
   m_Name: Base
   m_TagString: Untagged
@@ -57,8 +59,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1700673514415674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -37.3, y: -0.2176168, z: -9.434374}
-  m_LocalScale: {x: 9.542417, y: 9.5424185, z: 9.5424185}
+  m_LocalPosition: {x: -42.399998, y: -0.2176168, z: 56.700005}
+  m_LocalScale: {x: 9.542419, y: 9.542419, z: 9.542419}
   m_Children:
   - {fileID: 4584859305170792}
   m_Father: {fileID: 0}
@@ -201,12 +203,103 @@ MonoBehaviour:
   commanderCamera: {fileID: 0}
   basePowerRegenerationRate: 1
   turret: {fileID: 114471346742281876, guid: fb196093836ea4bc9b4d7f4aaa96b765, type: 2}
-  unit: {fileID: 0}
+  unit: {fileID: 114481785881680840, guid: c4db686b4cb5ab641a8f6ae0157cdf39, type: 2}
   radiusCalculation: {fileID: 58479587165172924}
-  unitToSpawnOnTimer: {fileID: 114794391687040602, guid: c4db686b4cb5ab641a8f6ae0157cdf39,
+  unitToSpawnOnTimer: {fileID: 114481785881680840, guid: c4db686b4cb5ab641a8f6ae0157cdf39,
     type: 2}
   spawnRate: 50
   shouldSpawnNow: 0
+--- !u!114 &114728541299453906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1700673514415674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114989348817907764}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &114989348817907764
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1700673514415674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 0
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    InterpolateMoveTowardsAcceleration: 2
+    InterpolateMoveTowardsDeceleration: 2
+    InterpolateSpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: -1
+        value: 0
+        inSlope: 0
+        outSlope: Infinity
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 4
+        value: 4
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+    DrawErrorGizmo: 1
+  m_RotationModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!120 &120948320356245434
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -313,7 +406,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!208 &208475304922420936
+--- !u!208 &208404907743562268
 NavMeshObstacle:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

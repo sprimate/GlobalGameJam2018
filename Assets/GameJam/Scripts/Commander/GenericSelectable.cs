@@ -165,7 +165,7 @@ public class GenericSelectable : ADamageable, ISelectHandler, IPointerClickHandl
     }
 
     [PunRPC]
-    protected override void Death()
+    protected override void OnDeath()
     {
         IsDead = true;
         Destroy();

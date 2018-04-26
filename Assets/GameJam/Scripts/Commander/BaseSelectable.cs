@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler, IEndDragHandler {
     
-    [SerializeField] Camera commanderCamera;
+    public Camera commanderCamera;
     public int basePowerRegenerationRate;
     public GenericSelectable turret;
     public GenericSelectable unit;
@@ -40,15 +40,33 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
 
     }
 
-    public static System.Action<BaseSelectable> OnParticleColissionCallback;
+    public GameObject associatedParticleSystem;
+
+    public static Dictionary<BaseSelectable, System.Action<BaseSelectable>> OnParticleColissionCallback = new Dictionary<BaseSelectable, System.Action<BaseSelectable>>();
+
+    public static void AddCallback(BaseSelectable selectable, GameObject _associatedParticleSystem, System.Action<BaseSelectable> action)
+    {
+        selectable.associatedParticleSystem = _associatedParticleSystem;
+        OnParticleColissionCallback[selectable] = action;
+    }
+
+    public static void RemoveCallback(BaseSelectable selectable)
+    {
+        selectable.associatedParticleSystem = null;
+        OnParticleColissionCallback.Remove(selectable);
+    }
 
     void OnParticleCollision(GameObject other)
     {
-        if (OnParticleColissionCallback != null)
+        foreach (var pair in OnParticleColissionCallback)
         {
-            ParticleSystem particles = other.GetComponent<ParticleSystem>();
-            Debug.Log("Invoking the callback");
-            OnParticleColissionCallback.Invoke(this);
+            if (other == pair.Key.associatedParticleSystem)
+            {
+                ParticleSystem particles = other.GetComponent<ParticleSystem>();
+                Debug.Log("Invoking the callback");
+                OnParticleColissionCallback[pair.Key].Invoke(this);
+                return;
+            }
         }
     }
 
@@ -234,11 +252,10 @@ public class BaseSelectable : GenericSelectable, IBeginDragHandler, IDragHandler
         lineRenderer.enabled = false;
     }
 
-    [PunRPC]
-    protected override void Death()
+    protected override void OnDeath()
     {
         BasePowerDisplayer.instance.BaseDestroyed(this);
-        base.Death();
+        base.OnDeath();
         //base.Death();
     }
 }
