@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameJam/Scenes/Title.unity
     guid: 4c066979fb731124c86baa2183d221b8
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameJam/Scenes/Main Scene.unity
     guid: 0bb515776059e43a085ba7aa21babd18
+  - enabled: 1
+    path: Assets/GameJam/Scenes/Voltron/Voltron Mode.unity
+    guid: dd3e0c94e6f32419f931b53cec976edf
