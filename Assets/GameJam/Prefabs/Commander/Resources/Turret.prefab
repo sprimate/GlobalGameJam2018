@@ -194,7 +194,7 @@ MonoBehaviour:
   power: 0
   selectedMaterial: {fileID: 2100000, guid: 518045663b48d4ec09b94dd33f2ca2bf, type: 2}
   fireRadius: 25
-  fireRate: 4
+  fireRate: 2.5
   damagePerAttack: 0
   effectsDisplayTime: 0.2
 --- !u!120 &120041788900529080

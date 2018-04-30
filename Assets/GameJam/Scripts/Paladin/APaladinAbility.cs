@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public abstract class APaladinAbility : MonoBehaviour {
     public bool inactiveByDefault;
     public KeyCode hotkey;
-    public int playerId;
+    public int paladinPlayerNum;
     public int abilityNum;
 	public float cooldown;
 	public string abilityName;

@@ -17,6 +17,11 @@ public class BaseSpawner : MonoBehaviour {
         {
             yield return null;
         }
+
+        if (GameJamGameManager.LocalPlayerId != 1)
+        {
+            yield break;
+        }
         float vertexAngleFrequency = 360f / numberOfBases;
         float startAngle = numberOfBases % 2 == 0 ? vertexAngleFrequency / 2 : 90f;
 

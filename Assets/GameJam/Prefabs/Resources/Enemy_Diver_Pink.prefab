@@ -7418,12 +7418,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soulValue: 30
   soul: {fileID: 114530559174382538, guid: 723808ba368764b7f898a74e32460939, type: 2}
+  IsDead: 0
   enemyColorId: 2
-  startingHealth: 30
+  startingHealth: 25
   healthDrop: {fileID: 1894737646982756, guid: 82510f794d0d6470fa80cb06ebbcb8c5, type: 2}
   firingRateDrop: {fileID: 1819517846112802, guid: 467e3331f04234a669d40cd2c23ef5b4,
     type: 2}
   speedDrop: {fileID: 1401477287462172, guid: 342c369bf389f47b98ba9bdc4c59b70b, type: 2}
+  menu: []
+  buildPowerCost: 0
+  power: 0
+  selectedMaterial: {fileID: 0}
   timeBetweenAttacks: 0.5
   attackDamage: 15
   sinkSpeed: 2.5

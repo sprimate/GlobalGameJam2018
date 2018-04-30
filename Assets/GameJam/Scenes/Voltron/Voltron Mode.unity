@@ -4004,9 +4004,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveByDefault: 0
   hotkey: 49
-  playerId: 1
+  paladinPlayerNum: 1
   abilityNum: 1
-  cooldown: 30
+  cooldown: 6
   abilityName: Magma Beam
   description: Shoot magma in a cone to do large amounts of damage to all enemies
     in range.
@@ -5274,11 +5274,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1953782996}
   - {fileID: 1353693826}
+  - {fileID: 1953782996}
   - {fileID: 1758644648}
   m_Father: {fileID: 589893053}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &533390868
 Prefab:
@@ -5929,8 +5929,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1516996590}
   - {fileID: 526117645}
+  - {fileID: 1516996590}
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11119,7 +11119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveByDefault: 1
   hotkey: 0
-  playerId: 1
+  paladinPlayerNum: 1
   abilityNum: 2
   cooldown: 55
   abilityName: Plasma Cannon
@@ -11701,7 +11701,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 526117645}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1353693827
 MonoBehaviour:
@@ -11716,8 +11716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveByDefault: 1
   hotkey: 0
-  playerId: 2
-  abilityNum: 2
+  paladinPlayerNum: 2
+  abilityNum: 1
   cooldown: 60
   abilityName: Sonic Cannon
   description: Reveal a part of the map within the fog of war, display specific health
@@ -12718,33 +12718,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: viewIdField
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: viewIdField
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114724032736077160, guid: 83e86d924f5a54230a5154f7a3f6a160,
+    - target: {fileID: 114163845839646794, guid: 83e86d924f5a54230a5154f7a3f6a160,
         type: 2}
       propertyPath: instantiationId
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4547732601429002, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0.798
-      objectReference: {fileID: 0}
-    - target: {fileID: 4547732601429002, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.017
       objectReference: {fileID: 0}
     - target: {fileID: 1215640450733762, guid: 83e86d924f5a54230a5154f7a3f6a160, type: 2}
       propertyPath: m_IsActive
@@ -13897,7 +13889,7 @@ Transform:
   - {fileID: 1290556326}
   - {fileID: 1631229618}
   m_Father: {fileID: 589893053}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1526941012 stripped
 Transform:
@@ -15449,10 +15441,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveByDefault: 1
   hotkey: 0
-  playerId: 1
+  paladinPlayerNum: 1
   abilityNum: 3
   cooldown: 63
-  abilityName: Magma Beam
+  abilityName: Agilitiy Boost
   description: This lion gets a massive boost in agility, allowing him to dodge all
     ranged attacks for a short period of time.  Visually, the lion will flicker on
     impact with a projectile during this time period, and the projectile will continue
@@ -16604,7 +16596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inactiveByDefault: 1
   hotkey: 0
-  playerId: 2
+  paladinPlayerNum: 2
   abilityNum: 3
   cooldown: 60
   abilityName: Sniper Mode
@@ -18428,7 +18420,7 @@ Transform:
   m_Children:
   - {fileID: 856511792}
   m_Father: {fileID: 526117645}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1953782997
 MonoBehaviour:
@@ -18442,10 +18434,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inactiveByDefault: 0
-  hotkey: 49
-  playerId: 1
+  hotkey: 50
+  paladinPlayerNum: 2
   abilityNum: 2
-  cooldown: 1
+  cooldown: 6
   abilityName: Ice Beam
   description: "Do damage, and freeze any enemy that wasn\u2019t destroyed for a short
     period of time. Frozen bases can not gain power or build units"

@@ -15,6 +15,7 @@ public class TurretSelectable : GenericSelectable {
 
 	void Start()
 	{
+        lastFireTime = Time.time;
 		gunLine = GetComponent <LineRenderer> ();
 	}
 

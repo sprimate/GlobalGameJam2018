@@ -91,7 +91,8 @@ namespace CompleteProject
 
             foreach (var ability in FindObjectsOfType<APaladinAbility>())
             {
-                if (ability.playerId == GameJamGameManager.LocalPlayerId)
+                var id = GameJamGameManager.instance.maxNumPlayers == 1 ? 1 : GameJamGameManager.LocalPlayerId - 1;
+                if (ability.paladinPlayerNum == id)
                 {
                     foreach (var button in FindObjectsOfType<AbilityButton>())
                     {
@@ -101,6 +102,10 @@ namespace CompleteProject
                             break;
                         }
                     }
+                }
+                else
+                {
+                    ability.gameObject.SetActive(false);
                 }
             }
             initialized = true;
@@ -595,8 +600,9 @@ namespace CompleteProject
 		public void initialColorAssignment()
 		{
 			//maybe a hack? just use the id assigned from multiplayer
-			int playerColor;
-			if (id == 1) 
+			int playerColor = GameJamGameManager.LocalPlayerId - 1; ;
+            playerColor = playerColor == 0 ? 1 : playerColor;
+			/*if (id == 1) 
 			{
 				playerColor = PlayerColor.ColorID1;
 			} 
@@ -604,6 +610,7 @@ namespace CompleteProject
 			{
 				playerColor = PlayerColor.ColorID2;
 			}
+            */
 
 			object[] parameters = new object[] {playerColor};
 			weapon.GetComponent<PhotonView>().RPC("SetColor", PhotonTargets.All, parameters );
